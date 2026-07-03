@@ -408,32 +408,113 @@ h3 {
   max-width: 150mm;
 }
 
-/* Pricing hero — the headline licence figure. */
-.price-hero {
-  display: flex;
-  align-items: baseline;
-  gap: 18px;
-  padding: 4px 0 20px;
-  flex-wrap: wrap;
+/* Pricing panel — the headline figure set in a dark-green feature block that
+   echoes the cover / CTA hero, so the deck bookends visually. Big number and
+   supporting line on the left; a mint-ticked "what's included" list on the
+   right. */
+.price-panel {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 34px;
+  align-items: center;
+  background: var(--canvas);
+  color: var(--beige-50);
+  border-radius: 12px;
+  padding: 26px 30px;
+  margin: 6px 0 28px;
 }
-.price-hero .badge {
-  align-self: center;
+.price-panel .badge {
+  background: rgb(244 241 234 / 0.12);
+  color: var(--mint-400);
 }
 .price-figure {
   display: flex;
   align-items: baseline;
   gap: 8px;
+  margin-top: 14px;
 }
 .price-figure .amount {
   font-family: var(--font-display);
-  font-size: 40pt;
+  font-size: 46pt;
   line-height: 1;
-  color: var(--heading);
+  color: var(--beige-50);
   letter-spacing: -0.01em;
 }
 .price-figure .per {
   font-family: var(--font-mono);
   font-size: 11pt;
+  color: var(--beige-50-66);
+}
+.price-panel .panel-sub {
+  margin: 14px 0 0;
+  font-family: var(--font-display);
+  font-size: 11pt;
+  line-height: 1.4;
+  color: var(--beige-50-66);
+  max-width: 82mm;
+}
+.included {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.included li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 9px 0;
+  font-size: 10pt;
+  line-height: 1.35;
+  color: var(--beige-50);
+  border-top: 1px solid rgb(244 241 234 / 0.14);
+}
+.included li:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+.included li:last-child {
+  padding-bottom: 0;
+}
+.included .check {
+  flex: none;
+  display: flex;
+  margin-top: 1px;
+  color: var(--mint-400);
+}
+.included .check svg {
+  width: 4.5mm;
+  height: 4.5mm;
+}
+
+/* Three even supporting points beneath the panel — replaces the old 2+1 card
+   grid, and picks up the icon language from the "More than dashboards" page. */
+.price-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+.price-features .feat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12mm;
+  height: 12mm;
+  border-radius: 8px;
+  background: var(--green-700-12);
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.price-features .feat-icon svg {
+  width: 6mm;
+  height: 6mm;
+}
+.price-features h3 {
+  font-size: 12.5pt;
+  margin-bottom: 5px;
+}
+.price-features p {
+  margin: 0;
+  font-size: 9.5pt;
   color: var(--muted);
 }
 

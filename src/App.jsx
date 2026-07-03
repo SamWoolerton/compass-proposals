@@ -62,6 +62,31 @@ const Icon = {
       <path d="M10.2 10.4 6.4 7.2M13.8 10.4l3.8-3.2M10.2 13.6l-3.8 3.2M13.8 13.6l3.8 3.2" />
     </svg>
   ),
+  Shield: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z" />
+      <path d="M9 12l2 2 4-4.5" />
+    </svg>
+  ),
+  Lift: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 3c2.8 2.1 4 5 4 8.2L14 13h-4l-2-1.8C8 8 9.2 5.1 12 3z" />
+      <circle cx="12" cy="9" r="1.3" />
+      <path d="M8 14l-2 3.5 3-1M16 14l2 3.5-3-1" />
+    </svg>
+  ),
+  Trial: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M9.5 3h5" />
+      <path d="M10 3v6.5l-4.2 7.8A2 2 0 0 0 7.6 20h8.8a2 2 0 0 0 1.8-2.7L14 9.5V3" />
+      <path d="M7.6 14.5h8.8" />
+    </svg>
+  ),
+  Check: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M20 6L9 17l-5-5" />
+    </svg>
+  ),
 };
 
 const TOTAL = 8;
@@ -309,31 +334,72 @@ export default function App() {
         <p className="lead">Simple, all-in, and built to fit.</p>
         <div className="divider" />
 
-        <div className="price-hero">
-          <span className="badge">Indicative licence</span>
-          <div className="price-figure">
-            <span className="amount">$2,000</span>
-            <span className="per">/ month</span>
+        <div className="price-panel">
+          <div className="price-panel-lead">
+            <span className="badge">Indicative licence</span>
+            <div className="price-figure">
+              <span className="amount">$2,000</span>
+              <span className="per">/ month</span>
+            </div>
+            <p className="panel-sub">
+              One flat licence for the whole firm — everything on the right is
+              in it. No per-seat maths, no surprise line items.
+            </p>
           </div>
+          <ul className="included">
+            <li>
+              <span className="check">
+                <Icon.Check />
+              </span>
+              Unlimited partners &amp; users — the whole firm
+            </li>
+            <li>
+              <span className="check">
+                <Icon.Check />
+              </span>
+              Chat, dashboards &amp; saved answers
+            </li>
+            <li>
+              <span className="check">
+                <Icon.Check />
+              </span>
+              Ongoing support &amp; updates
+            </li>
+            <li>
+              <span className="check">
+                <Icon.Check />
+              </span>
+              Hosted on your systems — nothing offshore
+            </li>
+          </ul>
         </div>
 
-        <div className="two-col">
-          <div className="card">
+        <div className="price-features">
+          <div className="feat">
+            <span className="feat-icon">
+              <Icon.Shield />
+            </span>
             <h3>Support included</h3>
             <p>Ongoing support is in the licence, not billed on top.</p>
           </div>
-          <div className="card">
-            <h3>Implementation help bundled in</h3>
+          <div className="feat">
+            <span className="feat-icon">
+              <Icon.Lift />
+            </span>
+            <h3>Implementation bundled in</h3>
             <p>
-              We&apos;ll fold in hours to get you live and drive adoption — and
+              We fold in hours to get you live and drive adoption — and
               Resolution8 can do the same.
             </p>
           </div>
-          <div className="card">
+          <div className="feat">
+            <span className="feat-icon">
+              <Icon.Trial />
+            </span>
             <h3>Try before you commit</h3>
             <p>
-              Start on your own data with a trial, so the value is proven before
-              anything&apos;s locked in.
+              Start on your own data with a trial, so the value is proven
+              before anything&apos;s locked in.
             </p>
           </div>
         </div>
