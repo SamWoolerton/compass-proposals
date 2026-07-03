@@ -3,7 +3,8 @@
    One .page element  ==  one physical sheet, on screen AND in the PDF.
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+/* Fonts are loaded via Fontsource in main.jsx (Lora / Geist / JetBrains Mono).
+   Install: @fontsource/lora  @fontsource-variable/geist  @fontsource/jetbrains-mono */
 
 :root {
   /* Page geometry — author in PHYSICAL units so screen and paper agree. */
@@ -11,23 +12,38 @@
   --page-h: 297mm;
   --margin: 20mm;
 
-  /* Palette */
-  --ink:      #14213d;      /* deep navy — headings */
-  --ink-2:    #3a4358;      /* body text */
-  --muted:    #8b90a0;      /* captions, rails */
-  --accent:   #3f7d8c;      /* dusty teal — primary accent, used sparingly */
-  --accent-2: #b9822f;      /* restrained ochre — one warm highlight only */
-  --hair:     #e4e2db;      /* hairline rules */
-  --paper:    #ffffff;
-  --backdrop: #4b4f55;      /* the gray "desk" behind pages, screen only */
+  /* ---- Bearing brand tokens (usebearing.com) ---- */
+  --green-900:    #0e2d1e;  /* primary dark green — hero canvas */
+  --green-800:    #1b4a35;  /* elevated green surface */
+  --green-700:    #1f6b45;  /* medium green — borders, accents on light */
+  --green-700-12: rgb(31 107 69 / 0.12);  /* 12% tint — subtle fills/hovers */
+  --mint-400:     #4dd49b;  /* bright mint — one accent, used sparingly */
+  --beige-50:     #f4f1ea;  /* primary ivory — surfaces / text on green */
+  --beige-100:    #f5f3ed;  /* secondary lighter beige */
+  --beige-50-66:  rgb(244 241 234 / 0.66); /* muted ivory on dark */
+  --ink:          #32292f;  /* near-black plum — primary text on light */
+
+  --font-display: "Lora", Georgia, serif;                     /* headings, serif labels */
+  --font-sans:    "Geist Variable", "Geist", system-ui, sans-serif; /* body, UI */
+  --font-mono:    "JetBrains Mono", ui-monospace, monospace;  /* annotations, spec labels */
+
+  /* ---- Semantic roles used by the layout below ---- */
+  --paper:    var(--beige-50);          /* content-page surface */
+  --canvas:   var(--green-900);         /* dark hero canvas (cover) */
+  --text:     var(--ink);               /* body text on light */
+  --heading:  var(--green-900);         /* serif headings on light */
+  --muted:    rgb(50 41 47 / 0.55);     /* captions, rails on light */
+  --accent:   var(--green-700);         /* accent for text on light (mint is invisible on beige) */
+  --hair:     rgb(50 41 47 / 0.14);     /* hairline rules on light */
+  --backdrop: #081a11;                  /* the "desk" behind pages, screen only */
 }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 
 body {
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
-  color: var(--ink-2);
+  font-family: var(--font-sans);
+  color: var(--text);
   font-size: 10.5pt;        /* pt keeps text sized to paper, not pixels */
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
@@ -88,38 +104,46 @@ body {
   align-items: center;
 }
 .rail .num {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 8pt; color: var(--muted);
 }
 .rail .label {
   writing-mode: vertical-rl;
-  font-family: "IBM Plex Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 7.5pt; letter-spacing: .18em; text-transform: uppercase;
   color: var(--muted);
 }
 .rail .tick { width: 1px; flex: 1; background: var(--hair); margin: 8px 0; }
 
-h1, h2, h3 { font-family: "Fraunces", Georgia, serif; color: var(--ink); font-weight: 500; margin: 0; }
+h1, h2, h3 { font-family: var(--font-display); color: var(--heading); font-weight: 500; margin: 0; }
 .eyebrow {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 8pt; letter-spacing: .22em; text-transform: uppercase;
   color: var(--accent); margin-bottom: 10px;
 }
 
-/* Cover */
-.cover { display: flex; flex-direction: column; height: 100%; }
-.cover .mark { font-family: "IBM Plex Mono", monospace; font-size: 9pt; letter-spacing: .2em; color: var(--ink); }
+/* Cover — the brand's dark forest-green hero: ivory text, one mint accent. */
+.cover {
+  /* Fill the whole sheet edge-to-edge (past .page padding) with the green canvas. */
+  position: absolute; inset: 0;
+  padding: var(--margin);
+  display: flex; flex-direction: column;
+  background: var(--canvas);
+  color: var(--beige-50);
+}
+.cover .mark { font-family: var(--font-mono); font-size: 9pt; letter-spacing: .2em; color: var(--beige-50); }
 .cover .center { margin-top: auto; }
-.cover h1 { font-size: 40pt; line-height: 1.05; letter-spacing: -.01em; }
-.cover h1 .thin { color: var(--accent); }
-.cover .sub { font-size: 13pt; color: var(--ink-2); margin-top: 14px; max-width: 120mm; }
-.cover .meta { margin-top: auto; display: flex; gap: 40px; padding-top: 24px; border-top: 1px solid var(--hair); }
-.cover .meta dt { font-family: "IBM Plex Mono", monospace; font-size: 7.5pt; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
-.cover .meta dd { margin: 4px 0 0; font-size: 10.5pt; color: var(--ink); }
+.cover .eyebrow { color: var(--mint-400); }
+.cover h1 { color: var(--beige-50); font-size: 40pt; line-height: 1.05; letter-spacing: -.01em; }
+.cover h1 .thin { color: var(--mint-400); }
+.cover .sub { font-size: 13pt; color: var(--beige-50-66); margin-top: 14px; max-width: 120mm; }
+.cover .meta { margin-top: auto; display: flex; gap: 40px; padding-top: 24px; border-top: 1px solid rgb(244 241 234 / 0.18); }
+.cover .meta dt { font-family: var(--font-mono); font-size: 7.5pt; letter-spacing: .15em; text-transform: uppercase; color: var(--beige-50-66); }
+.cover .meta dd { margin: 4px 0 0; font-size: 10.5pt; color: var(--beige-50); }
 
 /* Content pages */
 .page h2.section { font-size: 22pt; margin-bottom: 4px; }
-.lead { font-size: 12pt; color: var(--ink-2); max-width: 150mm; }
+.lead { font-size: 12pt; color: var(--text); max-width: 150mm; }
 .divider { height: 1px; background: var(--hair); margin: 18px 0; }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
 .card h3 { font-size: 13pt; margin-bottom: 6px; }
@@ -127,20 +151,20 @@ h1, h2, h3 { font-family: "Fraunces", Georgia, serif; color: var(--ink); font-we
 
 .timeline { list-style: none; margin: 0; padding: 0; }
 .timeline li { display: grid; grid-template-columns: 24mm 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--hair); }
-.timeline .phase { font-family: "IBM Plex Mono", monospace; font-size: 8.5pt; color: var(--accent); padding-top: 3px; }
+.timeline .phase { font-family: var(--font-mono); font-size: 8.5pt; color: var(--accent); padding-top: 3px; }
 .timeline h3 { font-size: 12pt; }
-.timeline p { margin: 3px 0 0; font-size: 9.5pt; color: var(--ink-2); }
+.timeline p { margin: 3px 0 0; font-size: 9.5pt; color: var(--text); }
 
 table.price { width: 100%; border-collapse: collapse; margin-top: 8px; }
-table.price th { text-align: left; font-family: "IBM Plex Mono", monospace; font-size: 7.5pt; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 0 0 8px; border-bottom: 2px solid var(--ink); }
+table.price th { text-align: left; font-family: var(--font-mono); font-size: 7.5pt; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 0 0 8px; border-bottom: 2px solid var(--green-900); }
 table.price th.r, table.price td.r { text-align: right; }
 table.price td { padding: 11px 0; border-bottom: 1px solid var(--hair); font-size: 10pt; }
-table.price td .name { color: var(--ink); font-weight: 500; }
+table.price td .name { color: var(--heading); font-weight: 500; }
 table.price td .desc { color: var(--muted); font-size: 8.5pt; }
-table.price tr.total td { border-bottom: none; padding-top: 16px; font-weight: 600; color: var(--ink); font-size: 12pt; }
-.badge { display: inline-block; background: var(--accent); color: #fff; font-family: "IBM Plex Mono", monospace; font-size: 7.5pt; letter-spacing: .1em; padding: 3px 8px; border-radius: 2px; }
+table.price tr.total td { border-bottom: none; padding-top: 16px; font-weight: 600; color: var(--heading); font-size: 12pt; }
+.badge { display: inline-block; background: var(--green-800); color: var(--mint-400); font-family: var(--font-mono); font-size: 7.5pt; letter-spacing: .1em; padding: 3px 8px; border-radius: 2px; }
 
-.footer { position: absolute; left: var(--margin); right: var(--margin); bottom: 12mm; display: flex; justify-content: space-between; font-family: "IBM Plex Mono", monospace; font-size: 7.5pt; color: var(--muted); letter-spacing: .06em; }
+.footer { position: absolute; left: var(--margin); right: var(--margin); bottom: 12mm; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 7.5pt; color: var(--muted); letter-spacing: .06em; }
 
 /* Floating toolbar — screen only, hidden from print via .no-print */
 .toolbar {
@@ -148,9 +172,9 @@ table.price tr.total td { border-bottom: none; padding-top: 16px; font-weight: 6
   display: flex; gap: 10px; align-items: center;
 }
 .toolbar button {
-  font-family: "Inter", sans-serif; font-size: 10pt; font-weight: 500;
-  color: #fff; background: var(--ink); border: none; border-radius: 6px;
-  padding: 10px 16px; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,.3);
+  font-family: var(--font-sans); font-size: 10pt; font-weight: 500;
+  color: var(--green-900); background: var(--mint-400); border: none; border-radius: 6px;
+  padding: 10px 16px; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,.35);
 }
-.toolbar button.ghost { background: rgba(255,255,255,.12); backdrop-filter: blur(6px); }
-.toolbar button:hover { filter: brightness(1.08); }
+.toolbar button.ghost { color: var(--beige-50); background: rgba(244,241,234,.14); backdrop-filter: blur(6px); }
+.toolbar button:hover { filter: brightness(1.06); }
