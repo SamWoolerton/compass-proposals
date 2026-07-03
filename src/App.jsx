@@ -8,11 +8,12 @@ function exportPdf() {
 }
 
 // Placeholder for a screenshot/image that content will drop in later.
-function Shot({ label = "Screenshot", tall = false }) {
+function Figure({ src, alt, caption }) {
   return (
-    <div className={`shot${tall ? " tall" : ""}`}>
-      <span>{label}</span>
-    </div>
+    <figure className="figure">
+      <img src={src} alt={alt} />
+      {caption && <figcaption>{caption}</figcaption>}
+    </figure>
   );
 }
 
@@ -91,40 +92,40 @@ export default function App() {
         <h2 className="section">Chat with your data</h2>
         <p className="lead">The fastest path from question to answer.</p>
         <div className="divider" />
-        <div className="split">
-          <ul className="benefits">
-            <li>
-              <h3>Ask anything, get it instantly.</h3>
-              <p>
-                &ldquo;Revenue by practice group this quarter?&rdquo; &ldquo;WIP
-                by partner?&rdquo; Type it like you&apos;d say it — chart or table
-                back in seconds.
-              </p>
-            </li>
-            <li>
-              <h3>Numbers you can trust, every time.</h3>
-              <p>
-                The AI reads your question, never your data — so it can&apos;t
-                invent a figure. The worst it can do is pick the wrong metric, and
-                you&apos;ll see that from its name. No silent errors buried in a
-                board pack.
-              </p>
-            </li>
-            <li>
-              <h3>Locked to your permissions.</h3>
-              <p>
-                Everyone sees exactly what they&apos;re cleared to see — and
-                nothing else. Restricted data stays invisible by design, not by
-                policy.
-              </p>
-            </li>
-            <li>
-              <h3>Your data never leaves your systems.</h3>
-              <p>The AI never touches it. Nothing goes offshore.</p>
-            </li>
-          </ul>
-          <Shot label="A chat question resolving into a chart" tall />
-        </div>
+        <ul className="benefits grid">
+          <li>
+            <h3>Ask anything, get it instantly.</h3>
+            <p>
+              &ldquo;Revenue by practice group this quarter?&rdquo; &ldquo;WIP by
+              partner?&rdquo; Type it like you&apos;d say it — chart or table back
+              in seconds.
+            </p>
+          </li>
+          <li>
+            <h3>Numbers you can trust, every time.</h3>
+            <p>
+              The AI reads your question, never your data — so it can&apos;t
+              invent a figure. The worst it can do is pick the wrong metric, and
+              you&apos;ll see that from its name. No silent errors buried in a
+              board pack.
+            </p>
+          </li>
+          <li>
+            <h3>Locked to your permissions.</h3>
+            <p>
+              Everyone sees exactly what they&apos;re cleared to see — and nothing
+              else. Restricted data stays invisible by design, not by policy.
+            </p>
+          </li>
+          <li>
+            <h3>Your data never leaves your systems.</h3>
+            <p>The AI never touches it. Nothing goes offshore.</p>
+          </li>
+        </ul>
+        <Figure
+          src="/Chat chart.png"
+          alt="A chat question resolving into a chart"
+        />
         <div className="footer">
           <span>Bearing</span>
           <span>Proposal · Compass</span>
@@ -140,33 +141,31 @@ export default function App() {
         <h2 className="section">The dashboard you keep asking for</h2>
         <p className="lead">No IT ticket. No report developer. No wait.</p>
         <div className="divider" />
-        <div className="split">
-          <ul className="benefits">
-            <li>
-              <h3>Save it in one click.</h3>
-              <p>Pin any answer to a dashboard, straight from the chat.</p>
-            </li>
-            <li>
-              <h3>Every partner and exec self-serves.</h3>
-              <p>
-                The people asking the questions get the answers directly, instead
-                of queuing behind Finance.
-              </p>
-            </li>
-            <li>
-              <h3>Frees your analysts for the real work.</h3>
-              <p>
-                Less time pulling routine numbers, more time on analysis that
-                moves the needle.
-              </p>
-            </li>
-            <li>
-              <h3>Opens instantly.</h3>
-              <p>Built once, ready whenever you are.</p>
-            </li>
-          </ul>
-          <Shot label="A saved dashboard" tall />
-        </div>
+        <ul className="benefits grid">
+          <li>
+            <h3>Save it in one click.</h3>
+            <p>Pin any answer to a dashboard, straight from the chat.</p>
+          </li>
+          <li>
+            <h3>Every partner and exec self-serves.</h3>
+            <p>
+              The people asking the questions get the answers directly, instead
+              of queuing behind Finance.
+            </p>
+          </li>
+          <li>
+            <h3>Frees your analysts for the real work.</h3>
+            <p>
+              Less time pulling routine numbers, more time on analysis that moves
+              the needle.
+            </p>
+          </li>
+          <li>
+            <h3>Opens instantly.</h3>
+            <p>Built once, ready whenever you are.</p>
+          </li>
+        </ul>
+        <Figure src="/Dashboard chart.png" alt="A saved dashboard" />
         <div className="footer">
           <span>Bearing</span>
           <span>Proposal · Compass</span>
