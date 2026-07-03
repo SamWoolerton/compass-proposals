@@ -1,0 +1,44 @@
+/* ============================================================
+   index.css — Tailwind v4 entry.
+
+   Preflight (Tailwind's base reset) is INTENTIONALLY omitted. paged.css owns
+   the reset and all print/layout fidelity; Tailwind is purely additive utility
+   classes on top. We import only the theme + utilities layers, not preflight.
+   To re-enable the reset later, add:
+     @import "tailwindcss/preflight.css" layer(base);
+   ============================================================ */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* Bridge Bearing brand tokens (defined in paged.css :root) into Tailwind's
+   theme so they generate real utilities, e.g. bg-green-900, text-ink,
+   text-muted, border-hair, font-display.
+
+   Colors reference the paged.css vars directly (different namespace, single
+   source of truth). Fonts are inlined: Tailwind's font utilities share the
+   --font-* namespace with paged.css, so referencing var(--font-sans) would be
+   self-referential. Keep these stacks in sync with paged.css. */
+@theme {
+  /* brand palette */
+  --color-green-900: var(--green-900);
+  --color-green-800: var(--green-800);
+  --color-green-700: var(--green-700);
+  --color-mint-400: var(--mint-400);
+  --color-beige-50: var(--beige-50);
+  --color-beige-100: var(--beige-100);
+  --color-ink: var(--ink);
+
+  /* semantic roles */
+  --color-paper: var(--paper);
+  --color-canvas: var(--canvas);
+  --color-heading: var(--heading);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-hair: var(--hair);
+
+  /* fonts — keep in sync with paged.css :root */
+  --font-display: "Lora", Georgia, serif;
+  --font-sans: "Geist Variable", "Geist", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}

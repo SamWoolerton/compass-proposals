@@ -269,14 +269,24 @@ export default function App() {
           Both are already in your database — Actionstep for matters, Xero for
           financials.
         </p>
-        <div className="logo-row brand">
-          <div className="logo-slot">
-            <img src="/logos/actionstep.svg" alt="Actionstep" />
+        <div className="mt-3 flex gap-4">
+          <div className="flex flex-1 items-center justify-center rounded-md bg-green-900 px-4 h-[72mm] [-webkit-print-color-adjust:exact] [print-color-adjust:exact]">
+            <img
+              className="h-[8.5mm] w-auto max-w-[70%] object-contain text-white rotate-90"
+              src="/logos/actionstep.svg"
+              alt="Actionstep"
+            />
           </div>
-          <div className="logo-slot">
-            <img src="/logos/xero.svg" alt="Xero" />
+          <div className="flex flex-1 items-center justify-center rounded-md bg-green-900 px-4 h-[72mm] [-webkit-print-color-adjust:exact] [print-color-adjust:exact]">
+            <img
+              className="h-[6.5mm] w-auto max-w-[70%] object-contain text-white rotate-90"
+              src="/logos/xero.svg"
+              alt="Xero"
+            />
           </div>
-          <div className="logo-slot more">+ more</div>
+          <div className="flex flex-1 items-center justify-center rounded-md bg-green-900 px-4 h-[72mm] font-mono text-[9pt] tracking-[0.08em] text-white [-webkit-print-color-adjust:exact] [print-color-adjust:exact]">
+            + more
+          </div>
         </div>
 
         <div className="footer">

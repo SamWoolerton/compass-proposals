@@ -366,6 +366,48 @@ h3 {
   grid-column: 1 / -1;
 }
 
+/* Detail rows — one point per row, icon on the left, text on the right. */
+.detail-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.detail-rows li {
+  display: grid;
+  grid-template-columns: 12mm 1fr;
+  gap: 16px;
+  align-items: start;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--hair);
+}
+.detail-rows li:last-child {
+  border-bottom: none;
+}
+.detail-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12mm;
+  height: 12mm;
+  border-radius: 8px;
+  background: var(--green-700-12);
+  color: var(--accent);
+}
+.detail-icon svg {
+  width: 6mm;
+  height: 6mm;
+}
+.detail-rows h3 {
+  font-size: 13pt;
+  margin-bottom: 4px;
+}
+.detail-rows p {
+  margin: 0;
+  font-size: 10pt;
+  color: var(--muted);
+  max-width: 150mm;
+}
+
 /* Pricing hero — the headline licence figure. */
 .price-hero {
   display: flex;
@@ -549,60 +591,6 @@ table.price tr.total td {
 }
 
 /* Row of software logos on the Operations page. */
-.logo-row {
-  display: flex;
-  gap: 16px;
-  margin-top: 12px;
-}
-.logo-row.brand {
-  gap: 0;
-  padding: 8mm 16px;
-  border-radius: 6px;
-  background: var(--green-900);
-  -webkit-print-color-adjust: exact;
-  print-color-adjust: exact;
-}
-.logo-slot {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 22mm;
-  border: 1px solid var(--hair);
-  border-radius: 4px;
-  background: #fff;
-  font-family: var(--font-mono);
-  font-size: 9pt;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-}
-.logo-row.brand .logo-slot {
-  height: auto;
-  border: none;
-  background: none;
-  color: #fff;
-}
-.logo-row.brand .logo-slot img {
-  height: 8.5mm;
-  width: auto;
-  max-width: 70%;
-  object-fit: contain;
-  color: #fff; /* Xero logo uses currentColor */
-}
-.logo-slot.more {
-  background: var(--green-700-12);
-  color: var(--accent);
-  border-style: dashed;
-}
-.logo-row.brand .logo-slot.more {
-  background: rgb(255 255 255 / 0.12);
-  color: #fff;
-  border: 1px dashed rgb(255 255 255 / 0.6);
-  border-radius: 4px;
-  align-self: center;
-  padding: 7px 16px;
-  flex: 0 0 auto;
-}
 
 /* Team row — four members across, each name + title + photo. */
 .two-col.team {
