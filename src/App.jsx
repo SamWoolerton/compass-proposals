@@ -17,6 +17,53 @@ function Figure({ src, alt, caption }) {
   );
 }
 
+// Line icons for the "More than dashboards" detail rows. 24×24, drawn with
+// currentColor so the accent green flows through from CSS.
+const Icon = {
+  Sync: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M4 9a8 8 0 0 1 13.5-3.5L20 8" />
+      <path d="M20 4v4h-4" />
+      <path d="M20 15a8 8 0 0 1-13.5 3.5L4 16" />
+      <path d="M4 20v-4h4" />
+    </svg>
+  ),
+  Extract: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <ellipse cx="8" cy="5" rx="5" ry="2.2" />
+      <path d="M3 5v10c0 1.2 2.2 2.2 5 2.2" />
+      <path d="M13 5v4" />
+      <path d="M15 15h7" />
+      <path d="M19 12l3 3-3 3" />
+    </svg>
+  ),
+  Report: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+      <path d="M14 3v5h5" />
+      <path d="M9 13h6" />
+      <path d="M9 17h6" />
+    </svg>
+  ),
+  Inbox: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M4 13l2.5-7.5A2 2 0 0 1 8.4 4h7.2a2 2 0 0 1 1.9 1.5L20 13" />
+      <path d="M4 13v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5" />
+      <path d="M4 13h4l1.5 2.5h5L16 13h4" />
+    </svg>
+  ),
+  Source: () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="2.5" />
+      <circle cx="5" cy="6" r="1.8" />
+      <circle cx="19" cy="6" r="1.8" />
+      <circle cx="5" cy="18" r="1.8" />
+      <circle cx="19" cy="18" r="1.8" />
+      <path d="M10.2 10.4 6.4 7.2M13.8 10.4l3.8-3.2M10.2 13.6l-3.8 3.2M13.8 13.6l3.8 3.2" />
+    </svg>
+  ),
+};
+
 const TOTAL = 8;
 
 export default function App() {
@@ -371,43 +418,69 @@ export default function App() {
           so data flows where it needs to, on its own.
         </p>
         <div className="divider" />
-        <div className="two-col">
-          <div className="card">
-            <h3>Stop entering the same data twice</h3>
-            <p>
-              We sync between your systems so the team stops copy-pasting by hand.
-            </p>
-          </div>
-          <div className="card">
-            <h3>Get data out of stubborn systems</h3>
-            <p>
-              Some platforms don&apos;t like giving up their data — prising it out
-              cleanly is exactly what we specialise in. (And much of that
-              groundwork is already done for you.)
-            </p>
-          </div>
-          <div className="card">
-            <h3>Reports that write themselves</h3>
-            <p>
-              Auto-generate the documents your team builds by hand today, ready
-              for your commentary. (Yes — the one James asked about.)
-            </p>
-          </div>
-          <div className="card">
-            <h3>Delivered to the inbox</h3>
-            <p>
-              Schedule the numbers that matter and have them sent — no one has to
-              go and pull them.
-            </p>
-          </div>
-          <div className="card span-2">
-            <h3>One source of truth</h3>
-            <p>
-              Define the logic once; dashboards, reports and automations all draw
-              from it, so nothing drifts out of sync.
-            </p>
-          </div>
-        </div>
+        <ul className="detail-rows">
+          <li>
+            <span className="detail-icon">
+              <Icon.Sync />
+            </span>
+            <div>
+              <h3>Stop entering the same data twice</h3>
+              <p>
+                We sync between your systems so the team stops copy-pasting by
+                hand.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span className="detail-icon">
+              <Icon.Extract />
+            </span>
+            <div>
+              <h3>Get data out of stubborn systems</h3>
+              <p>
+                Some platforms don&apos;t like giving up their data — prising it
+                out cleanly is exactly what we specialise in. (And much of that
+                groundwork is already done for you.)
+              </p>
+            </div>
+          </li>
+          <li>
+            <span className="detail-icon">
+              <Icon.Report />
+            </span>
+            <div>
+              <h3>Reports that write themselves</h3>
+              <p>
+                Auto-generate the documents your team builds by hand today,
+                ready for your commentary. (Yes — the one James asked about.)
+              </p>
+            </div>
+          </li>
+          <li>
+            <span className="detail-icon">
+              <Icon.Inbox />
+            </span>
+            <div>
+              <h3>Delivered to the inbox</h3>
+              <p>
+                Schedule the numbers that matter and have them sent — no one has
+                to go and pull them.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span className="detail-icon">
+              <Icon.Source />
+            </span>
+            <div>
+              <h3>One source of truth</h3>
+              <p>
+                Define the logic once; dashboards, reports and automations all
+                draw from it, so nothing drifts out of sync.
+              </p>
+            </div>
+          </li>
+        </ul>
         <div className="footer">
           <span>Bearing · usebearing.com</span>
           <span>Proposal · Compass</span>
