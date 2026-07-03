@@ -284,8 +284,13 @@ export default function App() {
               alt="Xero"
             />
           </div>
-          <div className="flex flex-[3] items-center justify-center rounded-md border border-hair bg-green-700-12 px-4 h-[72mm] font-mono text-[9pt] tracking-[0.08em] text-accent text-center [-webkit-print-color-adjust:exact] [print-color-adjust:exact]">
-            + more — all your data can live in Compass
+          <div className="flex flex-[3] flex-col items-center justify-center gap-3 rounded-md border border-hair bg-green-700-12 px-6 h-[72mm] text-center [-webkit-print-color-adjust:exact] [print-color-adjust:exact]">
+            <span className="font-mono text-[8pt] uppercase tracking-[0.16em] text-accent">
+              + more
+            </span>
+            <span className="max-w-[52mm] font-display text-[14pt] leading-snug text-heading">
+              Unify all of your data in Compass
+            </span>
           </div>
         </div>
 
