@@ -7,182 +7,275 @@ function exportPdf() {
   window.print();
 }
 
-const TOTAL = 4;
+// Placeholder for a screenshot/image that content will drop in later.
+function Shot({ label = "Screenshot", tall = false }) {
+  return (
+    <div className={`shot${tall ? " tall" : ""}`}>
+      <span>{label}</span>
+    </div>
+  );
+}
+
+const TOTAL = 6;
 
 export default function App() {
   return (
     <>
       {/* Toolbar is .no-print, so it never appears in the PDF */}
       <div className="toolbar no-print">
-        <button className="ghost" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+        <button
+          className="ghost"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
           Top
         </button>
         <button onClick={exportPdf}>Export to PDF</button>
       </div>
 
-      {/* ---- PAGE 1 · COVER ------------------------------------ */}
+      {/* ============================================================
+          PAGE 1 · COVER  (TW-focused)
+          Kept from the existing scaffold — Compass + "Chat with your
+          data", TW logo prominent, white on Bearing green.
+          ============================================================ */}
       <Page n={1} total={TOTAL}>
         <div className="cover">
-          <div className="mark">NORTHLIGHT&nbsp;STUDIO</div>
+          <div className="mark">COMPASS BY BEARING</div>
           <div className="center">
-            <div className="eyebrow">Proposal · Website Design &amp; Build</div>
+            <div className="eyebrow">Proposal · Compass</div>
             <h1>
-              A new home<br />for <span className="thin">Harbour&nbsp;&amp;&nbsp;Vine</span>.
+              Compass
+              <br />
+              for <span className="thin">Tompkins&nbsp;Wake</span>.
             </h1>
             <p className="sub">
-              A fast, editorial storefront that makes the range feel as considered
-              online as it does on the shelf — built to be run by your team, not by us.
+              Chat with your data. One place to ask questions of everything the
+              firm knows — no reports to request, no waiting on IT.
             </p>
           </div>
           <dl className="meta">
-            <div>
+            <div className="prepared-for">
               <dt>Prepared for</dt>
-              <dd>Harbour &amp; Vine</dd>
+              <dd>
+                <img
+                  className="client-logo"
+                  src="/logos/tompkins-wake-logo.png"
+                  alt="Tompkins Wake"
+                />
+              </dd>
             </div>
-            <div>
+            <div className="prepared-by">
               <dt>Prepared by</dt>
-              <dd>Northlight Studio</dd>
-            </div>
-            <div>
-              <dt>Date</dt>
-              <dd>3 July 2026</dd>
-            </div>
-            <div>
-              <dt>Valid until</dt>
-              <dd>3 August 2026</dd>
+              <dd>Bearing</dd>
             </div>
           </dl>
         </div>
       </Page>
 
-      {/* ---- PAGE 2 · APPROACH --------------------------------- */}
-      <Page n={2} total={TOTAL} label="Approach">
-        <div className="eyebrow">01 — The brief, as we understand it</div>
-        <h2 className="section">Approach</h2>
+      {/* ============================================================
+          PAGE 2 · CHAT FEATURE  (general) — the headline benefit
+          ============================================================ */}
+      <Page n={2} total={TOTAL} label="Chat">
+        <div className="eyebrow">01 — The headline benefit</div>
+        <h2 className="section">Chat with your data</h2>
         <p className="lead">
-          You have a strong physical brand and a website that undersells it. The goal
-          isn&apos;t a redesign for its own sake — it&apos;s a site that converts browsers into
-          buyers and that your team can update without calling us.
+          [Lead paragraph — the one-line pitch for conversational access to the
+          firm&apos;s data. Ask a question in plain English, get an answer
+          grounded in your own systems.]
+        </p>
+        <div className="divider" />
+        <div className="split">
+          <ul className="benefits">
+            <li>
+              <h3>[Benefit one]</h3>
+              <p>[Short supporting sentence.]</p>
+            </li>
+            <li>
+              <h3>[Benefit two]</h3>
+              <p>[Short supporting sentence.]</p>
+            </li>
+            <li>
+              <h3>[Benefit three]</h3>
+              <p>[Short supporting sentence.]</p>
+            </li>
+            <li>
+              <h3>[Benefit four]</h3>
+              <p>[Short supporting sentence.]</p>
+            </li>
+          </ul>
+          <Shot label="Chat screenshot" tall />
+        </div>
+        <div className="footer">
+          <span>Bearing</span>
+          <span>Proposal · Compass</span>
+        </div>
+      </Page>
+
+      {/* ============================================================
+          PAGE 3 · DASHBOARDS  (general)
+          Curate your own dashboard, no IT required
+          ============================================================ */}
+      <Page n={3} total={TOTAL} label="Dashboards">
+        <div className="eyebrow">02 — For the questions you ask often</div>
+        <h2 className="section">Curate your own dashboard</h2>
+        <p className="lead">
+          [Lead paragraph — pin the questions you ask regularly into a dashboard
+          you build yourself. No IT tickets, no analyst in the loop.]
+        </p>
+        <div className="divider" />
+        <div className="split">
+          <ul className="benefits">
+            <li>
+              <h3>No IT required</h3>
+              <p>[Build and change it yourself, in minutes.]</p>
+            </li>
+            <li>
+              <h3>[Benefit two]</h3>
+              <p>[Short supporting sentence.]</p>
+            </li>
+            <li>
+              <h3>[Benefit three]</h3>
+              <p>[Short supporting sentence.]</p>
+            </li>
+          </ul>
+          <Shot label="Dashboard screenshot" tall />
+        </div>
+        <div className="footer">
+          <span>Bearing</span>
+          <span>Proposal · Compass</span>
+        </div>
+      </Page>
+
+      {/* ============================================================
+          PAGE 4 · OPERATIONS  (TW-focused)
+          Implementation, Resolution8, ongoing support, their software
+          ============================================================ */}
+      <Page n={4} total={TOTAL} label="Operations">
+        <div className="eyebrow">03 — What&apos;s involved</div>
+        <h2 className="section">Operations</h2>
+        <p className="lead">
+          [Lead — who takes point on implementation and how much work it is for
+          your team. Short answer: not much.]
+        </p>
+        <div className="divider" />
+
+        <div className="two-col">
+          <div className="card">
+            <h3>Built with Resolution8</h3>
+            <p>
+              [Bearing works with Resolution8 to …] Compass sits on top of your
+              existing data and draws on the data-modelling work Resolution8 have
+              already done — so this isn&apos;t a full new engagement, it builds
+              on what&apos;s in place.
+            </p>
+          </div>
+          <div className="card">
+            <h3>Ongoing support included</h3>
+            <p>
+              Ongoing support is included in the licensing fee — [expand on what
+              that covers].
+            </p>
+          </div>
+        </div>
+
+        <div className="divider" />
+        <h3 className="minihead">Connected to the software you already use</h3>
+        <p className="note">
+          Both are already in your database — Actionstep for matters, Xero for
+          financials.
+        </p>
+        <div className="logo-row">
+          <div className="logo-slot">Actionstep</div>
+          <div className="logo-slot">Xero</div>
+          <div className="logo-slot more">+ more</div>
+        </div>
+
+        <div className="footer">
+          <span>Bearing</span>
+          <span>Proposal · Compass</span>
+        </div>
+      </Page>
+
+      {/* ============================================================
+          PAGE 5 · THE TEAM  (general)
+          Pull from the Bearing website; link out for detail
+          ============================================================ */}
+      <Page n={5} total={TOTAL} label="Team">
+        <div className="eyebrow">04 — Who&apos;s behind it</div>
+        <h2 className="section">The team behind Compass</h2>
+        <p className="lead">
+          [Lead paragraph — pulled from usebearing.com. Who Bearing is and why
+          the firm is in safe hands.]
+        </p>
+        <div className="divider" />
+        <div className="two-col team">
+          <div className="member">
+            <img className="avatar" src="/team/sam.png" alt="Sam Woolerton" />
+            <h3>Sam Woolerton</h3>
+            <p className="role">Founder &amp; Director</p>
+          </div>
+          <div className="member">
+            <img className="avatar" src="/team/jesse.png" alt="Jesse O'Connor" />
+            <h3>Jesse O&apos;Connor</h3>
+            <p className="role">Full-Stack Developer</p>
+          </div>
+          <div className="member">
+            <img className="avatar" src="/team/ethan.png" alt="Ethan MacLeod" />
+            <h3>Ethan MacLeod</h3>
+            <p className="role">Full-Stack Developer</p>
+          </div>
+          <div className="member">
+            <img className="avatar" src="/team/isaiah.png" alt="Isaiah Foulidis" />
+            <h3>Isaiah Foulidis</h3>
+            <p className="role">Data Pipeline Specialist</p>
+          </div>
+        </div>
+        <p className="note">
+          More about the team at{" "}
+          <a className="link" href="https://usebearing.com/about-us">
+            usebearing.com/about-us
+          </a>
+          .
+        </p>
+        <div className="footer">
+          <span>Bearing · usebearing.com</span>
+          <span>Proposal · Compass</span>
+        </div>
+      </Page>
+
+      {/* ============================================================
+          PAGE 6 · INTEGRATIONS  (general / TW — TBD)
+          A platform for data-driven integrations & automation
+          ============================================================ */}
+      <Page n={6} total={TOTAL} label="Integrations">
+        <div className="eyebrow">05 — Beyond answering questions</div>
+        <h2 className="section">A platform for integrations</h2>
+        <p className="lead">
+          [Lead — Compass is also a platform for data-driven integrations that
+          save the team time: process automation, syncing between systems, and
+          more.]
         </p>
         <div className="divider" />
         <div className="two-col">
           <div className="card">
-            <h3>Editorial, not templated</h3>
-            <p>
-              A layout system built around your photography and product stories, so
-              each collection can be given room rather than dropped into a grid.
-            </p>
+            <h3>[Automation example]</h3>
+            <p>[Short supporting sentence.]</p>
           </div>
           <div className="card">
-            <h3>Owned by your team</h3>
-            <p>
-              A clean CMS with guardrails: your staff publish new products and journal
-              posts confidently, without breaking the design.
-            </p>
+            <h3>[Automation example]</h3>
+            <p>[Short supporting sentence.]</p>
           </div>
           <div className="card">
-            <h3>Fast by default</h3>
-            <p>
-              Static-first delivery with image optimisation baked in. Target: sub-second
-              loads on mobile, which is where two-thirds of your traffic sits.
-            </p>
+            <h3>[Automation example]</h3>
+            <p>[Short supporting sentence.]</p>
           </div>
           <div className="card">
-            <h3>Measured</h3>
-            <p>
-              Analytics and a simple conversion dashboard from day one, so we can tune
-              the funnel against real numbers after launch.
-            </p>
+            <h3>[Automation example]</h3>
+            <p>[Short supporting sentence.]</p>
           </div>
         </div>
         <div className="footer">
-          <span>Northlight Studio</span>
-          <span>Proposal · Harbour &amp; Vine</span>
-        </div>
-      </Page>
-
-      {/* ---- PAGE 3 · SCOPE & TIMELINE ------------------------- */}
-      <Page n={3} total={TOTAL} label="Scope">
-        <div className="eyebrow">02 — What we&apos;ll do, and when</div>
-        <h2 className="section">Scope &amp; timeline</h2>
-        <ul className="timeline">
-          <li>
-            <span className="phase">WEEK 1–2</span>
-            <div>
-              <h3>Discovery &amp; content model</h3>
-              <p>Workshops, audit of the current catalogue, and a content model your team signs off on.</p>
-            </div>
-          </li>
-          <li>
-            <span className="phase">WEEK 3–5</span>
-            <div>
-              <h3>Design</h3>
-              <p>Two directions for the homepage and a product page, then one refined system through to a full kit.</p>
-            </div>
-          </li>
-          <li>
-            <span className="phase">WEEK 6–9</span>
-            <div>
-              <h3>Build</h3>
-              <p>Front-end build, CMS wiring, and migration of your existing 140 products.</p>
-            </div>
-          </li>
-          <li>
-            <span className="phase">WEEK 10</span>
-            <div>
-              <h3>Launch &amp; handover</h3>
-              <p>QA, a training session for your team, and two weeks of post-launch support included.</p>
-            </div>
-          </li>
-        </ul>
-        <div className="footer">
-          <span>Northlight Studio</span>
-          <span>Proposal · Harbour &amp; Vine</span>
-        </div>
-      </Page>
-
-      {/* ---- PAGE 4 · INVESTMENT ------------------------------- */}
-      <Page n={4} total={TOTAL} label="Investment">
-        <div className="eyebrow">03 — Investment</div>
-        <h2 className="section">The numbers</h2>
-        <table className="price">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th className="r">Amount (NZD)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span className="name">Discovery &amp; content model</span><br /><span className="desc">Workshops, audit, sign-off</span></td>
-              <td className="r">$6,500</td>
-            </tr>
-            <tr>
-              <td><span className="name">Design system</span><br /><span className="desc">Homepage, product, journal, full kit</span></td>
-              <td className="r">$14,000</td>
-            </tr>
-            <tr>
-              <td><span className="name">Build &amp; migration</span><br /><span className="desc">Front end, CMS, 140 products</span></td>
-              <td className="r">$18,500</td>
-            </tr>
-            <tr>
-              <td><span className="name">Launch &amp; training</span> <span className="badge">Included support</span><br /><span className="desc">QA, handover, 2 weeks support</span></td>
-              <td className="r">$4,000</td>
-            </tr>
-            <tr className="total">
-              <td>Total, fixed</td>
-              <td className="r">$43,000</td>
-            </tr>
-          </tbody>
-        </table>
-        <div className="divider" />
-        <p className="lead" style={{ fontSize: "10pt" }}>
-          Fixed price, billed in three stages: 40% to start, 40% at build, 20% at launch.
-          Ongoing care plans start at $850/month if you&apos;d like us to stay on.
-        </p>
-        <div className="footer">
-          <span>Northlight Studio · hello@northlight.studio</span>
-          <span>Proposal · Harbour &amp; Vine</span>
+          <span>Bearing · usebearing.com</span>
+          <span>Proposal · Compass</span>
         </div>
       </Page>
     </>
