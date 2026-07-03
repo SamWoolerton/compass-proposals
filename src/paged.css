@@ -1,0 +1,156 @@
+/* ============================================================
+   paged.css — the only file that matters for print fidelity.
+   One .page element  ==  one physical sheet, on screen AND in the PDF.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Page geometry — author in PHYSICAL units so screen and paper agree. */
+  --page-w: 210mm;          /* A4. For US Letter: 8.5in / 11in and @page size below */
+  --page-h: 297mm;
+  --margin: 20mm;
+
+  /* Palette */
+  --ink:      #14213d;      /* deep navy — headings */
+  --ink-2:    #3a4358;      /* body text */
+  --muted:    #8b90a0;      /* captions, rails */
+  --accent:   #3f7d8c;      /* dusty teal — primary accent, used sparingly */
+  --accent-2: #b9822f;      /* restrained ochre — one warm highlight only */
+  --hair:     #e4e2db;      /* hairline rules */
+  --paper:    #ffffff;
+  --backdrop: #4b4f55;      /* the gray "desk" behind pages, screen only */
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  color: var(--ink-2);
+  font-size: 10.5pt;        /* pt keeps text sized to paper, not pixels */
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- THE SHEET ------------------------------------------------ */
+.page {
+  width: var(--page-w);
+  height: var(--page-h);
+  padding: var(--margin);
+  background: var(--paper);
+  position: relative;
+  overflow: hidden;         /* content that overruns is CLIPPED, never reflowed
+                               onto a new sheet. This is what makes layout exact. */
+}
+
+/* ---- SCREEN: pages float as cards on a gray desk -------------- */
+@media screen {
+  body { background: var(--backdrop); padding: 28px 0; }
+  .page {
+    margin: 0 auto 28px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .38);
+  }
+}
+
+/* ---- PRINT: one .page  ==  one sheet, pixel-for-pixel --------- */
+@page {
+  size: A4;                 /* must match --page-w/h above (or use: size: 8.5in 11in) */
+  margin: 0;                /* we handle all margins inside .page, so the browser adds none */
+}
+
+@media print {
+  html, body { background: #fff; }
+  .no-print { display: none !important; }
+
+  .page {
+    margin: 0;
+    box-shadow: none;
+    break-after: page;      /* force exactly one break after each sheet */
+  }
+  .page:last-of-type { break-after: auto; }   /* ...but not a trailing blank */
+
+  /* keep background colours / accent fills in the PDF */
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* ============================================================
+   Everything below is just the sample proposal's look.
+   Delete it and drop in your own content — the page machinery
+   above is all you actually need.
+   ============================================================ */
+
+.rail {
+  position: absolute;
+  left: 8mm; top: var(--margin); bottom: var(--margin);
+  width: 6mm;
+  display: flex; flex-direction: column; justify-content: space-between;
+  align-items: center;
+}
+.rail .num {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 8pt; color: var(--muted);
+}
+.rail .label {
+  writing-mode: vertical-rl;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 7.5pt; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--muted);
+}
+.rail .tick { width: 1px; flex: 1; background: var(--hair); margin: 8px 0; }
+
+h1, h2, h3 { font-family: "Fraunces", Georgia, serif; color: var(--ink); font-weight: 500; margin: 0; }
+.eyebrow {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 8pt; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 10px;
+}
+
+/* Cover */
+.cover { display: flex; flex-direction: column; height: 100%; }
+.cover .mark { font-family: "IBM Plex Mono", monospace; font-size: 9pt; letter-spacing: .2em; color: var(--ink); }
+.cover .center { margin-top: auto; }
+.cover h1 { font-size: 40pt; line-height: 1.05; letter-spacing: -.01em; }
+.cover h1 .thin { color: var(--accent); }
+.cover .sub { font-size: 13pt; color: var(--ink-2); margin-top: 14px; max-width: 120mm; }
+.cover .meta { margin-top: auto; display: flex; gap: 40px; padding-top: 24px; border-top: 1px solid var(--hair); }
+.cover .meta dt { font-family: "IBM Plex Mono", monospace; font-size: 7.5pt; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+.cover .meta dd { margin: 4px 0 0; font-size: 10.5pt; color: var(--ink); }
+
+/* Content pages */
+.page h2.section { font-size: 22pt; margin-bottom: 4px; }
+.lead { font-size: 12pt; color: var(--ink-2); max-width: 150mm; }
+.divider { height: 1px; background: var(--hair); margin: 18px 0; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.card h3 { font-size: 13pt; margin-bottom: 6px; }
+.card p { margin: 0; font-size: 10pt; }
+
+.timeline { list-style: none; margin: 0; padding: 0; }
+.timeline li { display: grid; grid-template-columns: 24mm 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--hair); }
+.timeline .phase { font-family: "IBM Plex Mono", monospace; font-size: 8.5pt; color: var(--accent); padding-top: 3px; }
+.timeline h3 { font-size: 12pt; }
+.timeline p { margin: 3px 0 0; font-size: 9.5pt; color: var(--ink-2); }
+
+table.price { width: 100%; border-collapse: collapse; margin-top: 8px; }
+table.price th { text-align: left; font-family: "IBM Plex Mono", monospace; font-size: 7.5pt; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 0 0 8px; border-bottom: 2px solid var(--ink); }
+table.price th.r, table.price td.r { text-align: right; }
+table.price td { padding: 11px 0; border-bottom: 1px solid var(--hair); font-size: 10pt; }
+table.price td .name { color: var(--ink); font-weight: 500; }
+table.price td .desc { color: var(--muted); font-size: 8.5pt; }
+table.price tr.total td { border-bottom: none; padding-top: 16px; font-weight: 600; color: var(--ink); font-size: 12pt; }
+.badge { display: inline-block; background: var(--accent); color: #fff; font-family: "IBM Plex Mono", monospace; font-size: 7.5pt; letter-spacing: .1em; padding: 3px 8px; border-radius: 2px; }
+
+.footer { position: absolute; left: var(--margin); right: var(--margin); bottom: 12mm; display: flex; justify-content: space-between; font-family: "IBM Plex Mono", monospace; font-size: 7.5pt; color: var(--muted); letter-spacing: .06em; }
+
+/* Floating toolbar — screen only, hidden from print via .no-print */
+.toolbar {
+  position: fixed; top: 20px; right: 20px; z-index: 50;
+  display: flex; gap: 10px; align-items: center;
+}
+.toolbar button {
+  font-family: "Inter", sans-serif; font-size: 10pt; font-weight: 500;
+  color: #fff; background: var(--ink); border: none; border-radius: 6px;
+  padding: 10px 16px; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,.3);
+}
+.toolbar button.ghost { background: rgba(255,255,255,.12); backdrop-filter: blur(6px); }
+.toolbar button:hover { filter: brightness(1.08); }
