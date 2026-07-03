@@ -24,6 +24,7 @@
   --color-green-900: var(--green-900);
   --color-green-800: var(--green-800);
   --color-green-700: var(--green-700);
+  --color-green-700-12: var(--green-700-12); /* 12% tint — figure/panel surface */
   --color-mint-400: var(--mint-400);
   --color-beige-50: var(--beige-50);
   --color-beige-100: var(--beige-100);

@@ -272,7 +272,7 @@ export default function App() {
         <div className="mt-3 flex gap-4">
           <div className="flex flex-1 items-center justify-center rounded-md bg-green-900 px-4 h-[72mm] [-webkit-print-color-adjust:exact] [print-color-adjust:exact]">
             <img
-              className="h-[8.5mm] w-auto max-w-[70%] object-contain text-white rotate-90"
+              className="h-[8.5mm] w-auto max-w-[70%] object-contain text-white rotate-90 scale-[1.4]"
               src="/logos/actionstep.svg"
               alt="Actionstep"
             />
@@ -284,8 +284,8 @@ export default function App() {
               alt="Xero"
             />
           </div>
-          <div className="flex flex-1 items-center justify-center rounded-md bg-green-900 px-4 h-[72mm] font-mono text-[9pt] tracking-[0.08em] text-white [-webkit-print-color-adjust:exact] [print-color-adjust:exact]">
-            + more
+          <div className="flex flex-[3] items-center justify-center rounded-md border border-hair bg-green-700-12 px-4 h-[72mm] font-mono text-[9pt] tracking-[0.08em] text-accent text-center [-webkit-print-color-adjust:exact] [print-color-adjust:exact]">
+            + more — all your data can live in Compass
           </div>
         </div>
 
