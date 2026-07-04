@@ -212,7 +212,7 @@ export default function App() {
               <p>
                 Compass changes that: ask in plain English and get answers in
                 seconds. Save the most useful charts to your personal dashboard.
-                Secure and reliable.
+                AI with guardrails, providing answers you can trust.
               </p>
             </div>
           </div>
@@ -347,30 +347,31 @@ export default function App() {
 
         <div className="two-col">
           <div className="card">
-            <h3>Resolution8 lead the rollout</h3>
+            <h3>Go live in weeks, not months</h3>
             <p>
-              You keep the relationship you already trust; we provide the
-              platform and support behind the scenes.
+              Compass sits on top of your existing data foundation, so your team
+              can start getting answers straight away.
             </p>
           </div>
           <div className="card">
-            <h3>No new data project</h3>
+            <h3>Streamlined setup</h3>
             <p>
-              We reuse Resolution8&apos;s existing model and metric definitions
-              — a small lift, not a fresh engagement.
+              Compass reuses the metric definitions has Resolution8 built for
+              your existing reporting, keeping the extra work to a minimum.
             </p>
           </div>
           <div className="card">
-            <h3>All local</h3>
+            <h3>Built to grow with you</h3>
             <p>
-              Bearing, Resolution8 and your IT partner are all Hamilton-based.
+              Start with operational and finance data, and teach Compass about
+              more topics whenever you&apos;re ready.
             </p>
           </div>
           <div className="card">
-            <h3>Support is included</h3>
+            <h3>Lives in your infrastructure</h3>
             <p>
-              Ongoing support sits in the licence — plus hours bundled in to get
-              you live smoothly.
+              Everything runs on your own systems, so sensitive client data is
+              protected by the controls you already trust.
             </p>
           </div>
         </div>
