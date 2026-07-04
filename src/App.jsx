@@ -635,8 +635,9 @@ export default function App() {
             <div>
               <h3>Secure client portals</h3>
               <p>
-                Give your key clients more insights into their data, with strict
-                security controls so they never see info for another client.
+                Raise the bar for client interactions by giving your key clients
+                more insights into their data. Strict security controls so they
+                only see information that you allow them to.
               </p>
             </div>
           </li>
