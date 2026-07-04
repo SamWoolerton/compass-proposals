@@ -202,20 +202,17 @@ export default function App() {
               <br />
               for <span className="thin">Tompkins&nbsp;Wake</span>.
             </h1>
-            <p className="sub">
-              Your data, on tap. Ask a question — get an answer you can trust.
-            </p>
+            <p className="sub">Effortless answers you can trust.</p>
             <div className="intro">
               <p>
-                Today, &ldquo;how are we tracking?&rdquo; means someone stops,
-                pulls an export, wrangles it, and builds a report. By the time
-                it lands, the question has moved on.
+                Today, &ldquo;how are we tracking?&rdquo; means someone stops
+                what they're doing to pull an export, wrangle the data, and
+                build a report.
               </p>
               <p>
-                Compass changes that. Ask in plain English — get the chart, the
-                table, the number, in seconds. No SQL. No report queue. No
-                guesswork. And for a firm that lives on accuracy: the numbers
-                are always real.
+                Compass changes that: ask in plain English and get answers in
+                seconds. Save the most useful charts to your personal dashboard.
+                Secure and reliable.
               </p>
             </div>
           </div>
@@ -245,9 +242,8 @@ export default function App() {
         <div className="eyebrow">Effortless answers</div>
         <h2 className="section">Chat with your data</h2>
         <p className="lead">
-          {" "}
-          Compass is the fastest path from question to answer. Ask questions and
-          follow-ups in plain English.
+          The fastest path to insights. Send a question and Compass answers with
+          a table or chart.
         </p>
         <div className="divider" />
         <ul className="benefits grid">
@@ -296,31 +292,39 @@ export default function App() {
           ============================================================ */}
       <Page n={3} total={TOTAL} label="Dashboards">
         <div className="eyebrow">Curate your favourites</div>
-        <h2 className="section">The dashboard you keep asking for</h2>
-        <p className="lead">No IT ticket. No report developer. No wait.</p>
+        <h2 className="section">A dashboard that's tailor-made for you</h2>
+        <p className="lead">
+          Save the most useful charts to your personal dashboard. No need to
+          wait for a report developer.
+        </p>
         <div className="divider" />
         <ul className="benefits grid">
           <li>
-            <h3>Save it in one click.</h3>
-            <p>Pin any answer to a dashboard, straight from the chat.</p>
-          </li>
-          <li>
-            <h3>Every partner and exec self-serves.</h3>
+            <h3>Save a chart in three clicks.</h3>
             <p>
-              The people asking the questions get the answers directly, instead
-              of queuing behind Finance.
+              Pin any table or chart to your dashboard, straight from the chat.
             </p>
           </li>
           <li>
-            <h3>Frees your analysts for the real work.</h3>
+            <h3>Always up to date.</h3>
             <p>
-              Less time pulling routine numbers, more time on analysis that
+              No more stale reports; see the latest data whenever you refresh
+              the page.
+            </p>
+          </li>
+          <li>
+            <h3>Frees your analysts to deep dive.</h3>
+            <p>
+              Less time pulling routine numbers, and more time on analysis that
               moves the needle.
             </p>
           </li>
           <li>
-            <h3>Opens instantly.</h3>
-            <p>Built once, ready whenever you are.</p>
+            <h3>Share with your team.</h3>
+            <p>
+              Share a report with your team, and they can refer to it directly
+              or use it as the base to build their own dashboard.
+            </p>
           </li>
         </ul>
         <Figure src="/Dashboard chart.png" alt="A saved dashboard" />
@@ -335,9 +339,9 @@ export default function App() {
         <div className="eyebrow">A running start</div>
         <h2 className="section">Built on the work you&apos;ve already done</h2>
         <p className="lead">
-          Resolution8 have already cracked the hard part: getting clean,
-          reliable data out of your systems and modelling it. Compass sits
-          straight on top.
+          Resolution8 have already done the hard part: getting clean, reliable
+          data out of your systems and modelling it. Compass sits straight on
+          top.
         </p>
         <div className="divider" />
 
@@ -372,7 +376,7 @@ export default function App() {
         </div>
 
         <div className="divider" />
-        <h3 className="minihead">Your systems, already connected</h3>
+        <h3 className="minihead">Your systems are already connected</h3>
         <p className="note">
           Both are already in your database — Actionstep for matters, Xero for
           financials.
@@ -579,9 +583,8 @@ export default function App() {
         <h2 className="section">More than dashboards</h2>
         <p className="lead">
           The same query engine that answers your questions can move your data
-          for you. Wiring your systems to run without the manual overhead is
-          Bearing&apos;s sweet spot — connecting the tools you already use so
-          data flows where it needs to, on its own.
+          for you. Compass connects your tools so data flows where it needs to,
+          without the manual overhead.
         </p>
         <div className="divider" />
         <ul className="detail-rows">
@@ -592,21 +595,8 @@ export default function App() {
             <div>
               <h3>Stop entering the same data twice</h3>
               <p>
-                We sync between your systems so the team stops copy-pasting by
-                hand.
-              </p>
-            </div>
-          </li>
-          <li>
-            <span className="detail-icon">
-              <Icon.Extract />
-            </span>
-            <div>
-              <h3>Get data out of stubborn systems</h3>
-              <p>
-                Some platforms don&apos;t like giving up their data — prising it
-                out cleanly is exactly what we specialise in. (And much of that
-                groundwork is already done for you.)
+                We sync data between your systems so the team stops copy-pasting
+                by hand.
               </p>
             </div>
           </li>
@@ -617,8 +607,9 @@ export default function App() {
             <div>
               <h3>Reports that write themselves</h3>
               <p>
-                Auto-generate the documents your team builds by hand today,
-                ready for your commentary. (Yes — the one James asked about.)
+                Auto-generate the documents you build by hand today. Your team
+                are in the loop to provide value-add commentary, not just to
+                pull data together.
               </p>
             </div>
           </li>
@@ -627,10 +618,10 @@ export default function App() {
               <Icon.Inbox />
             </span>
             <div>
-              <h3>Delivered to the inbox</h3>
+              <h3>Dashboards delivered to your inbox</h3>
               <p>
-                Schedule the numbers that matter and have them sent — no one has
-                to go and pull them.
+                For Outlook power users, schedule a Compass dashboard to come to
+                your inbox on your terms.
               </p>
             </div>
           </li>
@@ -641,8 +632,8 @@ export default function App() {
             <div>
               <h3>One source of truth</h3>
               <p>
-                Define the logic once; dashboards, reports and automations all
-                draw from it, so nothing drifts out of sync.
+                We define the logic once, and then dashboards, reports and
+                automations stay in sync as your business evolves.
               </p>
             </div>
           </li>
@@ -663,18 +654,21 @@ export default function App() {
               <li>
                 <span className="step-n">1</span>
                 <div>
-                  <h3>Book a walkthrough</h3>
+                  <h3>Book a demo on your data</h3>
                   <p>
-                    We&apos;ll take the questions your partners ask most and
-                    answer them live, on your own data.
+                    We&apos;ll take a data extract and show you live how Compass
+                    understands your data.
                   </p>
                 </div>
               </li>
               <li>
                 <span className="step-n">2</span>
                 <div>
-                  <h3>Run a trial you drive yourselves</h3>
-                  <p>Proof on your own data before anything&apos;s signed.</p>
+                  <h3>Run a trial</h3>
+                  <p>
+                    Put Compass through its paces, so you can see how it would
+                    fit into your workflows before signing.
+                  </p>
                 </div>
               </li>
             </ol>
