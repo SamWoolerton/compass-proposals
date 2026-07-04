@@ -7,6 +7,16 @@ function exportPdf() {
   window.print();
 }
 
+// Shared page footer. One definition so every sheet reads identically.
+function Footer() {
+  return (
+    <div className="footer">
+      <span>Bearing · usebearing.com</span>
+      <span>Proposal · Compass</span>
+    </div>
+  );
+}
+
 // Placeholder for a screenshot/image that content will drop in later.
 function Figure({ src, alt, caption }) {
   return (
@@ -277,10 +287,7 @@ export default function App() {
           src="/Chat chart.png"
           alt="A chat question resolving into a chart"
         />
-        <div className="footer">
-          <span>Bearing</span>
-          <span>Proposal · Compass</span>
-        </div>
+        <Footer />
       </Page>
 
       {/* ============================================================
@@ -317,10 +324,7 @@ export default function App() {
           </li>
         </ul>
         <Figure src="/Dashboard chart.png" alt="A saved dashboard" />
-        <div className="footer">
-          <span>Bearing</span>
-          <span>Proposal · Compass</span>
-        </div>
+        <Footer />
       </Page>
 
       {/* ============================================================
@@ -398,10 +402,7 @@ export default function App() {
           </div>
         </div>
 
-        <div className="footer">
-          <span>Bearing</span>
-          <span>Proposal · Compass</span>
-        </div>
+        <Footer />
       </Page>
 
       {/* ============================================================
@@ -489,10 +490,7 @@ export default function App() {
           Our standard pricing for a firm your size — we&apos;ll shape the final
           package with you and Resolution8 to match how you want to roll it out.
         </p>
-        <div className="footer">
-          <span>Bearing · usebearing.com</span>
-          <span>Proposal · Compass</span>
-        </div>
+        <Footer />
       </Page>
 
       {/* ============================================================
@@ -570,10 +568,7 @@ export default function App() {
           </a>
           .
         </p>
-        <div className="footer">
-          <span>Bearing · usebearing.com</span>
-          <span>Proposal · Compass</span>
-        </div>
+        <Footer />
       </Page>
 
       {/* ============================================================
@@ -652,10 +647,7 @@ export default function App() {
             </div>
           </li>
         </ul>
-        <div className="footer">
-          <span>Bearing · usebearing.com</span>
-          <span>Proposal · Compass</span>
-        </div>
+        <Footer />
       </Page>
 
       {/* ============================================================
