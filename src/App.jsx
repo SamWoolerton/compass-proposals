@@ -378,8 +378,8 @@ export default function App() {
         <div className="divider" />
         <h3 className="minihead">Your systems are already connected</h3>
         <p className="note">
-          Both are already in your database — Actionstep for matters, Xero for
-          financials.
+          Compass draws on what's already in your database — Actionstep for
+          operations, Xero for financials.
         </p>
         <div className="mt-3 flex gap-4">
           <div className="flex flex-1 items-center justify-center rounded-md bg-green-900 px-4 h-[72mm] [-webkit-print-color-adjust:exact] [print-color-adjust:exact]">
@@ -414,8 +414,8 @@ export default function App() {
           ============================================================ */}
       <Page n={5} total={TOTAL} label="Pricing">
         <div className="eyebrow">Investment</div>
-        <h2 className="section">Pricing</h2>
-        <p className="lead">Simple, all-in, and built to fit.</p>
+        <h2 className="section">Pricing package</h2>
+        <p className="lead">Clear pricing with no surprises.</p>
         <div className="divider" />
 
         <div className="price-panel">
@@ -426,8 +426,8 @@ export default function App() {
               <span className="per">/ month</span>
             </div>
             <p className="panel-sub">
-              One flat licence for the whole firm — everything on the right is
-              in it. No per-seat maths, no surprise line items.
+              One flat licence for the whole firm. No per-seat maths, no
+              surprise line items.
             </p>
           </div>
           <ul className="included">
@@ -471,10 +471,10 @@ export default function App() {
             <span className="feat-icon">
               <Icon.Lift />
             </span>
-            <h3>Implementation bundled in</h3>
+            <h3>Help at hand if you want it</h3>
             <p>
-              We fold in hours to get you live and drive adoption — and
-              Resolution8 can do the same.
+              Roll out at your own pace, or engage us or Resolution8 to help get
+              your team live sooner.
             </p>
           </div>
           <div className="feat">
@@ -483,7 +483,7 @@ export default function App() {
             </span>
             <h3>Try before you commit</h3>
             <p>
-              Start on your own data with a trial, so the value is proven before
+              Start out with a trial, so you can see Compass up close before
               anything&apos;s locked in.
             </p>
           </div>
@@ -548,14 +548,17 @@ export default function App() {
             </p>
           </div>
           <div className="card">
-            <h3>You own what we build</h3>
-            <p>Code lives in your repo, documented as we go.</p>
+            <h3>Clear scope, no surprises</h3>
+            <p>
+              Exactly what we&apos;ll build and what it costs is agreed up
+              front, before a single line of code is written.
+            </p>
           </div>
           <div className="card">
-            <h3>We stay because you want us to</h3>
+            <h3>A track record you can check</h3>
             <p>
-              95% of our clients bring us back — not because they&apos;re locked
-              in, but because the systems keep earning their place.
+              150+ projects delivered since 2022 — and we&apos;ll happily
+              connect you with our satisfied clients.
             </p>
           </div>
           <div className="card">
@@ -686,7 +689,7 @@ export default function App() {
             </ol>
           </div>
           <p className="closer">
-            Say the word and we&apos;ll get a time in the diary this week.
+            {/* Say the word and we&apos;ll get a time in the diary this week. */}
           </p>
         </div>
       </Page>
