@@ -514,6 +514,101 @@ h3 {
   color: var(--muted);
 }
 
+/* ---- Page 5 test variant --------------------------------------
+   The pricing figure is split out of the shared green block and duplicated
+   into two option boxes. Everything that isn't a price (the "what's included"
+   list) is lifted into a neutral details block above them. */
+.price-details {
+  margin: 6px 0 18px;
+}
+.price-details h3 {
+  font-size: 12.5pt;
+}
+.included--light {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px 32px;
+  margin-top: 12px;
+}
+.included--light li,
+.included--light li:first-child,
+.included--light li:last-child {
+  align-items: center;
+  color: var(--text);
+  border-top: none;
+  padding: 6px 0;
+}
+/* Tick sits in a soft green-tint circle, echoing the .feat-icon language. */
+.included--light .check {
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 7mm;
+  height: 7mm;
+  margin-top: 0;
+  border-radius: 50%;
+  background: var(--green-700-12);
+  color: var(--accent);
+}
+.included--light .check svg {
+  width: 4mm;
+  height: 4mm;
+}
+
+/* Two option boxes side by side. The right box keeps the dark brand green;
+   the left "Monthly" box uses the light --green-700-12 tint. */
+.price-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-bottom: 28px;
+}
+.price-opt {
+  background: var(--canvas);
+  color: var(--beige-50);
+  border-radius: 12px;
+  padding: 24px 20px;
+}
+.price-opt .badge {
+  background: rgb(244 241 234 / 0.12);
+  color: var(--mint-400);
+}
+.price-opt .price-figure {
+  margin-top: 16px;
+}
+.price-opt .panel-sub {
+  margin: 12px 0 0;
+  font-family: var(--font-display);
+  font-size: 10.5pt;
+  line-height: 1.4;
+  color: var(--beige-50-66);
+}
+.price-opt .panel-sub-small {
+  margin: 8px 0 0;
+  font-family: var(--font-display);
+  font-size: 8.5pt;
+  line-height: 1.4;
+  color: var(--beige-50-66);
+}
+.price-opt--light {
+  background: var(--green-700-12);
+  color: var(--text);
+  border: 1px solid var(--hair);
+}
+.price-opt--light .badge {
+  background: var(--green-800);
+  color: var(--mint-400);
+}
+.price-opt--light .amount {
+  color: var(--heading);
+}
+.price-opt--light .per {
+  color: var(--muted);
+}
+.price-opt--light .panel-sub {
+  color: var(--muted);
+}
+
 .timeline {
   list-style: none;
   margin: 0;

@@ -419,19 +419,37 @@ export default function App() {
         <p className="lead">Clear pricing with no surprises.</p>
         <div className="divider" />
 
-        <div className="price-panel">
-          <div className="price-panel-lead">
-            <span className="badge">Indicative licence</span>
+        <p>
+          Start on a monthly plan for complete flexibility, and then move to a
+          12 month contract when you're ready. Commit within the first 3 months
+          and we'll waive 25 hours of onboarding & implementation.
+        </p>
+
+        <div className="price-options">
+          <div className="price-opt price-opt--light">
+            <span className="badge">Flexible</span>
+            <div className="price-figure">
+              <span className="amount">$2,600</span>
+              <span className="per">/ month</span>
+            </div>
+            <p className="panel-sub">+ est 40h for implementation at $185/h.</p>
+          </div>
+          <div className="price-opt">
+            <span className="badge">12-month contract</span>
             <div className="price-figure">
               <span className="amount">$2,000</span>
               <span className="per">/ month</span>
             </div>
-            <p className="panel-sub">
-              One flat licence for the whole firm. No per-seat maths, no
-              surprise line items.
+            <p className="panel-sub">+ est 40h for implementation at $185/h.</p>
+            <p className="panel-sub-small">
+              Sign up within your first 3 months and we'll waive 25 hours.
             </p>
           </div>
-          <ul className="included">
+        </div>
+
+        <div className="price-details">
+          <h3>What&apos;s included</h3>
+          <ul className="included included--light">
             <li>
               <span className="check">
                 <Icon.Check />
@@ -460,93 +478,7 @@ export default function App() {
           </ul>
         </div>
 
-        <div className="price-features">
-          <div className="feat">
-            <span className="feat-icon">
-              <Icon.Shield />
-            </span>
-            <h3>Support included</h3>
-            <p>Ongoing support is in the licence, not billed on top.</p>
-          </div>
-          <div className="feat">
-            <span className="feat-icon">
-              <Icon.Lift />
-            </span>
-            <h3>Help at hand if you want it</h3>
-            <p>
-              Roll out at your own pace, or engage us or Resolution8 to help get
-              your team live sooner.
-            </p>
-          </div>
-          <div className="feat">
-            <span className="feat-icon">
-              <Icon.Trial />
-            </span>
-            <h3>Try before you commit</h3>
-            <p>
-              Start out with a trial, so you can see Compass up close before
-              anything&apos;s locked in.
-            </p>
-          </div>
-        </div>
-
         <div className="divider" />
-        <p className="note">
-          Our standard pricing for a firm your size — we&apos;ll shape the final
-          package with you and Resolution8 to match how you want to roll it out.
-        </p>
-        <Footer />
-      </Page>
-
-      {/* ============================================================
-          PAGE 5 - TESTING COPY · PRICING (COPY)
-          ============================================================ */}
-      <Page n={5} total={TOTAL} label="Pricing">
-        <div className="eyebrow">Investment</div>
-        <h2 className="section">Pricing package</h2>
-        <p className="lead">Clear pricing with no surprises.</p>
-        <div className="divider" />
-
-        <div className="price-panel">
-          <div className="price-panel-lead">
-            <span className="badge">Indicative licence</span>
-            <div className="price-figure">
-              <span className="amount">$2,000</span>
-              <span className="per">/ month</span>
-            </div>
-            <p className="panel-sub">
-              One flat licence for the whole firm. No per-seat maths, no
-              surprise line items.
-            </p>
-          </div>
-          <ul className="included">
-            <li>
-              <span className="check">
-                <Icon.Check />
-              </span>
-              Unlimited partners &amp; users — effortless answers for the whole
-              firm
-            </li>
-            <li>
-              <span className="check">
-                <Icon.Check />
-              </span>
-              Chat &amp; personalised dashboards
-            </li>
-            <li>
-              <span className="check">
-                <Icon.Check />
-              </span>
-              Ongoing support &amp; updates
-            </li>
-            <li>
-              <span className="check">
-                <Icon.Check />
-              </span>
-              Hosted in your environment for maximum security
-            </li>
-          </ul>
-        </div>
 
         <div className="price-features">
           <div className="feat">
@@ -572,7 +504,7 @@ export default function App() {
             </span>
             <h3>Try before you commit</h3>
             <p>
-              Start out with a trial, so you can see Compass up close before
+              Start on monthly billing so you can see Compass up close before
               anything&apos;s locked in.
             </p>
           </div>
@@ -583,6 +515,7 @@ export default function App() {
           Our standard pricing for a firm your size — we&apos;ll shape the final
           package with you and Resolution8 to match how you want to roll it out.
         </p>
+        <p className="note">Prices shown are exclusive of GST.</p>
         <Footer />
       </Page>
 
