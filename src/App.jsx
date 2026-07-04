@@ -627,6 +627,18 @@ export default function App() {
           </li>
           <li>
             <span className="detail-icon">
+              <Icon.Shield />
+            </span>
+            <div>
+              <h3>Secure client portals</h3>
+              <p>
+                Give your key clients more insights into their data, with strict
+                security controls so they never see info for another client.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span className="detail-icon">
               <Icon.Source />
             </span>
             <div>
