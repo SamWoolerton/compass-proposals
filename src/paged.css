@@ -112,12 +112,6 @@ body {
   }
 }
 
-/* ============================================================
-   Everything below is just the sample proposal's look.
-   Delete it and drop in your own content — the page machinery
-   above is all you actually need.
-   ============================================================ */
-
 .rail {
   position: absolute;
   left: 8mm;
@@ -163,7 +157,7 @@ h3 {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 10px;
+  margin-bottom: 3mm;
 }
 
 /* Cover — the brand's dark forest-green hero: ivory text, one mint accent. */
@@ -342,11 +336,13 @@ h3 {
   font-size: 12pt;
   color: var(--text);
   max-width: 150mm;
+  margin-top: 1mm;
+  /* margin-bottom: 8mm; */
 }
 .divider {
   height: 1px;
   background: var(--hair);
-  margin: 18px 0;
+  margin: 6mm 0;
 }
 .two-col {
   display: grid;
@@ -752,4 +748,9 @@ table.price tr.total td {
 }
 .toolbar button:hover {
   filter: brightness(1.06);
+}
+
+/* Utilities */
+.mt-8 {
+  margin-top: 8mm;
 }

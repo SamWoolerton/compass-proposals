@@ -21,7 +21,15 @@ function Figure({ src, alt, caption }) {
 // currentColor so the accent green flows through from CSS.
 const Icon = {
   Sync: () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
       <path d="M4 9a8 8 0 0 1 13.5-3.5L20 8" />
       <path d="M20 4v4h-4" />
       <path d="M20 15a8 8 0 0 1-13.5 3.5L4 16" />
@@ -29,7 +37,15 @@ const Icon = {
     </svg>
   ),
   Extract: () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
       <ellipse cx="8" cy="5" rx="5" ry="2.2" />
       <path d="M3 5v10c0 1.2 2.2 2.2 5 2.2" />
       <path d="M13 5v4" />
@@ -38,7 +54,15 @@ const Icon = {
     </svg>
   ),
   Report: () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
       <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
       <path d="M14 3v5h5" />
       <path d="M9 13h6" />
@@ -46,14 +70,30 @@ const Icon = {
     </svg>
   ),
   Inbox: () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
       <path d="M4 13l2.5-7.5A2 2 0 0 1 8.4 4h7.2a2 2 0 0 1 1.9 1.5L20 13" />
       <path d="M4 13v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5" />
       <path d="M4 13h4l1.5 2.5h5L16 13h4" />
     </svg>
   ),
   Source: () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
       <circle cx="12" cy="12" r="2.5" />
       <circle cx="5" cy="6" r="1.8" />
       <circle cx="19" cy="6" r="1.8" />
@@ -63,27 +103,59 @@ const Icon = {
     </svg>
   ),
   Shield: () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
       <path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z" />
       <path d="M9 12l2 2 4-4.5" />
     </svg>
   ),
   Lift: () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
       <path d="M12 3c2.8 2.1 4 5 4 8.2L14 13h-4l-2-1.8C8 8 9.2 5.1 12 3z" />
       <circle cx="12" cy="9" r="1.3" />
       <path d="M8 14l-2 3.5 3-1M16 14l2 3.5-3-1" />
     </svg>
   ),
   Trial: () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
       <path d="M9.5 3h5" />
       <path d="M10 3v6.5l-4.2 7.8A2 2 0 0 0 7.6 20h8.8a2 2 0 0 0 1.8-2.7L14 9.5V3" />
       <path d="M7.6 14.5h8.8" />
     </svg>
   ),
   Check: () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
       <path d="M20 6L9 17l-5-5" />
     </svg>
   ),
@@ -106,7 +178,7 @@ export default function App() {
       </div>
 
       {/* ============================================================
-          PAGE 1 · COVER  (TW-focused)
+          PAGE 1 · COVER 
           Compass + "Your data, on tap", TW logo prominent,
           white on Bearing green.
           ============================================================ */}
@@ -126,14 +198,14 @@ export default function App() {
             <div className="intro">
               <p>
                 Today, &ldquo;how are we tracking?&rdquo; means someone stops,
-                pulls an export, wrangles it, and builds a report. By the time it
-                lands, the question has moved on.
+                pulls an export, wrangles it, and builds a report. By the time
+                it lands, the question has moved on.
               </p>
               <p>
                 Compass changes that. Ask in plain English — get the chart, the
                 table, the number, in seconds. No SQL. No report queue. No
-                guesswork. And for a firm that lives on accuracy: the numbers are
-                always real.
+                guesswork. And for a firm that lives on accuracy: the numbers
+                are always real.
               </p>
             </div>
           </div>
@@ -157,41 +229,48 @@ export default function App() {
       </Page>
 
       {/* ============================================================
-          PAGE 2 · CHAT FEATURE  (general) — the headline benefit
+          PAGE 2 · CHAT FEATURE  — the headline benefit
           ============================================================ */}
       <Page n={2} total={TOTAL} label="Chat">
-        <div className="eyebrow">In plain English</div>
+        <div className="eyebrow">Effortless answers</div>
         <h2 className="section">Chat with your data</h2>
-        <p className="lead">The fastest path from question to answer.</p>
+        <p className="lead">
+          {" "}
+          Compass is the fastest path from question to answer. Ask questions and
+          follow-ups in plain English.
+        </p>
         <div className="divider" />
         <ul className="benefits grid">
           <li>
-            <h3>Ask anything, get it instantly.</h3>
+            <h3>Ask anything, get answers immediately.</h3>
             <p>
-              &ldquo;Revenue by practice group this quarter?&rdquo; &ldquo;WIP by
-              partner?&rdquo; Type it like you&apos;d say it — chart or table back
-              in seconds.
+              &ldquo;Top 5 most profitable clients?&rdquo; &ldquo;Billable hours
+              and utilisation rate trend this financial year?&rdquo; Type it
+              like you&apos;d say it, and get a chart or table back in seconds.
             </p>
           </li>
           <li>
             <h3>Numbers you can trust, every time.</h3>
             <p>
-              The AI reads your question, never your data — so it can&apos;t
-              invent a figure. The worst it can do is pick the wrong metric, and
-              you&apos;ll see that from its name. No silent errors buried in a
-              board pack.
+              The AI reads your question but our custom query engine runs the
+              query - the worst case is that it misunderstands you, and you
+              clarify in a follow up. No hallucinated answers.
             </p>
           </li>
           <li>
-            <h3>Locked to your permissions.</h3>
+            <h3>Locked down with granular permissions.</h3>
             <p>
-              Everyone sees exactly what they&apos;re cleared to see — and nothing
-              else. Restricted data stays invisible by design, not by policy.
+              Everyone sees exactly what they&apos;re cleared to see, and
+              nothing else. Users can't circumvent controls to trick the AI into
+              revealing info it shouldn't.
             </p>
           </li>
           <li>
             <h3>Your data never leaves your systems.</h3>
-            <p>The AI never touches it. Nothing goes offshore.</p>
+            <p>
+              The AI never sees your sensitive data, only your queries. Your
+              data never leaves your control.
+            </p>
           </li>
         </ul>
         <Figure
@@ -205,11 +284,11 @@ export default function App() {
       </Page>
 
       {/* ============================================================
-          PAGE 3 · DASHBOARDS  (general)
+          PAGE 3 · DASHBOARDS  
           Build the dashboard yourself, no IT required
           ============================================================ */}
       <Page n={3} total={TOTAL} label="Dashboards">
-        <div className="eyebrow">Build it yourself</div>
+        <div className="eyebrow">Curate your favourites</div>
         <h2 className="section">The dashboard you keep asking for</h2>
         <p className="lead">No IT ticket. No report developer. No wait.</p>
         <div className="divider" />
@@ -228,8 +307,8 @@ export default function App() {
           <li>
             <h3>Frees your analysts for the real work.</h3>
             <p>
-              Less time pulling routine numbers, more time on analysis that moves
-              the needle.
+              Less time pulling routine numbers, more time on analysis that
+              moves the needle.
             </p>
           </li>
           <li>
@@ -245,14 +324,14 @@ export default function App() {
       </Page>
 
       {/* ============================================================
-          PAGE 4 · BUILT ON EXISTING WORK  (TW-focused)
+          PAGE 4 · BUILT ON EXISTING WORK 
           Resolution8, no new data project, local, support
           ============================================================ */}
       <Page n={4} total={TOTAL} label="Head start">
-        <div className="eyebrow">A head start, not a rebuild</div>
+        <div className="eyebrow">A running start</div>
         <h2 className="section">Built on the work you&apos;ve already done</h2>
         <p className="lead">
-          Resolution8 have already cracked the hard part — getting clean,
+          Resolution8 have already cracked the hard part: getting clean,
           reliable data out of your systems and modelling it. Compass sits
           straight on top.
         </p>
@@ -269,8 +348,8 @@ export default function App() {
           <div className="card">
             <h3>No new data project</h3>
             <p>
-              We reuse Resolution8&apos;s existing model and metric definitions —
-              a small lift, not a fresh engagement.
+              We reuse Resolution8&apos;s existing model and metric definitions
+              — a small lift, not a fresh engagement.
             </p>
           </div>
           <div className="card">
@@ -326,7 +405,7 @@ export default function App() {
       </Page>
 
       {/* ============================================================
-          PAGE 5 · PRICING  (TW-focused)
+          PAGE 5 · PRICING 
           ============================================================ */}
       <Page n={5} total={TOTAL} label="Pricing">
         <div className="eyebrow">Investment</div>
@@ -351,13 +430,14 @@ export default function App() {
               <span className="check">
                 <Icon.Check />
               </span>
-              Unlimited partners &amp; users — the whole firm
+              Unlimited partners &amp; users — effortless answers for the whole
+              firm
             </li>
             <li>
               <span className="check">
                 <Icon.Check />
               </span>
-              Chat, dashboards &amp; saved answers
+              Chat &amp; personalised dashboards
             </li>
             <li>
               <span className="check">
@@ -369,7 +449,7 @@ export default function App() {
               <span className="check">
                 <Icon.Check />
               </span>
-              Hosted on your systems — nothing offshore
+              Hosted in your environment for maximum security
             </li>
           </ul>
         </div>
@@ -398,15 +478,15 @@ export default function App() {
             </span>
             <h3>Try before you commit</h3>
             <p>
-              Start on your own data with a trial, so the value is proven
-              before anything&apos;s locked in.
+              Start on your own data with a trial, so the value is proven before
+              anything&apos;s locked in.
             </p>
           </div>
         </div>
 
         <div className="divider" />
         <p className="note">
-          An indicative figure for a firm your size — we&apos;ll shape the final
+          Our standard pricing for a firm your size — we&apos;ll shape the final
           package with you and Resolution8 to match how you want to roll it out.
         </p>
         <div className="footer">
@@ -416,14 +496,14 @@ export default function App() {
       </Page>
 
       {/* ============================================================
-          PAGE 6 · THE TEAM  (general)
+          PAGE 6 · THE TEAM 
           ============================================================ */}
       <Page n={6} total={TOTAL} label="Team">
         <div className="eyebrow">Who&apos;s behind it</div>
         <h2 className="section">The team behind Compass</h2>
         <p className="lead">
-          A small, senior studio in Hamilton — the people you talk to are the
-          people who build it.
+          A boutique development studio in Hamilton — the people you talk to are
+          the people who build it.
         </p>
         <div className="divider" />
         <div className="two-col team">
@@ -433,7 +513,11 @@ export default function App() {
             <p className="role">Founder &amp; Director</p>
           </div>
           <div className="member">
-            <img className="avatar" src="/team/jesse.png" alt="Jesse O'Connor" />
+            <img
+              className="avatar"
+              src="/team/jesse.png"
+              alt="Jesse O'Connor"
+            />
             <h3>Jesse O&apos;Connor</h3>
             <p className="role">Full-Stack Developer</p>
           </div>
@@ -443,7 +527,11 @@ export default function App() {
             <p className="role">Full-Stack Developer</p>
           </div>
           <div className="member">
-            <img className="avatar" src="/team/isaiah.png" alt="Isaiah Foulidis" />
+            <img
+              className="avatar"
+              src="/team/isaiah.png"
+              alt="Isaiah Foulidis"
+            />
             <h3>Isaiah Foulidis</h3>
             <p className="role">Data Pipeline Specialist</p>
           </div>
@@ -451,10 +539,10 @@ export default function App() {
         <div className="divider" />
         <div className="two-col">
           <div className="card">
-            <h3>Senior by design</h3>
+            <h3>Only A players</h3>
             <p>
-              Bearing, est. 2022. A hand-picked team of seven — no juniors
-              learning on your dime.
+              We’ve shipped projects like yours many times over, and we don’t
+              have juniors learning on your dime.
             </p>
           </div>
           <div className="card">
@@ -470,10 +558,12 @@ export default function App() {
           </div>
           <div className="card">
             <h3>Right down the road</h3>
-            <p>Hamilton-based, same team end to end, references you can call.</p>
+            <p>
+              Hamilton-based, same team end to end, references you can call.
+            </p>
           </div>
         </div>
-        <p className="note">
+        <p className="note mt-8">
           Meet the team at{" "}
           <a className="link" href="https://usebearing.com/about-us">
             usebearing.com/about-us
@@ -487,16 +577,16 @@ export default function App() {
       </Page>
 
       {/* ============================================================
-          PAGE 7 · INTEGRATIONS & AUTOMATION  (general / TW)
+          PAGE 7 · INTEGRATIONS & AUTOMATION 
           ============================================================ */}
       <Page n={7} total={TOTAL} label="Automation">
-        <div className="eyebrow">Beyond answering questions</div>
+        <div className="eyebrow">Your data hub</div>
         <h2 className="section">More than dashboards</h2>
         <p className="lead">
-          The same engine that answers your questions can move your data for you.
-          Making the systems underneath a firm run without the manual overhead is
-          Bearing&apos;s core business — connecting the tools you already pay for
-          so data flows where it needs to, on its own.
+          The same query engine that answers your questions can move your data
+          for you. Wiring your systems to run without the manual overhead is
+          Bearing&apos;s sweet spot — connecting the tools you already use so
+          data flows where it needs to, on its own.
         </p>
         <div className="divider" />
         <ul className="detail-rows">
