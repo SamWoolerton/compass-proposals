@@ -454,8 +454,7 @@ export default function App() {
               <span className="check">
                 <Icon.Check />
               </span>
-              Unlimited partners &amp; users — effortless answers for the whole
-              firm
+              Unlimited partners &amp; users with bespoke security controls.
             </li>
             <li>
               <span className="check">
