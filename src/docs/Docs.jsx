@@ -73,7 +73,7 @@ export default function Docs() {
       else window.history.pushState({}, "", url);
     }
     firstSync.current = false;
-    document.title = `${doc.title} · Bearing Docs`;
+    document.title = `Bearing Docs · ${doc.title}`;
   }, [doc]);
 
   useEffect(() => {

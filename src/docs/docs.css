@@ -289,19 +289,23 @@ body {
   filter: brightness(1.06);
 }
 
-/* ---- PRINT: browser paginates the flow; header/footer repeat ----
-   @page reserves the top/bottom bands; the running header + footer are
-   position:fixed so Chromium repaints them on every sheet inside those bands.
-   (Verify the band offsets in print preview.) */
+/* ---- PRINT: the browser paginates the free-flowing content ----
+   @page margin is 0 for two reasons: it suppresses Chrome's own header/footer
+   (the "localhost… / page N" chrome), and it lets the root beige background
+   fill the sheet edge-to-edge. We paint our own page margins with padding on
+   the header / body / footer, which print once in normal flow (these SOPs are
+   ~1 page). If a doc ever spans several pages we can revisit a repeating header
+   via a thead/tfoot table — position:fixed can't reserve its own band here. */
 @page {
   size: A4;
-  margin: 22mm var(--print-margin-x) 18mm;
+  margin: 0;
 }
 
 @media print {
+  /* Root background propagates to the page canvas, so every sheet is beige. */
   html,
   body {
-    background: #fff;
+    background: var(--paper);
   }
   .no-print {
     display: none !important;
@@ -314,24 +318,16 @@ body {
     border-radius: 0;
     box-shadow: none;
   }
-  /* @page margins already inset the content, so drop the on-screen padding. */
-  .doc-body {
-    padding: 0;
-  }
 
+  /* @page margin is 0, so bake the page margins into padding here. */
   .doc-running {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 9mm var(--print-margin-x) 4mm;
+    padding: 18mm var(--print-margin-x) 5mm;
+  }
+  .doc-body {
+    padding: 8mm var(--print-margin-x);
   }
   .doc-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 4mm var(--print-margin-x) 8mm;
+    padding: 5mm var(--print-margin-x) 16mm;
   }
 
   /* Don't strand headings or split a step across a page break. */
