@@ -1,0 +1,130 @@
+import { useEffect, useMemo, useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import "./docs.css";
+
+// Native browser print → "Save as PDF". @page (in docs.css) sets A4 + margins,
+// and the browser paginates the free-flowing content for us.
+function exportPdf() {
+  window.print();
+}
+
+// Pull the leading "# Title" out of the markdown for the document heading and
+// for a stable, shareable slug. Falls back to the filename if there's no H1.
+function deriveTitle(raw, path) {
+  const m = raw.match(/^\s*#\s+(.+?)\s*$/m);
+  if (m) return m[1].trim();
+  return path.split("/").pop().replace(/\.md$/, "");
+}
+
+function slugify(title) {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+// Every .md in /docs becomes a selectable document. import.meta.glob copes with
+// the spaces + curly quotes in the filenames that a plain import can't.
+const modules = import.meta.glob("../../docs/*.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+});
+
+const DOCS = Object.entries(modules)
+  .map(([path, raw]) => {
+    const title = deriveTitle(raw, path);
+    return { slug: slugify(title), title, raw };
+  })
+  .sort((a, b) => a.title.localeCompare(b.title));
+
+// External links open in a new tab; nothing here is same-app navigation.
+const mdComponents = {
+  a: ({ href, children, ...props }) => (
+    <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
+      {children}
+    </a>
+  ),
+};
+
+export default function Docs() {
+  const [slug, setSlug] = useState(() => {
+    const fromUrl = new URLSearchParams(window.location.search).get("doc");
+    return DOCS.some((d) => d.slug === fromUrl) ? fromUrl : DOCS[0]?.slug;
+  });
+
+  const doc = useMemo(
+    () => DOCS.find((d) => d.slug === slug) ?? DOCS[0],
+    [slug],
+  );
+
+  // Keep the URL (?doc=…) in sync so a selection is shareable + survives reload,
+  // and support Back/Forward between docs — all without a router. The first sync
+  // replaces (no junk history entry); later user switches push a new entry.
+  const firstSync = useRef(true);
+  useEffect(() => {
+    if (!doc) return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("doc") !== doc.slug) {
+      params.set("doc", doc.slug);
+      const url = `?${params}`;
+      if (firstSync.current) window.history.replaceState({}, "", url);
+      else window.history.pushState({}, "", url);
+    }
+    firstSync.current = false;
+    document.title = `${doc.title} · Bearing Docs`;
+  }, [doc]);
+
+  useEffect(() => {
+    const onPop = () => {
+      const fromUrl = new URLSearchParams(window.location.search).get("doc");
+      if (DOCS.some((d) => d.slug === fromUrl)) setSlug(fromUrl);
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+
+  if (!doc) {
+    return <div className="doc-empty">No documents found in /docs.</div>;
+  }
+
+  return (
+    <>
+      {/* Toolbar + picker are .no-print, so they never reach the PDF. */}
+      <div className="toolbar no-print">
+        <label className="doc-picker">
+          <span className="doc-picker-label">Doc</span>
+          <select value={doc.slug} onChange={(e) => setSlug(e.target.value)}>
+            {DOCS.map((d) => (
+              <option key={d.slug} value={d.slug}>
+                {d.title}
+              </option>
+            ))}
+          </select>
+        </label>
+        <button onClick={exportPdf}>Export to PDF</button>
+      </div>
+
+      {/* One continuous beige sheet on screen. In print the header + footer
+          detach to position:fixed and repeat on every A4 page (see docs.css). */}
+      <div className="doc-page">
+        <header className="doc-running">
+          <span className="wordmark">Bearing</span>
+          <span className="kicker">Documentation</span>
+        </header>
+
+        <article className="doc-body">
+          <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>
+            {doc.raw}
+          </ReactMarkdown>
+        </article>
+
+        <footer className="doc-footer">
+          <span>Bearing · usebearing.com</span>
+          <span>{doc.title}</span>
+        </footer>
+      </div>
+    </>
+  );
+}

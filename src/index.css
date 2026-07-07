@@ -11,14 +11,14 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
 
-/* Bridge Bearing brand tokens (defined in paged.css :root) into Tailwind's
+/* Bridge Bearing brand tokens (defined in brand.css :root) into Tailwind's
    theme so they generate real utilities, e.g. bg-green-900, text-ink,
    text-muted, border-hair, font-display.
 
-   Colors reference the paged.css vars directly (different namespace, single
+   Colors reference the brand.css vars directly (different namespace, single
    source of truth). Fonts are inlined: Tailwind's font utilities share the
-   --font-* namespace with paged.css, so referencing var(--font-sans) would be
-   self-referential. Keep these stacks in sync with paged.css. */
+   --font-* namespace with brand.css, so referencing var(--font-sans) would be
+   self-referential. Keep these stacks in sync with brand.css. */
 @theme {
   /* brand palette */
   --color-green-900: var(--green-900);

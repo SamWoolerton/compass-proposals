@@ -1,0 +1,359 @@
+/* ============================================================
+   docs.css — layout for the free-flowing document view.
+
+   Unlike paged.css (one fixed .page == one sheet), this lets content
+   flow and hands pagination to the browser's print engine. Brand colour
+   + type tokens come from brand.css; this file owns the doc shell,
+   markdown typography, and the print rules.
+   ============================================================ */
+@import "../brand.css";
+
+:root {
+  --doc-w: 210mm; /* on-screen sheet width — A4 */
+  --doc-pad-x: 22mm; /* horizontal content margin (screen) */
+  --print-margin-x: 20mm; /* horizontal page margin (print, via @page) */
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--text);
+  font-size: 10.5pt;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- SCREEN: one beige sheet floating on the dark "desk" ---- */
+@media screen {
+  body {
+    background: var(--backdrop);
+    padding: 28px 16px;
+  }
+  .doc-page {
+    width: min(var(--doc-w), 100%);
+    margin: 0 auto;
+    background: var(--paper);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.38);
+  }
+}
+
+/* ---- Running header / footer (brand chrome) ---- */
+.doc-running {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 13mm var(--doc-pad-x) 5mm;
+  border-bottom: 1px solid var(--hair);
+}
+.doc-running .wordmark {
+  font-family: var(--font-display);
+  font-size: 15pt;
+  font-weight: 500;
+  color: var(--heading);
+}
+.doc-running .kicker {
+  font-family: var(--font-mono);
+  font-size: 7.5pt;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.doc-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 5mm var(--doc-pad-x) 12mm;
+  border-top: 1px solid var(--hair);
+  font-family: var(--font-mono);
+  font-size: 7.5pt;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* ---- Document body typography ---- */
+.doc-body {
+  padding: 9mm var(--doc-pad-x) 11mm;
+}
+.doc-body h1,
+.doc-body h2,
+.doc-body h3 {
+  font-family: var(--font-display);
+  color: var(--heading);
+  font-weight: 500;
+  line-height: 1.15;
+}
+.doc-body h1 {
+  font-size: 25pt;
+  letter-spacing: -0.01em;
+  margin: 0 0 6mm;
+}
+/* First heading reads as the document title, with a rule under it. */
+.doc-body > h1:first-child {
+  padding-bottom: 5mm;
+  border-bottom: 1px solid var(--hair);
+}
+.doc-body h2 {
+  font-size: 16pt;
+  margin: 8mm 0 3mm;
+}
+.doc-body h3 {
+  font-size: 13pt;
+  margin: 6mm 0 2mm;
+}
+.doc-body p {
+  margin: 0 0 3.2mm;
+}
+.doc-body a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: rgb(31 107 69 / 0.4);
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere; /* long URLs shouldn't push the layout wide */
+}
+.doc-body a:hover {
+  color: var(--green-900);
+}
+/* Bold is used in the SOPs for UI labels (**Name**, **Register**) — tint it
+   brand green so those references read as interface elements. */
+.doc-body strong {
+  font-weight: 600;
+  color: var(--heading);
+}
+.doc-body em {
+  font-style: italic;
+}
+.doc-body code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--green-700-12);
+  color: var(--green-900);
+  padding: 1px 5px;
+  border-radius: 4px;
+  overflow-wrap: anywhere;
+}
+.doc-body a code {
+  color: inherit;
+  background: rgb(31 107 69 / 0.14);
+}
+.doc-body pre {
+  background: var(--beige-100);
+  border: 1px solid var(--hair);
+  border-radius: 6px;
+  padding: 10px 14px;
+  overflow-x: auto;
+  margin: 0 0 4mm;
+}
+.doc-body pre code {
+  background: none;
+  padding: 0;
+  font-size: 9.5pt;
+  color: var(--ink);
+}
+
+/* ---- Lists — the SOPs nest ordered → bullets up to 3 deep ---- */
+.doc-body ol,
+.doc-body ul {
+  margin: 0 0 3.2mm;
+  padding-left: 6.5mm;
+}
+.doc-body li {
+  margin: 1.6mm 0;
+  line-height: 1.55;
+}
+/* Nested lists tuck in tighter and lose the outer bottom gap. */
+.doc-body li > ol,
+.doc-body li > ul {
+  margin: 1.6mm 0 0;
+}
+.doc-body ol {
+  list-style: decimal;
+}
+.doc-body ul {
+  list-style: disc;
+}
+.doc-body li li {
+  /* second level */
+}
+.doc-body ul ul {
+  list-style: circle;
+}
+/* Green markers give the steps a branded rhythm. */
+.doc-body li::marker {
+  color: var(--accent);
+}
+
+.doc-body hr {
+  border: none;
+  height: 1px;
+  background: var(--hair);
+  margin: 6mm 0;
+}
+.doc-body blockquote {
+  margin: 0 0 4mm;
+  padding-left: 5mm;
+  border-left: 2px solid var(--accent);
+  color: var(--muted);
+}
+
+/* Tables aren't in the current SOPs, but keep them on-brand for when they are. */
+.doc-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 4mm;
+  font-size: 10pt;
+}
+.doc-body th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 7.5pt;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0 10px 6px 0;
+  border-bottom: 2px solid var(--green-900);
+}
+.doc-body td {
+  padding: 8px 10px 8px 0;
+  border-bottom: 1px solid var(--hair);
+  vertical-align: top;
+}
+
+.doc-empty {
+  font-family: var(--font-sans);
+  color: var(--muted);
+  padding: 40px;
+  text-align: center;
+}
+
+/* ---- Toolbar (screen only) — doc picker + export ---- */
+.toolbar {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 50;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.doc-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(244, 241, 234, 0.14);
+  backdrop-filter: blur(6px);
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+.doc-picker-label {
+  font-family: var(--font-mono);
+  font-size: 7.5pt;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--beige-50);
+}
+.doc-picker select {
+  font-family: var(--font-sans);
+  font-size: 10pt;
+  color: var(--beige-50);
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  max-width: 52mm;
+}
+.doc-picker select option {
+  color: var(--ink); /* dropdown list renders on the OS surface */
+}
+.toolbar button {
+  font-family: var(--font-sans);
+  font-size: 10pt;
+  font-weight: 500;
+  color: var(--green-900);
+  background: var(--mint-400);
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+.toolbar button:hover {
+  filter: brightness(1.06);
+}
+
+/* ---- PRINT: browser paginates the flow; header/footer repeat ----
+   @page reserves the top/bottom bands; the running header + footer are
+   position:fixed so Chromium repaints them on every sheet inside those bands.
+   (Verify the band offsets in print preview.) */
+@page {
+  size: A4;
+  margin: 22mm var(--print-margin-x) 18mm;
+}
+
+@media print {
+  html,
+  body {
+    background: #fff;
+  }
+  .no-print {
+    display: none !important;
+  }
+
+  .doc-page {
+    width: auto;
+    margin: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  /* @page margins already inset the content, so drop the on-screen padding. */
+  .doc-body {
+    padding: 0;
+  }
+
+  .doc-running {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 9mm var(--print-margin-x) 4mm;
+  }
+  .doc-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 4mm var(--print-margin-x) 8mm;
+  }
+
+  /* Don't strand headings or split a step across a page break. */
+  .doc-body h1,
+  .doc-body h2,
+  .doc-body h3 {
+    break-after: avoid;
+    break-inside: avoid;
+  }
+  .doc-body li,
+  .doc-body pre,
+  .doc-body table {
+    break-inside: avoid;
+  }
+  .doc-body p {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Keep brand tints (code backgrounds, markers, hairlines) in the PDF. */
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

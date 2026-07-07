@@ -1,0 +1,39 @@
+/* ============================================================
+   brand.css — Bearing brand tokens, shared by every document in
+   this repo (the proposal, the docs, and anything added later).
+
+   This is the single source of truth for colour + type. Document-
+   specific stylesheets (paged.css for the proposal, docs.css for the
+   docs) @import this first, then layer their own layout on top.
+
+   Fonts are loaded via Fontsource in each entry's main.jsx
+   (Lora / Geist / JetBrains Mono).
+   ============================================================ */
+
+:root {
+  /* ---- Bearing brand tokens (usebearing.com) ---- */
+  --green-900: #0e2d1e; /* primary dark green — hero canvas */
+  --green-800: #1b4a35; /* elevated green surface */
+  --green-700: #1f6b45; /* medium green — borders, accents on light */
+  --green-700-12: rgb(31 107 69 / 0.12); /* 12% tint — subtle fills/hovers */
+  --mint-400: #4dd49b; /* bright mint — one accent, used sparingly */
+  --beige-50: #f4f1ea; /* primary ivory — surfaces / text on green */
+  --beige-100: #f5f3ed; /* secondary lighter beige */
+  --beige-50-66: rgb(244 241 234 / 0.66); /* muted ivory on dark */
+  --ink: #32292f; /* near-black plum — primary text on light */
+
+  --font-display: "Lora", Georgia, serif; /* headings, serif labels */
+  --font-sans: "Geist Variable", "Geist", system-ui, sans-serif; /* body, UI */
+  --font-mono:
+    "JetBrains Mono", ui-monospace, monospace; /* annotations, spec labels */
+
+  /* ---- Semantic roles used by the layouts ---- */
+  --paper: var(--beige-50); /* content-page surface */
+  --canvas: var(--green-900); /* dark hero canvas */
+  --text: var(--ink); /* body text on light */
+  --heading: var(--green-900); /* serif headings on light */
+  --muted: rgb(50 41 47 / 0.55); /* captions, rails on light */
+  --accent: var(--green-700); /* accent for text on light (mint is invisible on beige) */
+  --hair: rgb(50 41 47 / 0.14); /* hairline rules on light */
+  --backdrop: #081a11; /* the "desk" behind pages, screen only */
+}
