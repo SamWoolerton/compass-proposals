@@ -47,6 +47,27 @@ body {
   }
 }
 
+/* ---- The sheet is a one-column table so the header (<thead>) and footer
+   (<tfoot>) reprint on every page in print; <tbody> holds the flowing body.
+   Direct-child selectors keep these off any markdown tables inside .doc-body. */
+.doc-sheet {
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+}
+.doc-sheet > thead > tr > td,
+.doc-sheet > tfoot > tr > td,
+.doc-sheet > tbody > tr > td {
+  padding: 0;
+  vertical-align: top;
+}
+/* Gap below the divider lives on the <thead> cell so it repeats on every page
+   in print (body padding would only apply to the first page). Matched to the
+   Bearing→divider gap above (.doc-running padding-bottom) for symmetry. */
+.doc-sheet > thead > tr > td {
+  padding-bottom: 5mm;
+}
+
 /* ---- Running header / footer (brand chrome) ---- */
 .doc-running {
   display: flex;
@@ -81,7 +102,7 @@ body {
 
 /* ---- Document body typography ---- */
 .doc-body {
-  padding: 9mm var(--doc-pad-x) 11mm;
+  padding: 0 var(--doc-pad-x) 11mm;
 }
 .doc-body h1,
 .doc-body h2,
@@ -292,10 +313,10 @@ body {
 /* ---- PRINT: the browser paginates the free-flowing content ----
    @page margin is 0 for two reasons: it suppresses Chrome's own header/footer
    (the "localhost… / page N" chrome), and it lets the root beige background
-   fill the sheet edge-to-edge. We paint our own page margins with padding on
-   the header / body / footer, which print once in normal flow (these SOPs are
-   ~1 page). If a doc ever spans several pages we can revisit a repeating header
-   via a thead/tfoot table — position:fixed can't reserve its own band here. */
+   fill the sheet edge-to-edge. The page margins are baked into the padding on
+   the <thead>/<tfoot>/<tbody> cells, which — because they're table row-groups —
+   reprint on every page, so multi-page docs get the header + footer on each
+   sheet with their space properly reserved (no overlap). */
 @page {
   size: A4;
   margin: 0;
@@ -319,15 +340,36 @@ body {
     box-shadow: none;
   }
 
-  /* @page margin is 0, so bake the page margins into padding here. */
+  /* Repeat the header at the top and footer at the bottom of every page. */
+  .doc-sheet > thead {
+    display: table-header-group;
+  }
+  .doc-sheet > tfoot {
+    display: table-footer-group;
+  }
+
+  /* @page margin is 0, so bake the page margins into padding here. These
+     repeat with the header/footer, giving consistent margins on every page. */
   .doc-running {
-    padding: 18mm var(--print-margin-x) 5mm;
+    padding: 13mm var(--print-margin-x) 5mm;
   }
   .doc-body {
-    padding: 8mm var(--print-margin-x);
+    padding: 0 var(--print-margin-x) 7mm;
   }
   .doc-footer {
-    padding: 5mm var(--print-margin-x) 16mm;
+    padding: 5mm var(--print-margin-x) 13mm;
+  }
+
+  /* Fill the page height so the content cell stretches and the footer is pushed
+     to the bottom of the last page (table-footer-group otherwise leaves it
+     right under the content). vertical-align:top keeps the body under the
+     header. Note: only pins on the last page for single-page-height content;
+     if a doc overflows, the final page's footer follows the content again. */
+  html,
+  body,
+  .doc-page,
+  .doc-sheet {
+    height: 100%;
   }
 
   /* Don't strand headings or split a step across a page break. */

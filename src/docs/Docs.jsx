@@ -106,24 +106,47 @@ export default function Docs() {
         <button onClick={exportPdf}>Export to PDF</button>
       </div>
 
-      {/* One continuous beige sheet on screen. In print the header + footer
-          detach to position:fixed and repeat on every A4 page (see docs.css). */}
+      {/* One beige sheet on screen. The table structure is what makes the
+          header/footer repeat on every A4 page in print: browsers natively
+          reprint <thead>/<tfoot> across page breaks and reserve their space,
+          which position:fixed can't do (see docs.css @media print). */}
       <div className="doc-page">
-        <header className="doc-running">
-          <span className="wordmark">Bearing</span>
-          <span className="kicker">Documentation</span>
-        </header>
-
-        <article className="doc-body">
-          <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>
-            {doc.raw}
-          </ReactMarkdown>
-        </article>
-
-        <footer className="doc-footer">
-          <span>Bearing · usebearing.com</span>
-          <span>{doc.title}</span>
-        </footer>
+        <table className="doc-sheet">
+          <thead>
+            <tr>
+              <td>
+                <div className="doc-running">
+                  <span className="wordmark">Bearing</span>
+                  <span className="kicker">Documentation</span>
+                </div>
+              </td>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <td>
+                <div className="doc-footer">
+                  <span>Bearing · usebearing.com</span>
+                  <span>{doc.title}</span>
+                </div>
+              </td>
+            </tr>
+          </tfoot>
+          <tbody>
+            <tr>
+              <td>
+                <article className="doc-body">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={mdComponents}
+                  >
+                    {doc.raw}
+                  </ReactMarkdown>
+                </article>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </>
   );
