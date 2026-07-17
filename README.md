@@ -14,6 +14,8 @@ npm run dev
 Open the URL, hit **Export to PDF**, and in the print dialog choose
 **Save as PDF** as the destination.
 
+**Important note**: Chrome's `Save to PDF` renders with selectable text; the MS print to PDF option is just an image. Use the Chrome version as it's way better UX to be able to copy text and links.
+
 ## How the "exact layout" works
 
 All the machinery is in `src/paged.css`. Four ideas do the work:
@@ -21,13 +23,13 @@ All the machinery is in `src/paged.css`. Four ideas do the work:
 1. **Fixed-size sheets in physical units.** Each `.page` is `210mm × 297mm`
    (A4). Authoring in `mm`/`pt` — not `px` — is what makes the screen and the
    paper agree.
-2. **`@page { size: A4; margin: 0 }`.** The browser adds *zero* margin of its
+2. **`@page { size: A4; margin: 0 }`.** The browser adds _zero_ margin of its
    own; all whitespace is padding inside `.page`. This is the single most common
    cause of a stray blank second page, so it must be `0`.
 3. **`break-after: page` on each `.page`.** Forces exactly one sheet per page
    element. `:last-of-type` gets `break-after: auto` so there's no trailing blank.
 4. **`overflow: hidden` on `.page`.** Content that runs past the sheet is
-   *clipped*, never reflowed onto a new page. This is the tradeoff that
+   _clipped_, never reflowed onto a new page. This is the tradeoff that
    guarantees WYSIWYG: **you** decide where content breaks by splitting it across
    `<Page>` components.
 
@@ -38,7 +40,7 @@ All the machinery is in `src/paged.css`. Four ideas do the work:
   Margins → **Default** (or None), Scale → **100 / Default**, and **Background
   graphics → ON** if you use coloured fills (this template does).
 - **Background colours dropping out.** Needs `print-color-adjust: exact`
-  (already set) *and* the "Background graphics" checkbox above. CSS alone can't
+  (already set) _and_ the "Background graphics" checkbox above. CSS alone can't
   guarantee it.
 - **Fonts shifting line breaks.** Load explicit web fonts (this uses Google
   Fonts) so the client's system-font substitution doesn't reflow your lines.
@@ -58,7 +60,7 @@ All the machinery is in `src/paged.css`. Four ideas do the work:
 
 ## Want automatic reflow instead?
 
-If you later want content to *flow* across as many pages as it needs while
+If you later want content to _flow_ across as many pages as it needs while
 keeping print fidelity (page numbers, running headers, footnotes), look at
 [**Paged.js**](https://pagedjs.org/). It's heavier, but it's the right tool once
 you stop hand-placing every page. This scaffold deliberately keeps pagination
