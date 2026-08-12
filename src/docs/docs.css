@@ -52,6 +52,7 @@ body {
    Direct-child selectors keep these off any markdown tables inside .doc-body. */
 .doc-sheet {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   background: transparent;
 }
@@ -170,7 +171,9 @@ body {
   border: 1px solid var(--hair);
   border-radius: 6px;
   padding: 10px 14px;
-  overflow-x: auto;
+  max-width: 100%;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   margin: 0 0 4mm;
 }
 .doc-body pre code {
@@ -287,9 +290,14 @@ body {
 /* Tables aren't in the current SOPs, but keep them on-brand for when they are. */
 .doc-body table {
   width: 100%;
+  max-width: 100%;
   border-collapse: collapse;
   margin: 0 0 4mm;
   font-size: 10pt;
+}
+.doc-body th,
+.doc-body td {
+  overflow-wrap: anywhere;
 }
 .doc-body th {
   text-align: left;
