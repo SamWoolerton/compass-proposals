@@ -384,6 +384,19 @@ body {
   .doc-body table {
     break-inside: avoid;
   }
+
+  /* We tag these so that they only apply ot sufficiently long tables. */
+  /* We don't want short tables to break across pages but for a long table that's better than having a lot of whitespace before the next page. */
+  .doc-body table.is-long {
+    break-inside: auto;
+  }
+  .doc-body table.is-long thead {
+    display: table-header-group;
+    break-after: avoid;
+  }
+  .doc-body table.is-long tr {
+    break-inside: avoid;
+  }
   .doc-body p {
     orphans: 3;
     widows: 3;

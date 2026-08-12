@@ -39,12 +39,37 @@ const DOCS = Object.entries(modules)
   })
   .sort((a, b) => a.title.localeCompare(b.title));
 
+const LONG_TABLE_ROWS = 8;
+
+function countRows(node) {
+  let rows = 0;
+  const walk = (el) => {
+    for (const child of el.children ?? []) {
+      if (child.type !== "element") continue;
+
+      if (child.tagName === "tr") rows += 1;
+      else walk(child);
+    }
+  };
+  walk(node);
+  return rows;
+}
+
 // External links open in a new tab; nothing here is same-app navigation.
 const mdComponents = {
   a: ({ href, children, ...props }) => (
     <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
       {children}
     </a>
+  ),
+  table: ({ node, children, ...props }) => (
+    <table
+      // See the notes in the CSS file.
+      className={countRows(node) > LONG_TABLE_ROWS ? "is-long" : undefined}
+      {...props}
+    >
+      {children}
+    </table>
   ),
 };
 
