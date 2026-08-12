@@ -180,6 +180,65 @@ body {
   color: var(--ink);
 }
 
+/* ---- Syntax highlighting (rehype-highlight → highlight.js classes) ----
+   Everything not listed inherits --ink. */
+.doc-body .hljs-comment,
+.doc-body .hljs-quote {
+  color: var(--muted);
+  font-style: italic;
+}
+/* Language scaffolding: keywords, operators, `null`/`true`, `import`/`await`. */
+.doc-body .hljs-keyword,
+.doc-body .hljs-literal,
+.doc-body .hljs-built_in,
+.doc-body .hljs-symbol,
+.doc-body .hljs-selector-tag,
+.doc-body .hljs-tag,
+.doc-body .hljs-meta {
+  color: var(--green-700);
+}
+/* Names the reader is meant to scan for: functions, classes, TS types. */
+.doc-body .hljs-title,
+.doc-body .hljs-title.class_,
+.doc-body .hljs-title.function_,
+.doc-body .hljs-type,
+.doc-body .hljs-section,
+.doc-body .hljs-name {
+  color: var(--green-900);
+  font-weight: 500;
+}
+/* Data: strings and template contents. */
+.doc-body .hljs-string,
+.doc-body .hljs-char.escape_,
+.doc-body .hljs-regexp,
+.doc-body .hljs-template-variable,
+.doc-body .hljs-addition {
+  color: #8a5a12;
+}
+/* Numbers and constants — warmer still, so they pop out of a string. */
+.doc-body .hljs-number,
+.doc-body .hljs-variable.constant_,
+.doc-body .hljs-deletion {
+  color: #9c452a;
+}
+/* Object keys, JSX/HTML attributes, and bound variables stay near body ink. */
+.doc-body .hljs-attr,
+.doc-body .hljs-attribute,
+.doc-body .hljs-property,
+.doc-body .hljs-variable,
+.doc-body .hljs-params {
+  color: rgb(50 41 47 / 0.82);
+}
+.doc-body .hljs-variable {
+  font-weight: 600;
+}
+.doc-body .hljs-emphasis {
+  font-style: italic;
+}
+.doc-body .hljs-strong {
+  font-weight: 600;
+}
+
 /* ---- Lists — the SOPs nest ordered → bullets up to 3 deep ---- */
 .doc-body ol,
 .doc-body ul {

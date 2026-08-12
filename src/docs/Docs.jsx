@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 import "./docs.css";
 
@@ -56,6 +57,11 @@ function countRows(node) {
 }
 
 // External links open in a new tab; nothing here is same-app navigation.
+const rehypePlugins = [
+  // Highlighting for code blocks
+  [rehypeHighlight, { detect: false, ignoreMissing: true }],
+];
+
 const mdComponents = {
   a: ({ href, children, ...props }) => (
     <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
@@ -163,6 +169,7 @@ export default function Docs() {
                 <article className="doc-body">
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
+                    rehypePlugins={rehypePlugins}
                     components={mdComponents}
                   >
                     {doc.raw}
