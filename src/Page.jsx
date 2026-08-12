@@ -11,14 +11,14 @@ export default function Page({ n, total, label, children }) {
     <section className="page">
       {label && (
         <div className="rail">
-          <span className="num">{String(n).padStart(2, "0")}</span>
+          <span className="num">{String(n).padStart(2, '0')}</span>
           <div className="tick" />
           <span className="label">{label}</span>
           <div className="tick" />
-          <span className="num">/{String(total).padStart(2, "0")}</span>
+          <span className="num">/{String(total).padStart(2, '0')}</span>
         </div>
       )}
       {children}
     </section>
-  );
+  )
 }

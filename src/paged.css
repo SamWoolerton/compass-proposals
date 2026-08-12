@@ -5,7 +5,7 @@
    Brand colour + type tokens live in brand.css (shared across every
    document in this repo); this file owns page geometry + proposal layout.
    ============================================================ */
-@import "./brand.css";
+@import './brand.css';
 
 /* Fonts are loaded via Fontsource in main.jsx (Lora / Geist / JetBrains Mono).
    Install: @fontsource/lora  @fontsource-variable/geist  @fontsource/jetbrains-mono */

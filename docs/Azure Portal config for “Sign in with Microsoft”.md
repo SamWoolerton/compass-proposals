@@ -4,8 +4,8 @@
 2. Register the app:
    - **Name**: e.g. "Compass".
    - **Supported account types**: choose who can sign in:
-     - *Accounts in any organizational directory and personal Microsoft accounts* → leave `MICROSOFT_TENANT` unset (defaults to `common`).
-     - *Accounts in this organizational directory only* → restrict to your org; set `MICROSOFT_TENANT` to your **Directory (tenant) ID**.
+     - _Accounts in any organizational directory and personal Microsoft accounts_ → leave `MICROSOFT_TENANT` unset (defaults to `common`).
+     - _Accounts in this organizational directory only_ → restrict to your org; set `MICROSOFT_TENANT` to your **Directory (tenant) ID**.
    - **Redirect URI**: platform **Web**, value `<BASE_URL>/auth/callback/microsoft-entra-id`.
      - We need this to be set to this for now: [`http://localhost:5173/auth/callback/microsoft-entra-id`](http://localhost:5173/auth/callback/microsoft-entra-id)
      - Once the app goes live, we’ll also need to include the live app’s URL here too, like [`https://compassdemo.usebearing.com/auth/callback/microsoft-entra-id`](https://compassdemo.usebearing.com/auth/callback/microsoft-entra-id)

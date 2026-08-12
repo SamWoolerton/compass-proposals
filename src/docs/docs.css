@@ -6,7 +6,7 @@
    + type tokens come from brand.css; this file owns the doc shell,
    markdown typography, and the print rules.
    ============================================================ */
-@import "../brand.css";
+@import '../brand.css';
 
 :root {
   --doc-w: 210mm; /* on-screen sheet width — A4 */

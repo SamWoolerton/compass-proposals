@@ -1,10 +1,10 @@
-import Page from "./Page.jsx";
-import "./paged.css";
+import Page from './Page.jsx'
+import './paged.css'
 
 // The Export button. Native browser print → "Save as PDF" as the destination.
 // Because @page margin is 0 and each .page is exactly A4, the PDF is 1:1.
 function exportPdf() {
-  window.print();
+  window.print()
 }
 
 // Shared page footer. One definition so every sheet reads identically.
@@ -14,7 +14,7 @@ function Footer() {
       <span>Bearing · usebearing.com</span>
       <span>Proposal · Compass</span>
     </div>
-  );
+  )
 }
 
 // Placeholder for a screenshot/image that content will drop in later.
@@ -24,7 +24,7 @@ function Figure({ src, alt, caption }) {
       <img src={src} alt={alt} />
       {caption && <figcaption>{caption}</figcaption>}
     </figure>
-  );
+  )
 }
 
 // Line icons for the "More than dashboards" detail rows. 24×24, drawn with
@@ -169,9 +169,9 @@ const Icon = {
       <path d="M20 6L9 17l-5-5" />
     </svg>
   ),
-};
+}
 
-const TOTAL = 8;
+const TOTAL = 8
 
 export default function App() {
   return (
@@ -180,7 +180,7 @@ export default function App() {
       <div className="toolbar no-print">
         <button
           className="ghost"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
           Top
         </button>
@@ -590,7 +590,7 @@ export default function App() {
           </div>
         </div>
         <p className="note mt-8">
-          Meet the team at{" "}
+          Meet the team at{' '}
           <a className="link" href="https://usebearing.com/about-us">
             usebearing.com/about-us
           </a>
@@ -716,5 +716,5 @@ export default function App() {
         </div>
       </Page>
     </>
-  );
+  )
 }

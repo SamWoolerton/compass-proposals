@@ -22,10 +22,10 @@
   --beige-50-66: rgb(244 241 234 / 0.66); /* muted ivory on dark */
   --ink: #32292f; /* near-black plum — primary text on light */
 
-  --font-display: "Lora", Georgia, serif; /* headings, serif labels */
-  --font-sans: "Geist Variable", "Geist", system-ui, sans-serif; /* body, UI */
+  --font-display: 'Lora', Georgia, serif; /* headings, serif labels */
+  --font-sans: 'Geist Variable', 'Geist', system-ui, sans-serif; /* body, UI */
   --font-mono:
-    "JetBrains Mono", ui-monospace, monospace; /* annotations, spec labels */
+    'JetBrains Mono', ui-monospace, monospace; /* annotations, spec labels */
 
   /* ---- Semantic roles used by the layouts ---- */
   --paper: var(--beige-50); /* content-page surface */
@@ -33,7 +33,9 @@
   --text: var(--ink); /* body text on light */
   --heading: var(--green-900); /* serif headings on light */
   --muted: rgb(50 41 47 / 0.55); /* captions, rails on light */
-  --accent: var(--green-700); /* accent for text on light (mint is invisible on beige) */
+  --accent: var(
+    --green-700
+  ); /* accent for text on light (mint is invisible on beige) */
   --hair: rgb(50 41 47 / 0.14); /* hairline rules on light */
   --backdrop: #081a11; /* the "desk" behind pages, screen only */
 }

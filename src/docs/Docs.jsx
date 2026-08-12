@@ -1,66 +1,66 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import ReactMarkdown from "react-markdown";
-import rehypeHighlight from "rehype-highlight";
-import remarkGfm from "remark-gfm";
-import "./docs.css";
+import { useEffect, useMemo, useRef, useState } from 'react'
+import ReactMarkdown from 'react-markdown'
+import rehypeHighlight from 'rehype-highlight'
+import remarkGfm from 'remark-gfm'
+import './docs.css'
 
 // Native browser print → "Save as PDF". @page (in docs.css) sets A4 + margins,
 // and the browser paginates the free-flowing content for us.
 function exportPdf() {
-  window.print();
+  window.print()
 }
 
 // Pull the leading "# Title" out of the markdown for the document heading and
 // for a stable, shareable slug. Falls back to the filename if there's no H1.
 function deriveTitle(raw, path) {
-  const m = raw.match(/^\s*#\s+(.+?)\s*$/m);
-  if (m) return m[1].trim();
-  return path.split("/").pop().replace(/\.md$/, "");
+  const m = raw.match(/^\s*#\s+(.+?)\s*$/m)
+  if (m) return m[1].trim()
+  return path.split('/').pop().replace(/\.md$/, '')
 }
 
 function slugify(title) {
   return title
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
 }
 
 // Every .md in /docs becomes a selectable document. import.meta.glob copes with
 // the spaces + curly quotes in the filenames that a plain import can't.
-const modules = import.meta.glob("../../docs/*.md", {
-  query: "?raw",
-  import: "default",
+const modules = import.meta.glob('../../docs/*.md', {
+  query: '?raw',
+  import: 'default',
   eager: true,
-});
+})
 
 const DOCS = Object.entries(modules)
   .map(([path, raw]) => {
-    const title = deriveTitle(raw, path);
-    return { slug: slugify(title), title, raw };
+    const title = deriveTitle(raw, path)
+    return { slug: slugify(title), title, raw }
   })
-  .sort((a, b) => a.title.localeCompare(b.title));
+  .sort((a, b) => a.title.localeCompare(b.title))
 
-const LONG_TABLE_ROWS = 8;
+const LONG_TABLE_ROWS = 8
 
 function countRows(node) {
-  let rows = 0;
-  const walk = (el) => {
+  let rows = 0
+  const walk = el => {
     for (const child of el.children ?? []) {
-      if (child.type !== "element") continue;
+      if (child.type !== 'element') continue
 
-      if (child.tagName === "tr") rows += 1;
-      else walk(child);
+      if (child.tagName === 'tr') rows += 1
+      else walk(child)
     }
-  };
-  walk(node);
-  return rows;
+  }
+  walk(node)
+  return rows
 }
 
 // External links open in a new tab; nothing here is same-app navigation.
 const rehypePlugins = [
   // Highlighting for code blocks
   [rehypeHighlight, { detect: false, ignoreMissing: true }],
-];
+]
 
 const mdComponents = {
   a: ({ href, children, ...props }) => (
@@ -71,53 +71,50 @@ const mdComponents = {
   table: ({ node, children, ...props }) => (
     <table
       // See the notes in the CSS file.
-      className={countRows(node) > LONG_TABLE_ROWS ? "is-long" : undefined}
+      className={countRows(node) > LONG_TABLE_ROWS ? 'is-long' : undefined}
       {...props}
     >
       {children}
     </table>
   ),
-};
+}
 
 export default function Docs() {
   const [slug, setSlug] = useState(() => {
-    const fromUrl = new URLSearchParams(window.location.search).get("doc");
-    return DOCS.some((d) => d.slug === fromUrl) ? fromUrl : DOCS[0]?.slug;
-  });
+    const fromUrl = new URLSearchParams(window.location.search).get('doc')
+    return DOCS.some(d => d.slug === fromUrl) ? fromUrl : DOCS[0]?.slug
+  })
 
-  const doc = useMemo(
-    () => DOCS.find((d) => d.slug === slug) ?? DOCS[0],
-    [slug],
-  );
+  const doc = useMemo(() => DOCS.find(d => d.slug === slug) ?? DOCS[0], [slug])
 
   // Keep the URL (?doc=…) in sync so a selection is shareable + survives reload,
   // and support Back/Forward between docs — all without a router. The first sync
   // replaces (no junk history entry); later user switches push a new entry.
-  const firstSync = useRef(true);
+  const firstSync = useRef(true)
   useEffect(() => {
-    if (!doc) return;
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("doc") !== doc.slug) {
-      params.set("doc", doc.slug);
-      const url = `?${params}`;
-      if (firstSync.current) window.history.replaceState({}, "", url);
-      else window.history.pushState({}, "", url);
+    if (!doc) return
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('doc') !== doc.slug) {
+      params.set('doc', doc.slug)
+      const url = `?${params}`
+      if (firstSync.current) window.history.replaceState({}, '', url)
+      else window.history.pushState({}, '', url)
     }
-    firstSync.current = false;
-    document.title = `Bearing Docs · ${doc.title}`;
-  }, [doc]);
+    firstSync.current = false
+    document.title = `Bearing Docs · ${doc.title}`
+  }, [doc])
 
   useEffect(() => {
     const onPop = () => {
-      const fromUrl = new URLSearchParams(window.location.search).get("doc");
-      if (DOCS.some((d) => d.slug === fromUrl)) setSlug(fromUrl);
-    };
-    window.addEventListener("popstate", onPop);
-    return () => window.removeEventListener("popstate", onPop);
-  }, []);
+      const fromUrl = new URLSearchParams(window.location.search).get('doc')
+      if (DOCS.some(d => d.slug === fromUrl)) setSlug(fromUrl)
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
 
   if (!doc) {
-    return <div className="doc-empty">No documents found in /docs.</div>;
+    return <div className="doc-empty">No documents found in /docs.</div>
   }
 
   return (
@@ -126,8 +123,8 @@ export default function Docs() {
       <div className="toolbar no-print">
         <label className="doc-picker">
           <span className="doc-picker-label">Doc</span>
-          <select value={doc.slug} onChange={(e) => setSlug(e.target.value)}>
-            {DOCS.map((d) => (
+          <select value={doc.slug} onChange={e => setSlug(e.target.value)}>
+            {DOCS.map(d => (
               <option key={d.slug} value={d.slug}>
                 {d.title}
               </option>
@@ -181,5 +178,5 @@ export default function Docs() {
         </table>
       </div>
     </>
-  );
+  )
 }
