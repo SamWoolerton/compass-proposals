@@ -10,6 +10,7 @@ import "@fontsource/lora/700.css";
 import "@fontsource-variable/geist";
 import "@fontsource/jetbrains-mono/400.css";
 import "@fontsource/jetbrains-mono/500.css";
+import "@fontsource/jetbrains-mono/600.css";
 
 import Docs from "./Docs.jsx";
 

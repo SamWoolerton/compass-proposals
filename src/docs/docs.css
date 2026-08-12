@@ -208,7 +208,7 @@ body {
 .doc-body .hljs-section,
 .doc-body .hljs-name {
   color: var(--green-900);
-  font-weight: 500;
+  font-weight: 600;
 }
 /* Data: strings and template contents. */
 .doc-body .hljs-string,
