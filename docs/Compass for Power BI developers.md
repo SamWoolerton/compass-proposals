@@ -259,7 +259,7 @@ Users and the LLM see the model name (`Customer`), and e.g. `company_name` is on
 
 Using both `sqlName` and `sqlExpression` together would never be useful, so we treat this as a mistake and raise an error so it can be corrected.
 
-## CASE and SWITCH
+## `CASE` and `SWITCH`
 
 ```dax
 Discount Rate =
