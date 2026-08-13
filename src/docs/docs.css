@@ -464,6 +464,11 @@ body {
   .doc-body table.is-long tr {
     break-inside: avoid;
   }
+  .doc-body pre.is-long {
+    break-inside: auto;
+    orphans: 4;
+    widows: 4;
+  }
   .doc-body p {
     orphans: 3;
     widows: 3;

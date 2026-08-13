@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import rehypeHighlight from 'rehype-highlight'
 import remarkGfm from 'remark-gfm'
 import './docs.css'
+import { sumBy } from '../utility/numbers'
 
 // Native browser print → "Save as PDF". @page (in docs.css) sets A4 + margins,
 // and the browser paginates the free-flowing content for us.
@@ -41,19 +42,23 @@ const DOCS = Object.entries(modules)
   .sort((a, b) => a.title.localeCompare(b.title))
 
 const LONG_TABLE_ROWS = 8
+const LONG_CODE_LINES = 16
+
+const sumChildren = (node, count) => sumBy(node.children ?? [], count)
+
+function countNewlines(node) {
+  if (node.type !== 'text') return sumChildren(node, countNewlines)
+
+  let found = 0
+  const { value } = node
+  for (let i = value.indexOf('\n'); i !== -1; i = value.indexOf('\n', i + 1))
+    found += 1
+  return found
+}
 
 function countRows(node) {
-  let rows = 0
-  const walk = el => {
-    for (const child of el.children ?? []) {
-      if (child.type !== 'element') continue
-
-      if (child.tagName === 'tr') rows += 1
-      else walk(child)
-    }
-  }
-  walk(node)
-  return rows
+  if (node.tagName === 'tr') return 1
+  return sumChildren(node, countRows)
 }
 
 // External links open in a new tab; nothing here is same-app navigation.
@@ -76,6 +81,15 @@ const mdComponents = {
     >
       {children}
     </table>
+  ),
+  pre: ({ node, children, ...props }) => (
+    <pre
+      // See the notes in the CSS file.
+      className={countNewlines(node) > LONG_CODE_LINES ? 'is-long' : undefined}
+      {...props}
+    >
+      {children}
+    </pre>
   ),
 }
 
