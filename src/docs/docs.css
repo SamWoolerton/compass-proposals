@@ -183,6 +183,32 @@ body {
   color: var(--ink);
 }
 
+/* Language tag in the block's top-right corner — the fence's language, set on
+   the <pre> as data-lang by the pre override in Docs.jsx. Same mono/uppercase
+   as the running header and table headings. Untagged fences have no
+   attribute and render exactly as before.
+
+   Floated rather than absolutely positioned, because these blocks are pre-wrap:
+   a float shortens only the line boxes it sits beside, so the first line wraps
+   around the tag and every line below keeps the full width. Reserving the
+   gutter with padding instead would narrow all ~30 blocks in the doc to buy
+   clearance the first line alone needs.
+
+   On a pre.is-long that splits across pages this prints on the first fragment
+   only — it's anchored to the box, not repeated per page. */
+.doc-body pre[data-lang]::before {
+  content: attr(data-lang);
+  float: right;
+  margin: 3px 0 0 12px;
+  font-family: var(--font-mono);
+  font-size: 7pt;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  user-select: none; /* keep it out of copied code */
+}
+
 /* ---- Syntax highlighting (rehype-highlight → highlight.js classes) ----
    Everything not listed inherits --ink. */
 .doc-body .hljs-comment,

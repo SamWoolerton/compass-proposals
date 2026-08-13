@@ -56,6 +56,33 @@ function countNewlines(node) {
   return found
 }
 
+// Fence tag → the label shown in the block's corner. Anything unmapped falls
+// back to its own uppercased tag.
+const LANG_LABELS = {
+  ts: 'TypeScript',
+  tsx: 'TypeScript',
+  js: 'JavaScript',
+  jsx: 'JavaScript',
+  dax: 'DAX',
+  sql: 'SQL',
+  json: 'JSON',
+  bash: 'Shell',
+  sh: 'Shell',
+}
+
+// react-markdown puts the fence tag on the <code> as `language-x`, whether or
+// not rehype-highlight recognised it — so ```dax gets a label even though it
+// highlights as plain text. An untagged fence has no class and no label.
+function langLabel(node) {
+  const code = node.children?.find(child => child.tagName === 'code')
+  const tag = (code?.properties?.className ?? [])
+    .find(c => c.startsWith('language-'))
+    ?.slice('language-'.length)
+
+  if (!tag) return undefined
+  return LANG_LABELS[tag] ?? tag.toUpperCase()
+}
+
 function countRows(node) {
   if (node.tagName === 'tr') return 1
   return sumChildren(node, countRows)
@@ -86,6 +113,7 @@ const mdComponents = {
     <pre
       // See the notes in the CSS file.
       className={countNewlines(node) > LONG_CODE_LINES ? 'is-long' : undefined}
+      data-lang={langLabel(node)}
       {...props}
     >
       {children}
