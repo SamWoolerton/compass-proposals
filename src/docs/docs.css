@@ -116,7 +116,7 @@ body {
 .doc-body h1 {
   font-size: 25pt;
   letter-spacing: -0.01em;
-  margin: 0 0 6mm;
+  margin: 12mm 0 3mm;
 }
 /* First heading reads as the document title, with a rule under it. */
 .doc-body > h1:first-child {
