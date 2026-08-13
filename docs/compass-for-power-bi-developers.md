@@ -1,47 +1,47 @@
 # Compass for Power BI developers
 
-Compass is a semantic layer that compiles to SQL. You declare tables, columns and metrics in TypeScript, and a query arrives as JSON for Compass to compile and run.
+The biggest difference stems from Compass having one data model that's the source of truth, rather than a series of datasets. Within this model, we define our tables & columns, the metrics built on these, and access control permissions.
 
-There is no in-memory model and no filter context. Most of the differences below follow from that.
+Compass sits on top of a single SQL database and queries are translated to a combination of SQL queries & pre-/post-processing logic in the query engine as required.
+
+If you encounter a concept that you're not sure how to represent in Compass, then speak to our team. We can advise how to achieve this and any workarounds that are available, and can build new functionality into the query engine where required too.
 
 Examples use a wholesale model - orders, order lines, customers, products, regions. Listed in full at the end of this document.
 
 ## Quick reference
 
-| Power BI                                        | Compass                                            | Notes                                                                        |
-| ----------------------------------------------- | -------------------------------------------------- | ---------------------------------------------------------------------------- |
-| Measure                                         | Metric in `defineMetrics({ ... })`                 | Four types: `query`, `snapshot`, `modify`, `combine`.                        |
-| `SUM`, `AVERAGE`, `MIN`, `MAX`, `DISTINCTCOUNT` | `queryMetric(operation, table, column)`            | Also `median` and `percentile`.                                              |
-| `COUNTROWS`                                     | `countMetric(table)`                               |                                                                              |
-| `CALCULATE([m], filters)`                       | `modify('m', [filters])`                           | Filters intersect. They do not replace.                                      |
-| `DIVIDE(a, b)`                                  | `divide('a', 'b')`                                 |                                                                              |
-| Subtract one measure from another               | `combine` with `subtract`                          | Also `add` and `multiply`.                                                   |
-| `SWITCH` in a measure                           | None                                               |                                                                              |
-| `ALL`, `ALLEXCEPT`, `REMOVEFILTERS`             | None                                               |                                                                              |
-| `SAMEPERIODLASTYEAR`, `PREVIOUSMONTH`           | `shift` transform                                  | The query applies it, not the metric.                                        |
-| Period-over-period difference                   | `movement` transform                               |                                                                              |
-| Running total, `DATESYTD`                       | `cumulative` on a query metric                     |                                                                              |
-| `LASTNONBLANK` semi-additive measure            | `type: 'snapshot'` metric                          |                                                                              |
-| `TOPN`, `RANKX`                                 | `topN` on the query                                | Includes an "Other" group.                                                   |
-| Variables (`VAR`)                               | A TypeScript `const`                               |                                                                              |
-| Calculated column                               | `sqlExpression` on a column                        |                                                                              |
-| `SWITCH` or `IF` in a calculated column         | `sqlExpression` with a SQL `CASE`                  |                                                                              |
-| Renamed column                                  | `sqlName`                                          | The model name stays public. `sqlName` is the physical name.                 |
-| Format string                                   | `formatter` on a column or metric                  | Changes the display only.                                                    |
-| Currency data type                              | `type: 'number'` and `currencyFormatter(n)`        | Currency is a formatter, not a type.                                         |
-| Percentage data type                            | `type: 'number'` and `formatPercentage`            | Store the ratio, not `0` to `100`.                                           |
-| Star schema in the model                        | `defineTables({ ... })`                            | Maps onto tables that already exist in your database.                        |
-| Relationship (many-to-one)                      | `relationship('parent_table')` column on the child | Always many-to-one and directional.                                          |
-| Inactive relationship, `USERELATIONSHIP`        | On the roadmap                                     | Every relationship is currently active.                                      |
-| Bidirectional cross-filter                      | None                                               | Filters move from child to parent only.                                      |
-| Many-to-many relationship                       | `complexRelationships` entry                       | Partly supported. An antipattern in Power BI too. Ask us before you use one. |
-| Ambiguous join paths                            | Rejected                                           | Same as Power BI. Two tables can have one join path only.                    |
-| Date table, "mark as date table"                | `primaryDate` on each table                        | There is no calendar table.                                                  |
-| Display folders, hierarchies                    | None                                               |                                                                              |
-| RLS role with a DAX filter                      | RLS group and user entries                         | Matches a value. It does not evaluate an expression.                         |
-| Q&A synonyms                                    | `synonyms` on a column or metric                   | An LLM reads the model, so these change the results.                         |
-
----
+| Power BI                                                                        | Compass                                                                                                                                                     | Notes                                                                                                                                                                                                                               |
+| ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Measure                                                                         | Metric in `defineMetrics({ ... })`                                                                                                                          | Four types: `query`, `snapshot`, `modify`, `combine`.                                                                                                                                                                               |
+| Column-aggregating options like `SUM`, `AVERAGE`, `MIN`, `MAX`, `DISTINCTCOUNT` | `queryMetric(operation, table, column)`, which also supports calculations like `median` and `percentile`                                                    | Unlike in Power BI, Compass requires the core calculations (e.g. summing sales $) to be defined in a base metric for others to build off, rather than inline.                                                                       |
+| `COUNTROWS`                                                                     | `countMetric(table)`                                                                                                                                        |                                                                                                                                                                                                                                     |
+| `CALCULATE([m], filter1, filter2)`                                              | `modify('m', [filter1, filter2])`                                                                                                                           |                                                                                                                                                                                                                                     |
+| `DIVIDE(a, b)`                                                                  | `divide('a', 'b')`                                                                                                                                          |                                                                                                                                                                                                                                     |
+| Defining a reusable filters to use in many different measures: unsupported      | Just define filters in your data model file and reference them like `modify('m', [filter1, filter2])`                                                       |                                                                                                                                                                                                                                     |
+| Subtract one measure from another                                               | `combine` with `subtract`                                                                                                                                   | Other arithmetic operations are supported too. Note each operation is a separate metric - if there's a case that makes it very clunky then say so, as it's on the roadmap to give better ergonomics for this type of calculation.   |
+| `SWITCH` in a measure                                                           | None                                                                                                                                                        |                                                                                                                                                                                                                                     |
+| `ALL`, `ALLEXCEPT`, `REMOVEFILTERS`                                             | None                                                                                                                                                        |                                                                                                                                                                                                                                     |
+| `SAMEPERIODLASTYEAR`, `PREVIOUSMONTH`                                           | `shift` transform                                                                                                                                           | At query time, not defined in the data model up front.                                                                                                                                                                              |
+| Period-over-period difference                                                   | `movement` transform                                                                                                                                        | At query time, not defined in the data model up front. % change is on the roadmap                                                                                                                                                   |
+| Running total, `DATESYTD`                                                       | `cumulative` on a query metric                                                                                                                              | Defined at query time as part of the data model. Rolling periods are on the roadmap, and will be supported at query time like the `shift` & `movement` transforms.                                                                  |
+| `TOPN`, `RANKX`                                                                 | `topN` on the query                                                                                                                                         | Can optionally group the others into an `Other` group. Supports bottom N as well.                                                                                                                                                   |
+| Variables (`VAR`)                                                               | Partial support via defining constants in TypeScript, but they behave differently.                                                                          | DAX is a more complex & powerful query language than Compass has, which isn't only a good thing (makes it harder to optimise performance & reason about the code). Some DAX idioms need to be more carefully translated to Compass. |
+| Calculated column                                                               | `sqlExpression` on a column                                                                                                                                 |                                                                                                                                                                                                                                     |
+| `SWITCH` or `IF` in a calculated column                                         | `sqlExpression` with a SQL `CASE`                                                                                                                           |                                                                                                                                                                                                                                     |
+| Renamed column                                                                  | Name the column what you want to see in the UI, and remap it for database queries with `sqlName` (only used at query time & only internally to the engine). |                                                                                                                                                                                                                                     |
+| Format string                                                                   | `formatter` on a column or metric                                                                                                                           | Changes the display only.                                                                                                                                                                                                           |
+| Currency data type                                                              | `type: 'number'` and `currencyFormatter(decimalPlaces)`                                                                                                     | Currency is a formatter, not a type.                                                                                                                                                                                                |
+| Percentage data type                                                            | `type: 'number'` and `formatPercentage`                                                                                                                     | Store the ratio, i.e. 0-1 rather than 0-100.                                                                                                                                                                                        |
+| Star schema in the model                                                        | `defineTables({ ... })`                                                                                                                                     | Maps onto tables that already exist in your database.                                                                                                                                                                               |
+| Relationship (many-to-one)                                                      | `relationship('parent_table')` column on the child                                                                                                          | Always many-to-one and directional.                                                                                                                                                                                                 |
+| Inactive relationship, `USERELATIONSHIP`                                        | On the roadmap                                                                                                                                              | Every relationship is currently active.                                                                                                                                                                                             |
+| Bidirectional cross-filter                                                      | Currently unsupported; further updates are on the roadmap to support parents based on filter criteria on the children.                                      |                                                                                                                                                                                                                                     |
+| Many-to-many relationship                                                       | `complexRelationships` entry                                                                                                                                | Partly supported; this is an anti-pattern in Power BI too. Ask us before you use one.                                                                                                                                               |
+| Ambiguous join paths: Rejected                                                  | Also rejected                                                                                                                                               | Same as Power BI. Two tables can have one join path only.                                                                                                                                                                           |
+| Add a date table and "mark as date table"                                       | Define a `primaryDate` column per table.                                                                                                                    | You don't need to manually define a calendar table & relationships to it.                                                                                                                                                           |
+| Display folders, hierarchies                                                    | None                                                                                                                                                        |                                                                                                                                                                                                                                     |
+| RLS role with a DAX filter                                                      | RLS group and user entries                                                                                                                                  |                                                                                                                                                                                                                                     |
+| Q&A synonyms                                                                    | `synonyms` on a column or metric                                                                                                                            | These are injected directly into the prompt, so you can technically put whatever you want in there, including instructions.                                                                                                         |
 
 # Metrics
 
@@ -73,7 +73,7 @@ Gold Sales = CALCULATE ( [Total Sales], Customers[Tier] = "Gold" )
 'Gold sales': modify('Total sales', [eq('customers', 'Tier', dynamic('Gold'))]),
 ```
 
-> **Trap** - filters intersect, they never replace. Two layers filtering the same column give zero rows, with no error. See _Layering_.
+> **Tip** - filters intersect rather than replacing earlier filters (boolean AND). See _Layering_.
 
 ## Ratio - `DIVIDE`
 
@@ -107,15 +107,17 @@ Gross Profit = [Total Sales] - [Total Cost]
 
 A combine metric can span two fact tables.
 
-> **Trap** - a `combine` metric cannot be a `modify` base. Filter the parts instead, then combine them.
+> **Tip** - a `combine` metric cannot be a `modify` base. Filter the parts instead, then combine them.
 
-## Running total - `DATESYTD`
+## Cumulative total for life-to-date calculations
 
 ```dax
 Cumulative Sales =
+VAR _maxDate = MAX ( 'Date'[Date] )
+
 CALCULATE (
     [Total Sales],
-    FILTER ( ALL ( 'Date' ), 'Date'[Date] <= MAX ( 'Date'[Date] ) )
+    FILTER ( ALL ( 'Date' ), 'Date'[Date] <=  _maxDate)
 )
 ```
 
@@ -131,13 +133,9 @@ CALCULATE (
 ```
 
 - The date column can sit on the aggregation table or on a parent.
-- Only `sum` and `count` are permitted. `average`, `min`, `max` and `median` throw.
-- Periods with no rows still appear, carrying the previous total forward.
-- Top N scores on the last value, not the sum of the running totals.
+- Only `sum` and `count` are supported currently. Other metrics like `average`, `min`, `max` and `median` are on the roadmap; they're doable but will require more handling so we don't e.g. take the average of an average.
 
-> **Trap** - a lower date limit does not cut the baseline. Filter to "March and later" and the March total still includes January and February. In Power BI you reach for `ALL` to rebuild that total.
-
-## Semi-additive measure - `LASTNONBLANK`
+## Snapshot metric
 
 ```dax
 Units On Hand =
@@ -158,11 +156,9 @@ CALCULATE (
 },
 ```
 
-Compass aggregates the rows at the most recent date in each period only. With no date in the query at all, it aggregates at a single maximum date across the data.
+Snapshot metrics are useful for calculations like headcount if you have a series of snapshots that represent the new state of the system, rather than a dataset that only shows the changes. A naive count on a snapshot table would overcount, giving e.g. the number of employees * the number of snapshots.
 
-`operation` is required. Use `sum` across products, or `max` or `average` for a value that is already aggregated.
-
-> **Trap** - grouped by month with one row per item per month, this looks identical to a plain sum. The behaviour only shows itself when the date grouping comes off. See _Cumulative or snapshot_.
+Compass aggregates snapshot metrics based on the rows at the most recent date for the data. Queries that return a row per period (e.g. per month) will snapshot based on the most recent date in each period.
 
 ## Time intelligence
 
@@ -172,43 +168,41 @@ Compass aggregates the rows at the most recent date in each period only. With no
 | `CALCULATE([Total Sales], PREVIOUSMONTH('Date'[Date]))`      | `shift` with the offset `{ amount: -1, unit: 'month' }`  |
 | `[Total Sales] - [Total Sales LY]`                           | `movement` with the same offset                          |
 
-Transforms live on the query, not the metric, so you define `Total sales` once and never a `Total Sales LY`. A negative amount looks backwards.
+Transforms are handled at query time rather than when first building the data model - e.g. you can query sales, sales a year ago, and sales 3 days ago without having to define the latter two metrics in advance.
 
-- **Pair a transform with a date.** With a period group, each period compares to the offset period. With a date filter only, one value compares to one earlier period.
 - **A shifted cumulative gives the previous period's running total**, so its movement is the increase in this period.
-- **You cannot shift a snapshot metric.** It throws.
+- **Shifting a snapshot metric is currently unsupported.**
 
-Result columns take a suffix: `Total sales` shifted by `-1 month` becomes `Total sales_prev_1_month`, and its movement becomes `Total sales_mvmt_prev_1_month`. A metric, its shift and its movement can therefore sit in one result together.
+Result columns take a suffix: `Total sales` shifted by `-1 month` becomes `Total sales_prev_1_month`, and its movement becomes `Total sales_mvmt_prev_1_month`. A metric, its shift and its movement can therefore sit in one result together as each column name is unique. These names are customisable if required, but they must be hard-coded rather than LLM-supplied to ensure we uphold our guarantee that you can tell at a glance what data you're seeing, and can't be provided with hallucinated data in the chat UI.
 
-> **Trap** - the filter window widens to fetch the comparison. Filter to "February and later", ask for last month's value, and Compass still reads January.
+> **Tip** - the filter window widens to fetch the comparison. Filter to "February and later", ask for last month's value, and Compass will fetch the Jan data for that priod-month column, without bringing it into the other columns where you didn't want it.
 
-## Top N - `TOPN`, `RANKX`
+## Top N
 
 | DAX                                                          | Compass                                                          |
 | ------------------------------------------------------------ | ---------------------------------------------------------------- |
 | `TOPN(10, VALUES(Customers[Customer]), [Total Sales], DESC)` | `topN: { n: 10, dimension: ..., metric: ..., direction: 'top' }` |
 | An "Other" row built with `ALLEXCEPT`                        | `others: 'group'`                                                |
-| Rank inside a category                                       | `partitionBy`                                                    |
+| Rank inside a category                                       |                                                                  |
 
-`others: 'hide'` drops the rest. `others: 'group'` folds them into one "Other" row, and the per-period totals stay correct.
+The basic syntax is `topN: { n: 10, dimension: ..., metric: ..., direction: 'top' }`. You can control grouping with `others` (default: `hide`). You can rank inside a category with `partitionBy`, which allows you to distinguish between e.g. "sales by month & category for the top 4 categories by all-time sales" and "sales by month & category for the top 4 categories for each month".
 
-The ranked dimension does not need to be in the select, so you can ask for "total sales from the top 3 customers" and get one number.
+`others: 'hide'` drops the entries that weren't in that top grouping. `others: 'group'` folds them into one "Other" row.
 
-> **Trap** - `distinctCount` is rejected as a ranking metric, because per-group distinct counts cannot be combined. Averages and `combine` metrics are not supported yet either, and their "Other" row comes back null.
+You don't have to select the ranking dimension, so e.g. you can ask for "total sales from the top 3 customers" and get one number.
+
+> **Tip** - `distinctCount` isn't supported for top N ranking currently, and some aggregations like averages and `combine` metrics aren't yet supported for `group: 'others'` specifically..
 
 ## Metric options
 
 `formatter`, `synonyms`, `access`, `visibleToLlm` and `schema` are all per-metric.
 
-> **Trap** - `modify` inherits filters only. A derived metric that omits its formatter has none, even when its base has one. Repeat it on every layer.
+> **Tip** - `modify` inherits filters only. A derived metric that omits its formatter has none, even when its base has one.
 
 ## No equivalent
 
-- **`SWITCH` in a measure.** No metric can return different expressions for different selections. Write separate metrics and let the query choose.
-- **`ALL`, `ALLEXCEPT`, `REMOVEFILTERS`.** There is no filter context to clear, and a layer can only narrow.
-- **A metric referring to itself**, directly or through other metrics.
-
----
+- **`SWITCH` in a measure.** Most patterns that require this in Power BI are workarounds for an inflexible dev environment, so DAX is the only tool you have here. Compass has a lot more flexibility in the structure around the queries so this typically isn't required. For changing the metric shown in a report via a slicer selection for example, we'd just use a button with custom code to handle this - and this even lets us trivially change dimensions/axes for charts, which is much more difficult (or infeasible) in Power BI.
+- **`ALL`, `ALLEXCEPT`, `REMOVEFILTERS`.** `Modify` only adds filters, and doesn't take any away.
 
 # Columns
 
@@ -216,13 +210,15 @@ The ranked dimension does not need to be in the select, so you can ask for "tota
 
 Five scalar types: `id`, `text`, `number`, `date` and `boolean`. Also `enum_(options)` and `relationship(table, column)`.
 
-There is no currency, percentage or decimal type. The type controls:
+There is no currency, percentage or decimal type; these are handled as formatters.
+
+The type controls:
 
 1. **The permitted operators.** `text` permits `=`, `in`, `notIn` and `like`. `number` and `date` permit the comparison operators. `boolean` permits `=` only.
 2. **Date handling.** Compass validates filter values against a `date` column.
 3. **Numeric behaviour**, such as which columns Compass can add into a total.
 
-> **Trap** - a column that holds dates as text is a `text` column. Declare it as a `date` and the query fails.
+> **Tip** - a column that holds dates as text is a `text` column, not a `date` column. You can cast it to a date column with `sqlExpression` though and then use it as you'd expect.
 
 ## Calculated column - `sqlExpression`
 
@@ -238,16 +234,20 @@ Line Total = 'Order Lines'[unit_price] * 'Order Lines'[quantity]
 },
 ```
 
-1. **Write the table name.** Compass inlines the expression unchanged, so write `order_lines.unit_price`.
+Instead of using `sqlExpression`, you can always define a view in your database instead.
+
+More flexible syntax that covers common cases without needing to drop into raw SQL is on the roadmap.
+
+1. **Write the table name.** Compass inlines the expression into the query directly without modification, so write `order_lines.unit_price`.
 2. **Keep it row-level.** The expression cannot contain an aggregation.
 3. **Keep it fast.** The database calculates it in every query.
 
-|              | Power BI calculated column | Compass `sqlExpression`  |
-| ------------ | -------------------------- | ------------------------ |
-| Language     | DAX                        | The SQL of your database |
-| Calculated   | At refresh, then stored    | In each query            |
-| Other tables | Yes, with `RELATED`        | The same row only        |
-| Cost         | Model size                 | Query time               |
+|              | Power BI calculated column                                      | Compass `sqlExpression`                                                      |
+| ------------ | --------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Language     | DAX                                                             | The SQL of your database                                                     |
+| Calculated   | At refresh, then stored                                         | In each query                                                                |
+| Other tables | Yes, with `RELATED` (in `Import` mode only, not `Direct Query`) | The same row only (Compass only runs in the equivalent of direct query mode) |
+| Cost         | Model size                                                      | Query time                                                                   |
 
 ## Renamed column - `sqlName`
 
@@ -255,7 +255,9 @@ Line Total = 'Order Lines'[unit_price] * 'Order Lines'[quantity]
 Customer: { type: 'text', sqlName: 'company_name' },
 ```
 
-Users and the LLM see the model name. Use `sqlName` or `sqlExpression`, never both - the types reject it.
+Users and the LLM see the model name (`Customer`), and e.g. `company_name` is only used in queries to the database.
+
+Using both `sqlName` and `sqlExpression` together would never be useful, so we treat this as a mistake and raise an error so it can be corrected.
 
 ## CASE and SWITCH
 
@@ -280,7 +282,9 @@ SWITCH (
 },
 ```
 
-For a fixed set of values, use an enum instead, so the LLM knows the permitted values:
+## Enums
+
+For a fixed set of values, you can use the `enum` type. This behaves like a `text` column, except that we send the list of options to the LLM as part of the prompt so it can filter on these directly if users reference values.
 
 ```ts
 Tier: enum_(['Bronze', 'Silver', 'Gold'], { sqlName: 'tier' }),
@@ -296,13 +300,11 @@ Format string: "$#,##0.00"
 'Unit price': {
   type: 'number',
   sqlName: 'unit_price',
-  formatter: currencyFormatter(2),   // The argument is the number of decimal places
+  formatter: currencyFormatter(2),   // This example formats to 2dp.
 },
 ```
 
-A formatter changes the display only. It never reaches the SQL, a comparison or an aggregation.
-
-> **Trap** - the currency is always USD in the `en-US` locale. Only the decimal places are configurable. For another currency, write your own formatter - an object with a `format(value, options)` method.
+A formatter changes how values are displayed, and doesn't affect calculations.
 
 ## Percentage
 
@@ -315,13 +317,11 @@ A formatter changes the display only. It never reaches the SQL, a comparison or 
 },
 ```
 
-The other formatters are `numberFormatter()` and `formatDays`. `numberFormatter` builds a formatter, so call it. Both it and `currencyFormatter` accept `{ compact: true }` to shorten large values.
-
-> **Trap** - `formatPercentage` multiplies by 100. Store the ratio. A column holding `15` for "15%" shows `1500.0%`.
+> **Tip** - `formatPercentage` multiplies by 100, so store e.g. 0.15 for 15%.
 
 ## Filters
 
-`metricBuilderHelpers(tables)` gives you `eq`, `compare`, `inFilter`, `notIn`, `isNull`, `isNotNull` and `like`.
+We have helper functions available: `eq` (=), `compare` (<, >, <=, >=), `inFilter`, `notIn`, `isNull`, `isNotNull` and `like`.
 
 ```ts
 const recentOrders = compare('orders', 'Order date', '>=', ago(90, 'day'))
@@ -332,17 +332,14 @@ const coreCategories = inFilter('products', 'Category', [
 ])
 ```
 
-Wrap the comparison value: `dynamic(value)` for a fixed value, `ago(n, unit)` for a relative date. `ago(1, 'month', { aligned: true })` starts at the first day of this month, giving a full calendar month.
+Use `dynamic` to wrap a hard-coded value.
+Use `ago` for a relative date, and you can choose full months (rather than being relative to today) with `ago(1, 'month', { aligned: true })`.
 
-Put a shared filter in a `const` and reuse it. This replaces the DAX `VAR`.
+You can save a filter to a variable (as shown above) and reuse it for many metrics, which isn't possible in DAX.
 
 ## Dates
 
-A date filter value must be an ISO 8601 string: `2026-07-01` or `2026-07-01T00:00:00`. Compass rejects everything else, including `01/07/2026`, `July 1, 2026` and `2026-07`.
-
-Postgres reads `01/07/2026` as 7 January by default, so accepting it would return a wrong answer with no error.
-
----
+A date filter value must be an ISO 8601 string for consistency: `2026-07-01` or `2026-07-01T00:00:00`. Compass rejects everything else, including `01/07/2026`, `July 1, 2026` and `2026-07`.
 
 # Model
 
@@ -350,7 +347,7 @@ Postgres reads `01/07/2026` as 7 January by default, so accepting it would retur
 
 Each table needs `columns`, `access` and `primaryDate`.
 
-A Compass table points at a table or view in your database. There is no import and no refresh, so each query reads the source database.
+A Compass table points at a table or view in your database. There is no import and no refresh: every query hits the database on the fly so it runs based on the latest data available.
 
 ## Relationships
 
@@ -364,50 +361,37 @@ customers: {
 order_lines: {
   columns: {
     order_id: relationship('orders'),
-    // Joins to the `Product code` column of products instead of `id`
+    // Joins to products.[Product code] instead of `id`
     product_id: relationship('products', 'Product code'),
   },
 },
 ```
 
-Declare a relationship as a column on the child, pointing at the parent. The second argument is the column on the **parent** table. It defaults to `id`. Use the model name of the column, not the `sqlName`.
+Declare a relationship as a column on the child, pointing at the parent. Use the model name of the column, not the `sqlName`.
 
-This is many-to-one, from child to parent. Compass calls this direction "upwards".
+This is many-to-one, from child to parent. Compass calls this direction "upwards", aligning with common practice for laying out relationship diagrams, that visualise relationships as flowing downwards from dimension tables to fact tables.
 
-- **Every relationship is active.** There is no `USERELATIONSHIP` yet. Inactive relationships are on the roadmap.
+- **Every relationship is active.** There is no `USERELATIONSHIP` yet. Support for inactive relationships is on the roadmap.
 - **Filters move upwards only.** A filter on a parent table also filters its children. There is no bidirectional filtering.
 - **Ambiguous models are rejected**, the same as Power BI. If `a → b`, `b → c` and also `a → c`, the path from `a` to `c` is ambiguous and validation fails.
 
-## Role-playing dimensions
-
-Power BI joins `orders` to one date dimension twice, then activates the second relationship per measure. Use two date columns on the fact table instead, and let the query pick one.
-
-```ts
-orders: {
-  columns: {
-    'Order date': { type: 'date', sqlName: 'ordered_at' },
-    'Shipped date': { type: 'date', sqlName: 'shipped_at' },
-  },
-},
-```
-
 ## Many-to-many
 
-`complexRelationships` takes a join condition you write yourself. Support is partial, and the results surprise people in the same cases they do in Power BI.
+`complexRelationships` takes a join condition you write yourself. This is a partially supported feature currently, and the results can be surprising (similarly to Power BI).
 
-> **Trap** - treat it as an antipattern. Talk to us first, and we can add proper support if you have a case that needs it.
+> **Tip** - many:many relationships are an anti-pattern in most cases. Talk to us first, and we can add proper support if you have a case that needs it, or we can advise how to restructure your data to work with normal relationships.
 
-## Date table - `primaryDate`
+## `primaryDate`
 
 ```ts
-orders:      { primaryDate: { column: 'Order date' } },   // This table has a date
-order_lines: { primaryDate: { parent: 'orders' } },       // Use the parent's date
+orders:      { primaryDate: { column: 'Order date' } },   // This table has a date column directly
+order_lines: { primaryDate: { parent: 'orders' } },       // Use the parent's date column
 products:    { primaryDate: NO_PRIMARY_DATE },            // This table has no date
 ```
 
-`primaryDate` names the date column for a table, so a query can group everything by month without naming a column for each table. Delegation moves upwards through more than one table if it needs to, and the final column must have the type `date`.
+`primaryDate` names the date column for a table, so a query can e.g. group by month and select the correct date column from each data source without requiring user input.
 
-There is no calendar table, so there are no calendar attributes. Add fiscal periods or day names as columns or expressions.
+A date column must have the type `date`.
 
 ## Row-level security
 
@@ -421,142 +405,17 @@ const rlsUserEntries = [
 ]
 ```
 
-- **Compass matches a value rather than evaluating an expression.** There is no DAX predicate and no `USERNAME()`.
-- **RLS filters follow the same reachability rule as query filters**, so Compass drops them where they cannot reach a metric. Set `enforced: true` to throw instead.
+- RLS is always based on the user's email, which we know from the sign in flow.
+- Users inherit RLS rules from groups that they're associated with.
+- RLS rules stack, so if a user is in several groups then those will all be included filters.
+- RLS filters only flow downwards, so e.g. you can't RLS-filter a query about regions based on access to orders, but you can define a filter on regions that will apply to all queries on orders data (a fact table downstream from the regions table).
+- RLS filters follow the same reachability rule as query filters, so e.g. an RLS filter on a financial dataset has no effect on queries on H&S data. For a filter that will always be relevant, set `enforced: true` to throw an error if the Compass query engine can't reach that filter table from the data that's being queried.
 
-Table and metric `access` is the coarser control: `{ type: 'all' }` or `{ type: 'specified', groups, emails }`. The group names are a fixed list of `admin`, `manager` and `staff`.
+## Table and metric security
 
-> **Trap** - only set `enforced` when RLS covers every table those users can query, or their other queries start throwing.
+Table and metric `access` can either be open to all users (`{ type: 'all' }`) or locked down with `{ type: 'specified', groups, emails }`. Groups are customisable per Compass deployment. Group memberships can be synced from other platforms and tools, such as Microsoft Entra / Azure AD (see the Bearing team to discuss this).
 
-## What each side is missing
-
-Power BI has, and Compass does not: calculated tables, hierarchies, bidirectional filters, aggregation tables, incremental refresh, calculation groups and field parameters.
-
-Compass has, and Power BI does not:
-
-- `synonyms` on tables, columns and metrics. An LLM reads the model to answer questions, so these words change the results.
-- `access` on tables and metrics, controlling who can query each item.
-- `visibleToLlm: false`. Your code can query the item, but the LLM does not see it.
-- `schema`. A Zod schema that gives typed rows to code calling Compass directly.
-
-The LLM uses your names to understand a question. `Customer` and `Order date` work. `dim_cust_v2` does not.
-
----
-
-# Concepts
-
-The four places the mental model breaks.
-
-## Layering
-
-In DAX, a filter in `CALCULATE` **replaces** the filter context for that column. `CALCULATE([Gold Sales], Customers[Tier] = "Silver")` gives Silver sales.
-
-In Compass, `modify` **adds** the filter. Every layer's filters join with `AND`, like `KEEPFILTERS` on each DAX filter. The same pair gives `Tier = 'Gold' AND Tier = 'Silver'`, which is zero rows, with no error and no warning.
-
-A layer can only make the result smaller. There is no `ALL` or `REMOVEFILTERS`, so build "Silver" from a metric above both, not from the Gold metric.
-
-Four layers, spanning three tables:
-
-```ts
-export const metrics = defineMetrics({
-  // Layer 0. All the layers below use this metric.
-  'Total sales': queryMetric('sum', 'order_lines', 'Line total', {
-    formatter: currencyFormatter(0),
-    synonyms: ['revenue', 'turnover'],
-  }),
-
-  // Layer 1. Keep the lines that have a discount.
-  'Discounted sales': modify(
-    'Total sales',
-    [compare('order_lines', 'Discount', '>', dynamic(0))],
-    { formatter: currencyFormatter(0) },
-  ),
-
-  // Layer 2. Keep the Gold customers. Compass reaches `customers` through `orders`.
-  'Gold discounted sales': modify(
-    'Discounted sales',
-    [eq('customers', 'Tier', dynamic('Gold'))],
-    { formatter: currencyFormatter(0) },
-  ),
-
-  // Layer 3. Keep one region. This table is two joins higher.
-  'Gold discounted sales, North': modify(
-    'Gold discounted sales',
-    [eq('regions', 'Region', dynamic('North'))],
-    { formatter: currencyFormatter(0) },
-  ),
-})
-```
-
-Compass follows the `base` chain to the bottom and collects every filter into one list:
-
-```
-'Gold discounted sales, North'
-  → base: 'Gold discounted sales'
-      → base: 'Discounted sales'
-          → base: 'Total sales'   ← The bottom: sum of order_lines."Line total"
-
-The result is one metric:
-  operation: sum
-  table:     order_lines
-  column:    Line total
-  filters:   [ Discount > 0,
-               customers.Tier = 'Gold',
-               regions.Region = 'North' ]
-```
-
-```sql
-SELECT SUM(order_lines.unit_price * order_lines.quantity) AS "Gold discounted sales, North"
-FROM order_lines
-LEFT JOIN orders    ON order_lines.order_id = orders.id
-LEFT JOIN customers ON orders.customer_id   = customers.id
-LEFT JOIN regions   ON customers.region_id  = regions.id
-WHERE order_lines.discount_amount > ?
-  AND customers.tier = ?
-  AND regions.name = ?
-```
-
-- **The order of the layers does not matter.** In DAX, the order decides which `CALCULATE` wins.
-- **A filter can use any table above the aggregation table.** Layer 3 filters `regions`, three joins away, and Compass adds the joins.
-- **Two layers on the same column give zero rows.** In DAX the second filter replaces the first and you get a plausible number. Here you get zero, and nothing says why.
-
-## Cumulative or snapshot
-
-Add two adjacent periods together. If the result means something, you want `cumulative`. If it does not, you want `snapshot`.
-
-**`cumulative`** suits rows you can add up and want a running total of: ledger entries, cash movements, units shipped.
-
-**`snapshot`** suits rows that are already a state at one time: stock on hand, headcount, open tickets. Adding these across months gives a total far too large.
-
-|                        | Query metric             | Cumulative                       | Snapshot                             |
-| ---------------------- | ------------------------ | -------------------------------- | ------------------------------------ |
-| No date in the query   | Aggregates all rows      | The total of all periods         | Aggregates the most recent date only |
-| One period             | That period only         | All periods up to it             | The most recent date in the period   |
-| Permitted operations   | All                      | `sum` and `count` only           | All, but you must give one           |
-| Adds into a total row  | If `sum` or `count`      | No                               | Only `sum`, and only with no date    |
-| Top N score            | Depends on the operation | The last value                   | The last value                       |
-| `shift` and `movement` | Yes                      | Yes, as running totals           | **No. It throws an error**           |
-| Periods with no rows   | Absent                   | Present, with the previous total | Absent                               |
-
-## One root table per metric
-
-Power BI evaluates a measure against one model. Compass builds the SQL for each metric separately:
-
-- The `FROM` table is the aggregation table of the metric.
-- Every other table in the query joins onto it with a `LEFT JOIN`. An order with no customer still counts.
-
-Two consequences:
-
-- Metrics on different fact tables do not multiply each other's rows. You do not need bridge tables.
-- A calculation across two fact tables must be a `combine` metric, not one aggregation over a joined result.
-
-## Dropped filters
-
-A query filter applies only if its table is already in the joins for that metric, or is a parent of one of them. Otherwise **Compass removes it without a message**.
-
-Compass never removes the filters inside a metric definition. Row-level security can set `enforced` to throw instead of dropping.
-
----
+If a user has access to a metric but not the underlying table, they can't query that metric (safe by default). As a result, typically you can leave metrics with open access and control only the source data tables.
 
 # Worked examples
 
@@ -596,14 +455,13 @@ export const metrics = defineMetrics({
 ```
 
 ```dax
+// Formatting not shown here; the Compass data model above handles logic + synonyms for chat + formatting, which is a large part of why it takes more lines
 Total Sales    = SUM ( 'Order Lines'[line_total] )
 Total Cost     = SUM ( 'Order Lines'[line_cost] )
 Total Discount = SUM ( 'Order Lines'[discount_amount] )
 Gross Profit   = [Total Sales] - [Total Cost] - [Total Discount]
 Gross Margin % = DIVIDE ( [Gross Profit], [Total Sales] )
 ```
-
-A combine metric can build on another, so `Gross profit` uses `Gross profit before discount`. Naming each step also lets a user ask about profit before the discount.
 
 ## A rate from two filtered metrics
 
@@ -622,21 +480,72 @@ export const metrics = defineMetrics({
 })
 ```
 
-`Fulfilled orders` builds on `Live orders`, not `Total orders`. Because layers only narrow, the numerator can never include a cancelled order the denominator excludes, so the rate cannot exceed 100%.
+`Fulfilled orders` builds on `Live orders`, not `Total orders`, and stacks a new filter on top.
 
-Synonyms can be phrases, not just single words.
+The filters here could have been defined inline rather than at the top level, but defining them there makes it trivial to reuse them in other metrics, so it's a good practice to follow.
 
-## When a number looks wrong
+Synonyms can also be phrases, not just single words.
 
-1. **Two layers filtering the same column?** That gives zero rows. Check the whole chain.
-2. **Value unformatted?** The metric has no `formatter`. They do not inherit.
-3. **Query filter ignored?** It could not reach that metric's aggregation table.
-4. **Percentage 100 times too large?** `formatPercentage` needs a ratio.
-5. **Stock or headcount far too large?** Use a `snapshot` metric.
-6. **Running total starting too high?** Expected. A lower date limit does not cut the baseline.
-7. **Total row empty?** Averages, medians and distinct counts cannot be re-derived, so Compass gives null rather than a wrong number.
+## Layering & `modify` deep-dive
 
----
+```ts
+export const metrics = defineMetrics({
+  // Layer 0. All the layers below use this metric.
+  'Total sales': queryMetric('sum', 'order_lines', 'Line total', {
+    formatter: currencyFormatter(0),
+    synonyms: ['revenue', 'turnover'],
+  }),
+
+  // Layer 1. Keep the lines that have a discount.
+  'Discounted sales': modify(
+    'Total sales',
+    [compare('order_lines', 'Discount', '>', dynamic(0))],
+    { formatter: currencyFormatter(0) },
+  ),
+
+  // Layer 2. Keep the Gold customers (reached through `orders`).
+  'Gold discounted sales': modify(
+    'Discounted sales',
+    [eq('customers', 'Tier', dynamic('Gold'))],
+    { formatter: currencyFormatter(0) },
+  ),
+
+  // Layer 3. Keep one region, which is another join away.
+  'Gold discounted sales, North': modify(
+    'Gold discounted sales',
+    [eq('regions', 'Region', dynamic('North'))],
+    { formatter: currencyFormatter(0) },
+  ),
+})
+```
+
+Compass follows the `base` chain to the bottom and collects every filter into one list:
+
+```
+'Gold discounted sales, North'
+  → base: 'Gold discounted sales'
+      → base: 'Discounted sales'
+          → base: 'Total sales'   ← The bottom: sum of order_lines."Line total"
+
+The result is one metric:
+  operation: sum
+  table:     order_lines
+  column:    Line total
+  filters:   [ Discount > 0,
+               customers.Tier = 'Gold',
+               regions.Region = 'North' ]
+```
+
+```sql
+SELECT SUM(order_lines.unit_price * order_lines.quantity) AS "Gold discounted sales, North"
+FROM order_lines
+LEFT JOIN orders    ON order_lines.order_id = orders.id
+LEFT JOIN customers ON orders.customer_id   = customers.id
+LEFT JOIN regions   ON customers.region_id  = regions.id
+WHERE order_lines.discount_amount > ?
+  AND customers.tier = ?
+  AND regions.name = ?
+```
 
 # The example model
 
@@ -744,7 +653,7 @@ export const tables = defineTables({
 export const complexRelationships = [] satisfies ComplexRelationship[]
 ```
 
-`metricBuilderHelpers(tables)` gives you builders bound to these tables, so a wrong table or column name becomes a type error.
+`metricBuilderHelpers(tables)` gives you builders bound to these tables, so a wrong table or column name becomes a type error (a red underline in the editor).
 
 ```ts
 const {
