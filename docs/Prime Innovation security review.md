@@ -56,7 +56,7 @@
 
 ## Encryption in transit and at rest
 
-We host on Render. Their documentation covers it well - links at the end of this section.
+We host on [Render](https://render.com/). Their documentation covers it well - links at the end of this section.
 
 **In transit**
 
