@@ -15,12 +15,13 @@
 - Client-facing endpoints take the org ID from the session (handled via our auth layer), not the request body. A client cannot ask for another client's data as there's no way to do so.
 - The only endpoints that accept explicit org-level filtering are gated behind a check that the user has the `clients` management admin permission.
 
+To secure the admin accounts themselves, Prime Innovation and Bearing each have configured their respective auth provider so that all accounts require MFA (applies to internal emails & account access, rather than specifically to the portal).
+
 **Potential concerns**
 
 | #   | Description                                                                                                                                                                                                                                                                                         | Risk                                       |
 | --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
 | 1   | **`users.list` is open to any admin regardless of permissions.** It uses `adminProcedure` rather than a permission-gated one and returns every user's name, email and organisation. An admin added with only `impersonate` - or with no grants at all - can enumerate the full client contact list. | Low to none (it's already only for admins) |
-| 2   | **No MFA requirement expressed by the app.** Prime Innovation should enforce MFA on the admin accounts in Google Workspace / Entra before go-live, to ensure that these are secure.                                                                                                                 | Medium                                     |
 
 ---
 
@@ -32,13 +33,13 @@
 - The permission is re-checked server-side on every request, not just when impersonation starts. A cookie held by someone whose permission was revoked stops working immediately.
 - The impersonated context is stripped of all admin rights, so an admin viewing a client cannot use admin endpoints while doing so.
 - Impersonation is cleared before sign-out is processed.
+- Impersonation start and stop events are tracked in the audit log
 
 **Potential concerns**
 
-| #   | Description                                                                                                                                                                                                                                                                                                                                    | Risk   |
-| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
-| 3   | **The impersonation auth doesn't automatically expire**. The 8-hour limit is a browser cookie `maxAge`, which the browser enforces and an attacker doesn't. The token value stays valid indefinitely (as long as the admin still has the `impersonate` permission). Fix is small: sign `userId + orgId + expiry` and check the expiry on read. | Low    |
-| 4   | **No record is kept of impersonation.** We don't track when an admin opens a client's dashboard. Given this is patent portfolio data, we should be able to answer "who looked at this client's data, and when".                                                                                                                                | Medium |
+| #   | Description                                                                                                                                                                                                                                                                                                                                    | Risk |
+| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---- |
+| 2   | **The impersonation auth doesn't automatically expire**. The 8-hour limit is a browser cookie `maxAge`, which the browser enforces and an attacker doesn't. The token value stays valid indefinitely (as long as the admin still has the `impersonate` permission). Fix is small: sign `userId + orgId + expiry` and check the expiry on read. | Low  |
 
 ---
 
@@ -61,21 +62,16 @@ We host on [Render](https://render.com/). Their documentation covers it well - l
 **In transit**
 
 - **Browser to app - Render.** Every Render service gets a free managed TLS certificate, for both the `onrender.com` subdomain and any custom domain we add. Render issues them through Let's Encrypt and Google Trust Services and renews them automatically before expiry, and it "automatically redirects all `HTTP` requests to `HTTPS`".
-- **App to database - Render** Each database gets an internal and an external URL. We currently use the **external** one, so our database traffic leaves Render and crosses the public internet. It is encrypted - Render enforces TLS on external connections, requiring clients to support "TLS version 1.2 or higher" and a set list of cipher suites, and those requirements apply only to external connections. So this is not an encryption gap. This is more about network exposure. Connecting externally means the database has to stay open to the internet, which is #5 below. **We should swap to the internal URL before go-live** - Render's own guidance is "Use the internal URL wherever possible", and external connections are also slower because "they traverse the public internet". Render's TLS enforcement applies to the external URL only, and their docs say nothing either way about internal connections, so set `sslmode=require` on the internal `DATABASE_URL` and confirm it still connects rather than assuming the encryption comes with it.
+- **App to database - Render** The portal uses the internal connection that Render provides, so traffic to the database travels over Render's internal network, not the public internet.
 - **App to Backblaze (client logos):** over HTTPS.
 - **App to Bearing's internal tool Mission Control for monitoring uptime:** over HTTPS.
+- **Direct access to database for debugging** Where direct access to the database is required for debugging, we use Render's external connection. This external access is locked down to only approved IPs. Render enforces TLS on external connections, requiring clients to support "TLS version 1.2 or higher" and a set list of cipher suites.
 
 **At rest**
 
 - **Database - Render.** "Render Postgres databases are encrypted at rest using AES-256 data encryption", and that covers the primary, any replicas, and all backups. Note that nothing in the application encrypts columns before storing them.
 - **Environment variables and secrets - Render.** "Your environment variables and secret files are encrypted at rest using a minimum AES-128 standard", with "TLS 1.2 or higher" securing the transport layer to the app.
 - **Logos - Backblaze.** The `prime-innovation` bucket is private, and default server-side encryption (SSE-B2, Backblaze-managed keys) is enabled.
-
-**What Render's defaults do not cover**
-
-| #   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Risk                                                                                         |
-| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| 5   | **Render Postgres is reachable from anywhere, and our use of the external URL is what keeps it that way.** Their docs are explicit: "By default, your Render Postgres instance is accessible from any IP address (if the connection uses valid credentials)" - the default allowlist is `0.0.0.0/0`. Encryption doesn't help if the database is exposed to credential stuffing from the whole internet, and right now a Postgres password is the only thing in front of it. We can't narrow the allowlist while the app connects externally, because we'd cut off our own app. Fix in order: move the app to the internal URL, then narrow the allowlist to specified IPs for our dev use. Allowlist rules "apply only to connections that use your database's external URL", so the app keeps working either way. **Action before go-live.** | Moderate (not an active vulnerability and the password is auto-generated, long, and random). |
 
 **Supporting documentation**
 
@@ -109,21 +105,26 @@ We host on [Render](https://render.com/). Their documentation covers it well - l
 
 | #   | Description                                                                                                                                                                                                                                                           | Risk                                                                                   |
 | --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| 6   | **No rate limiting.** API calls and sign-in attempts aren't rate-limited. The identity provider (Microsoft or Google) will definitely have rate limiting on their side, so this isn't a security risk as much as not having protected against getting DDoSed offline. | Low for security, medium for DDoS risk (Render has some network-level protections too) |
+| 3   | **No rate limiting.** API calls and sign-in attempts aren't rate-limited. The identity provider (Microsoft or Google) will definitely have rate limiting on their side, so this isn't a security risk as much as not having protected against getting DDoSed offline. | Low for security, medium for DDoS risk (Render has some network-level protections too) |
 
 ---
 
 ## Logging and monitoring
 
+The portal has an audit log for security-related events:
+
+- Access granted or revoked for a client
+- An admin being added or removed
+- An admin's permissions changing
+- Impersonation starting or ending
+- Client creation or deletion
+- Sign-ins
+
 **Potential concerns**
 
-| #   | Description                                                                                                                                                                                                                                                                                              | Risk                                                              |
-| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| 7   | **Auth.js debug mode is enabled in all environments**. Per Auth.js's docs, it's better to disable this in production environments so user email addresses aren't logged.                                                                                                                                 | Low to medium                                                     |
-| 8   | **No audit log** for security-relevant events. Importing a portfolio tracks who uploaded the document & when, but other flows don't track this sort of info. It would be good to track: granting or removing client access, changing admin permissions, starting impersonation, or exporting a schedule. | Medium (high importance, but most only possible for admins to do) |
-| 9   | **No alerting on suspicious sign-in attempts.** We don't have handling in place for repeated denied sign-ins; most of the work here is on the auth provider's side (Microsoft and Google), but we could add more handling here.                                                                          | Low to medium                                                     |
-
-Before go-live: best to add an `audit_log` table capturing actor, action, target org, timestamp and IP for access grants/revocations, permission changes and impersonation.
+| #   | Description                                                                                                                                                                                                                     | Risk          |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| 4   | **No alerting on suspicious sign-in attempts.** We don't have handling in place for repeated denied sign-ins; most of the work here is on the auth provider's side (Microsoft and Google), but we could add more handling here. | Low to medium |
 
 ---
 
@@ -139,15 +140,11 @@ Before go-live: best to add an `audit_log` table capturing actor, action, target
 
 ## Dependencies and third parties
 
-`npm audit --omit=dev`, run 2026-08-17 against `package-lock.json`: **14 vulnerabilities (3 critical, 4 high, 7 moderate)**. Not all are relevant, but one is:
+**Dependencies:**
 
-| #   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Risk |
-| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---- |
-| 10  | **`@auth/core` 0.41.2 - three advisories, one critical.** This is the library doing our authentication. The relevant one is GHSA-x445-f3h2-j279: OAuth `state`, `nonce` and PKCE check cookies are not bound to the provider that issued them - and we run two providers. Also affects `@auth/express` 0.12.2 and `@auth/prisma-adapter` 2.11.2, which depend on it. `npm audit` reports a non-breaking fix is available. **This should be patched before go-live.** | High |
+Dependencies are up to date (as of the time of writing), with no known security vulnerabilities in packages the portal uses.
 
-The remainder are transitive and lower severity: `undici`, `brace-expansion`, `fast-uri`, `hono` (via `@prisma/dev`), `uuid` (via `exceljs` - the only fix is a major ExcelJS downgrade, so leave it; the advisory is a buffer bounds check on a code path we never call, since we don't generate UUIDs through ExcelJS).
-
-**Action:** run `npm audit fix` to apply non-breaking patches, and re-audit to confirm they're addressed. Longer term, turn on Dependabot or Renovate.
+We have GitHub's Dependabot enabled to track reported dependency vulnerabilities and alert us of these, so we can patch them promptly when reported.
 
 **Third-party services and what each can see:**
 
@@ -195,22 +192,13 @@ The portal and its database both run on Render, a managed platform, on a Pro wor
 
 ## Summary - recommended actions before go-live
 
-**Do before launch**
-
-1. Tweak: move the app onto the internal database URL, then narrow the Postgres IP allowlist to tighten where the database is accessible from (#5).
-2. Tweak: patch `@auth/core` and run `npm audit fix` (#10, #11).
-3. Tweak: turn off Auth.js debug logging in production, so user emails stop being written to the logs on every request (#7).
-4. (Prime Innovation to do): Enforce MFA on the admin accounts in Google Workspace/Entra (#2).
-
 **Optional for defence in depth**
 
-5. Small feature: add an audit log covering access grants and removals, admin permission changes, and impersonation (#4, #8).
-6. Small feature: add rate limiting to the sign-in and API endpoints (#6).
-7. Tweak: set up automated dependency updates in GitHub.
-8. Small feature: add much more logging on data-viewing actions across the app
-9. Small feature: set up a log retention platform so we can access logs for more than 14 days.
+1. Small feature: add rate limiting to the sign-in and API endpoints (#3).
+2. Small feature: add much more logging on data-viewing actions across the app
+3. Small feature: set up a log retention platform so we can access logs for more than 14 days.
 
 **Nice to have & polish**
 
-10. Tweak: make impersonation expire after a time (#3).
-11. Small feature: add alerting on repeated denied sign-ins (#9).
+4. Tweak: make impersonation expire after a time (#2).
+5. Small feature: add alerting on repeated denied sign-ins (#4).
