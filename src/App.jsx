@@ -3,6 +3,8 @@ import './paged.css'
 
 const clientName = 'TRT'
 
+document.title = `Compass + ${clientName}`
+
 // The Export button. Native browser print → "Save as PDF" as the destination.
 // Because @page margin is 0 and each .page is exactly A4, the PDF is 1:1.
 function exportPdf() {
