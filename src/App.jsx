@@ -1,6 +1,8 @@
 import Page from './Page.jsx'
 import './paged.css'
 
+const clientName = 'TRT'
+
 // The Export button. Native browser print → "Save as PDF" as the destination.
 // Because @page margin is 0 and each .page is exactly A4, the PDF is 1:1.
 function exportPdf() {
@@ -30,6 +32,20 @@ function Figure({ src, alt, caption }) {
 // Line icons for the "More than dashboards" detail rows. 24×24, drawn with
 // currentColor so the accent green flows through from CSS.
 const Icon = {
+  Tag: () => (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M3 11.8V4a1 1 0 0 1 1-1h7.8a2 2 0 0 1 1.4.6l7.2 7.2a2 2 0 0 1 0 2.8l-6.8 6.8a2 2 0 0 1-2.8 0L3.6 13.2A2 2 0 0 1 3 11.8z" />
+      <circle cx="7.5" cy="7.5" r="1.3" />
+    </svg>
+  ),
   Sync: () => (
     <svg
       viewBox="0 0 24 24"
@@ -171,7 +187,7 @@ const Icon = {
   ),
 }
 
-const TOTAL = 8
+const TOTAL = 7
 
 export default function App() {
   return (
@@ -188,7 +204,7 @@ export default function App() {
       </div>
 
       {/* ============================================================
-          PAGE 1 · COVER 
+          COVER 
           Compass + "Your data, on tap", TW logo prominent,
           white on Bearing green.
           ============================================================ */}
@@ -200,7 +216,7 @@ export default function App() {
             <h1>
               Compass
               <br />
-              for <span className="thin">Tompkins&nbsp;Wake</span>.
+              for <span className="thin">{clientName}</span>.
             </h1>
             <p className="sub">Effortless answers you can trust.</p>
             <div className="intro">
@@ -222,8 +238,8 @@ export default function App() {
               <dd>
                 <img
                   className="client-logo"
-                  src="/logos/tompkins-wake-logo.png"
-                  alt="Tompkins Wake"
+                  src="/logos/trt-logo.svg"
+                  alt={clientName}
                 />
               </dd>
             </div>
@@ -236,9 +252,52 @@ export default function App() {
       </Page>
 
       {/* ============================================================
-          PAGE 2 · CHAT FEATURE  — the headline benefit
+          DASHBOARDS  
+          Build the dashboard yourself, no IT required
           ============================================================ */}
-      <Page n={2} total={TOTAL} label="Chat">
+      <Page n={2} total={TOTAL} label="Dashboards">
+        <div className="eyebrow">Curate your favourites</div>
+        <h2 className="section">A dashboard that's tailor-made for you</h2>
+        <p className="lead">
+          Save the most useful charts to your personal dashboard. No need to
+          wait for a report developer.
+        </p>
+        <div className="divider" />
+        <ul className="benefits grid">
+          <li>
+            <h3>Always up to date.</h3>
+            <p>
+              No more stale reports; see the latest data whenever you refresh
+              the page.
+            </p>
+          </li>
+          <li>
+            <h3>Frees up your time to deep dive.</h3>
+            <p>
+              Less time pulling routine numbers, and more time on analysis that
+              moves the needle.
+            </p>
+          </li>
+          <li>
+            <h3>Share with your team.</h3>
+            <p>
+              Share a report with your team, and they can refer to it directly
+              or use it as the base to build their own dashboard.
+            </p>
+          </li>
+          <li>
+            <h3>Track comments directly in the report.</h3>
+            <p>Keep everyone on the same page with in-report comments.</p>
+          </li>
+        </ul>
+        <Figure src="/Dashboard chart.png" alt="A saved dashboard" />
+        <Footer />
+      </Page>
+
+      {/* ============================================================
+          CHAT FEATURE  — the headline benefit
+          ============================================================ */}
+      <Page n={3} total={TOTAL} label="Chat">
         <div className="eyebrow">Effortless answers</div>
         <h2 className="section">Chat with your data</h2>
         <p className="lead">
@@ -250,9 +309,9 @@ export default function App() {
           <li>
             <h3>Ask anything, get answers immediately.</h3>
             <p>
-              &ldquo;Top 5 most profitable clients?&rdquo; &ldquo;Billable hours
-              and utilisation rate trend this financial year?&rdquo; Type it
-              like you&apos;d say it, and get a chart or table back in seconds.
+              &ldquo;Top 5 most profitable clients?&rdquo; &ldquo;What product
+              lines are our best sellers this year?&rdquo; Type it like
+              you&apos;d say it, and get a chart or table back in seconds.
             </p>
           </li>
           <li>
@@ -280,62 +339,17 @@ export default function App() {
           </li>
         </ul>
         <Figure
-          src="/Chat chart.png"
+          src="/Chat GP chart.png"
           alt="A chat question resolving into a chart"
         />
         <Footer />
       </Page>
 
       {/* ============================================================
-          PAGE 3 · DASHBOARDS  
-          Build the dashboard yourself, no IT required
-          ============================================================ */}
-      <Page n={3} total={TOTAL} label="Dashboards">
-        <div className="eyebrow">Curate your favourites</div>
-        <h2 className="section">A dashboard that's tailor-made for you</h2>
-        <p className="lead">
-          Save the most useful charts to your personal dashboard. No need to
-          wait for a report developer.
-        </p>
-        <div className="divider" />
-        <ul className="benefits grid">
-          <li>
-            <h3>Save a chart in three clicks.</h3>
-            <p>
-              Pin any table or chart to your dashboard, straight from the chat.
-            </p>
-          </li>
-          <li>
-            <h3>Always up to date.</h3>
-            <p>
-              No more stale reports; see the latest data whenever you refresh
-              the page.
-            </p>
-          </li>
-          <li>
-            <h3>Frees your analysts to deep dive.</h3>
-            <p>
-              Less time pulling routine numbers, and more time on analysis that
-              moves the needle.
-            </p>
-          </li>
-          <li>
-            <h3>Share with your team.</h3>
-            <p>
-              Share a report with your team, and they can refer to it directly
-              or use it as the base to build their own dashboard.
-            </p>
-          </li>
-        </ul>
-        <Figure src="/Dashboard chart.png" alt="A saved dashboard" />
-        <Footer />
-      </Page>
-
-      {/* ============================================================
-          PAGE 4 · BUILT ON EXISTING WORK 
+          BUILT ON EXISTING WORK 
           Resolution8, no new data project, local, support
           ============================================================ */}
-      <Page n={4} total={TOTAL} label="Head start">
+      {/* <Page n={4} total={TOTAL} label="Head start">
         <div className="eyebrow">A running start</div>
         <h2 className="section">Built on the work you&apos;ve already done</h2>
         <p className="lead">
@@ -408,41 +422,47 @@ export default function App() {
         </div>
 
         <Footer />
-      </Page>
+      </Page> */}
 
       {/* ============================================================
-          PAGE 5 · PRICING 
+          PRICING 
           ============================================================ */}
-      <Page n={5} total={TOTAL} label="Pricing">
+      <Page n={4} total={TOTAL} label="Pricing">
         <div className="eyebrow">Investment</div>
         <h2 className="section">Pricing package</h2>
-        <p className="lead">Clear pricing with no surprises.</p>
+        <p className="lead">
+          Clear pricing with no surprises: one flat fee for the whole company.
+        </p>
         <div className="divider" />
 
         <p>
           Start on a monthly plan for complete flexibility, and then move to a
           12 month contract when you're ready. Commit within the first 3 months
-          and we'll waive 25 hours of onboarding & implementation.
+          and we'll waive 40 hours of onboarding & implementation.
         </p>
 
         <div className="price-options">
           <div className="price-opt price-opt--light">
             <span className="badge">Flexible</span>
             <div className="price-figure">
-              <span className="amount">$2,600</span>
+              <span className="amount">$3,300</span>
               <span className="per">/ month</span>
             </div>
-            <p className="panel-sub">+ est 40h for implementation at $185/h.</p>
+            <p className="panel-sub">
+              + est 3-4w for implementation at $185/h.
+            </p>
           </div>
           <div className="price-opt">
             <span className="badge">12-month contract</span>
             <div className="price-figure">
-              <span className="amount">$2,000</span>
+              <span className="amount">$2,700</span>
               <span className="per">/ month</span>
             </div>
-            <p className="panel-sub">+ est 40h for implementation at $185/h.</p>
+            <p className="panel-sub">
+              + est 3-4w for implementation at $185/h.
+            </p>
             <p className="panel-sub-small">
-              Sign up within your first 3 months and we'll waive 25 hours.
+              Sign up within your first 3 months and we'll waive 40 hours.
             </p>
           </div>
         </div>
@@ -489,12 +509,12 @@ export default function App() {
           </div>
           <div className="feat">
             <span className="feat-icon">
-              <Icon.Lift />
+              <Icon.Tag />
             </span>
-            <h3>Help at hand if you want it</h3>
+            <h3>Predictable pricing</h3>
             <p>
-              Roll out at your own pace, or engage us or Resolution8 to help get
-              your team live sooner.
+              The flat fee is indexed to inflation, so you know the price won't
+              be hiked on you.
             </p>
           </div>
           <div className="feat">
@@ -512,16 +532,16 @@ export default function App() {
         <div className="divider" />
         <p className="note">
           Our standard pricing for a firm your size — we&apos;ll shape the final
-          package with you and Resolution8 to match how you want to roll it out.
+          package with you to match how you want to roll it out.
         </p>
         <p className="note">Prices shown are exclusive of GST.</p>
         <Footer />
       </Page>
 
       {/* ============================================================
-          PAGE 6 · THE TEAM 
+          THE TEAM 
           ============================================================ */}
-      <Page n={6} total={TOTAL} label="Team">
+      <Page n={5} total={TOTAL} label="Team">
         <div className="eyebrow">Who&apos;s behind it</div>
         <h2 className="section">The team behind Compass</h2>
         <p className="lead">
@@ -529,34 +549,51 @@ export default function App() {
           the people who build it.
         </p>
         <div className="divider" />
-        <div className="two-col team">
-          <div className="member">
-            <img className="avatar" src="/team/sam.png" alt="Sam Woolerton" />
-            <h3>Sam Woolerton</h3>
-            <p className="role">Founder &amp; Director</p>
+        <div class="space-y-6">
+          <div className="team flex justify-center space-x-8">
+            <div className="member">
+              <img className="avatar" src="/team/sam.png" alt="Sam Woolerton" />
+              <h3>Sam Woolerton</h3>
+              <p className="role">Founder &amp; Director</p>
+            </div>
+            <div className="member">
+              <img
+                className="avatar"
+                src="/team/cathan.jpg"
+                alt="Cathan Bowler"
+              />
+              <h3>Cathan Bowler</h3>
+              <p className="role">Sales Lead</p>
+            </div>
           </div>
-          <div className="member">
-            <img
-              className="avatar"
-              src="/team/jesse.png"
-              alt="Jesse O'Connor"
-            />
-            <h3>Jesse O&apos;Connor</h3>
-            <p className="role">Full-Stack Developer</p>
-          </div>
-          <div className="member">
-            <img className="avatar" src="/team/ethan.png" alt="Ethan MacLeod" />
-            <h3>Ethan MacLeod</h3>
-            <p className="role">Full-Stack Developer</p>
-          </div>
-          <div className="member">
-            <img
-              className="avatar"
-              src="/team/isaiah.png"
-              alt="Isaiah Foulidis"
-            />
-            <h3>Isaiah Foulidis</h3>
-            <p className="role">Data Pipeline Specialist</p>
+          <div className="team flex justify-center space-x-6">
+            <div className="member">
+              <img
+                className="avatar"
+                src="/team/jesse.png"
+                alt="Jesse O'Connor"
+              />
+              <h3>Jesse O&apos;Connor</h3>
+              <p className="role">Full-Stack Developer</p>
+            </div>
+            <div className="member">
+              <img
+                className="avatar"
+                src="/team/ethan.png"
+                alt="Ethan MacLeod"
+              />
+              <h3>Ethan MacLeod</h3>
+              <p className="role">Full-Stack Developer</p>
+            </div>
+            <div className="member">
+              <img
+                className="avatar"
+                src="/team/isaiah.png"
+                alt="Isaiah Foulidis"
+              />
+              <h3>Isaiah Foulidis</h3>
+              <p className="role">Data Pipeline Specialist</p>
+            </div>
           </div>
         </div>
         <div className="divider" />
@@ -600,9 +637,9 @@ export default function App() {
       </Page>
 
       {/* ============================================================
-          PAGE 7 · INTEGRATIONS & AUTOMATION 
+          INTEGRATIONS & AUTOMATION 
           ============================================================ */}
-      <Page n={7} total={TOTAL} label="Automation">
+      <Page n={6} total={TOTAL} label="Automation">
         <div className="eyebrow">Your data hub</div>
         <h2 className="section">More than dashboards</h2>
         <p className="lead">
@@ -654,11 +691,11 @@ export default function App() {
               <Icon.Shield />
             </span>
             <div>
-              <h3>Secure client portals</h3>
+              <h3>Secure customer portals</h3>
               <p>
-                Raise the bar for client interactions by giving your key clients
-                more insights into their data. Strict security controls so they
-                only see information that you allow them to.
+                Raise the bar for customer interactions by giving your key
+                customers more insights into their data. Strict security
+                controls so they only see information that you allow them to.
               </p>
             </div>
           </li>
@@ -679,9 +716,9 @@ export default function App() {
       </Page>
 
       {/* ============================================================
-          PAGE 8 · CTA  — closing, full-bleed green to bookend cover
+          CTA  — closing, full-bleed green to bookend cover
           ============================================================ */}
-      <Page n={8} total={TOTAL}>
+      <Page n={7} total={TOTAL}>
         <div className="cta">
           <div className="mark">COMPASS BY BEARING</div>
           <div className="center">
