@@ -1,9 +1,19 @@
 import Page from './Page.jsx'
 import './paged.css'
 
-const clientName = 'TRT'
+const clientName = 'Coastal Medical'
 
 document.title = `Compass + ${clientName}`
+
+const manufacturingSampleQuestions = [
+  'Top 5 most profitable clients?',
+  'What product lines are our best sellers this year?',
+]
+const servicesSampleQuestions = [
+  'Top 5 most profitable appointment types?',
+  'Who of the team have the highest utilisation rate?',
+]
+const sampleQuestions = servicesSampleQuestions
 
 // The Export button. Native browser print → "Save as PDF" as the destination.
 // Because @page margin is 0 and each .page is exactly A4, the PDF is 1:1.
@@ -11,7 +21,6 @@ function exportPdf() {
   window.print()
 }
 
-// Shared page footer. One definition so every sheet reads identically.
 function Footer() {
   return (
     <div className="footer">
@@ -240,7 +249,7 @@ export default function App() {
               <dd>
                 <img
                   className="client-logo"
-                  src="/logos/trt-logo.svg"
+                  src="/logos/coastal-medical.png"
                   alt={clientName}
                 />
               </dd>
@@ -255,7 +264,6 @@ export default function App() {
 
       {/* ============================================================
           DASHBOARDS  
-          Build the dashboard yourself, no IT required
           ============================================================ */}
       <Page n={2} total={TOTAL} label="Dashboards">
         <div className="eyebrow">Curate your favourites</div>
@@ -297,7 +305,7 @@ export default function App() {
       </Page>
 
       {/* ============================================================
-          CHAT FEATURE  — the headline benefit
+          CHAT FEATURE 
           ============================================================ */}
       <Page n={3} total={TOTAL} label="Chat">
         <div className="eyebrow">Effortless answers</div>
@@ -311,9 +319,13 @@ export default function App() {
           <li>
             <h3>Ask anything, get answers immediately.</h3>
             <p>
-              &ldquo;Top 5 most profitable clients?&rdquo; &ldquo;What product
-              lines are our best sellers this year?&rdquo; Type it like
-              you&apos;d say it, and get a chart or table back in seconds.
+              {sampleQuestions.map((q, i) => (
+                <span>
+                  {i !== 0 ? ', ' : ''}&ldquo;{q}&rdquo;
+                </span>
+              ))}
+              . Type it like you&apos;d say it, and get a chart or table back in
+              seconds.
             </p>
           </li>
           <li>
@@ -437,35 +449,40 @@ export default function App() {
         </p>
         <div className="divider" />
 
-        <p>
+        <p class="text-xs mb-5">
           Start on a monthly plan for complete flexibility, and then move to a
-          12 month contract when you're ready. Commit within the first 3 months
-          and we'll waive 40 hours of onboarding & implementation.
+          12-month contract when you're ready.
         </p>
 
         <div className="price-options">
           <div className="price-opt price-opt--light">
             <span className="badge">Flexible</span>
             <div className="price-figure">
-              <span className="amount">$3,300</span>
+              <span className="amount">$1,150</span>
               <span className="per">/ month</span>
             </div>
             <p className="panel-sub">
-              + est 3-4w for implementation at $185/h.
+              + BYO AI for chat; 3c/message in our testing.
             </p>
+            {/* <p className="panel-sub">
+              + est 3-4w for implementation at $185/h.
+            </p> */}
           </div>
           <div className="price-opt">
             <span className="badge">12-month contract</span>
             <div className="price-figure">
-              <span className="amount">$2,700</span>
+              <span className="amount">$1,000</span>
               <span className="per">/ month</span>
             </div>
             <p className="panel-sub">
+              + BYO AI for chat; 3c/message in our testing.
+            </p>
+            {/* <p className="panel-sub">
               + est 3-4w for implementation at $185/h.
-            </p>
-            <p className="panel-sub-small">
+            </p> */}
+            {/* <p className="panel-sub-small">
               Sign up within your first 3 months and we'll waive 40 hours.
-            </p>
+            </p> */}
           </div>
         </div>
 
@@ -532,10 +549,10 @@ export default function App() {
         </div>
 
         <div className="divider" />
-        <p className="note">
+        {/* <p className="note">
           Our standard pricing for a firm your size — we&apos;ll shape the final
           package with you to match how you want to roll it out.
-        </p>
+        </p> */}
         <p className="note">Prices shown are exclusive of GST.</p>
         <Footer />
       </Page>
@@ -688,19 +705,19 @@ export default function App() {
               </p>
             </div>
           </li>
-          <li>
+          {/* <li>
             <span className="detail-icon">
               <Icon.Shield />
             </span>
             <div>
-              <h3>Secure customer portals</h3>
+              <h3>Secure client portals</h3>
               <p>
-                Raise the bar for customer interactions by giving your key
-                customers more insights into their data. Strict security
-                controls so they only see information that you allow them to.
+                Raise the bar for client interactions by giving your key clients
+                more insights into their data. Strict security controls so they
+                only see information that you allow them to.
               </p>
             </div>
-          </li>
+          </li> */}
           <li>
             <span className="detail-icon">
               <Icon.Source />

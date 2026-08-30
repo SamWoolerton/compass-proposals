@@ -212,9 +212,9 @@ h3 {
 }
 .cover .client-logo {
   display: block;
-  height: 6mm;
+  height: 7mm;
   width: auto;
-  max-width: 60mm;
+  /* max-width: 60mm; */
   /* The artwork is already solid white; it only *looks* grey because scaling a
      thin wordmark down onto dark green leaves semi-transparent, dark-blended
      edge pixels. brightness(0) invert(1) guarantees white regardless of source,
