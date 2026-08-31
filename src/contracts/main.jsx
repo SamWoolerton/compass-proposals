@@ -10,6 +10,8 @@ import '@fontsource/jetbrains-mono/400.css'
 import '@fontsource/jetbrains-mono/500.css'
 import '@fontsource/jetbrains-mono/600.css'
 
+import '../index.css'
+
 import ContractPage from './ContractPage.jsx'
 import Contract, { client } from './Compass licensing agreement.jsx'
 

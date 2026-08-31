@@ -45,7 +45,7 @@ export default function Contract() {
         <strong>{client}</strong> (“Client”)
       </p>
 
-      <h2>1. Licence</h2>
+      <h2>Licence</h2>
 
       <p>
         Bearing grants the Client a{' '}
@@ -59,7 +59,7 @@ export default function Contract() {
         Client must not resell, sublicense, or provide Compass to third parties.
       </p>
 
-      <h2>2. Term</h2>
+      <h2>Term</h2>
 
       <p>
         The agreement runs for an initial <strong>12-month term</strong> from
@@ -72,10 +72,10 @@ export default function Contract() {
         further 12-month term if they wish.
       </p>
 
-      <h2>3. Fees &amp; Payment</h2>
+      <h2>Fees &amp; Payment</h2>
 
       <p>
-        The subscription fee is: <strong>NZ $2,000 +GST per month</strong>
+        The subscription fee is: <strong>NZ $2,000 +GST per month</strong>.
       </p>
 
       <p>
@@ -101,7 +101,7 @@ export default function Contract() {
         reasonable timeframe.
       </p>
 
-      <h2>4. Access &amp; Support</h2>
+      <h2>Access &amp; Support</h2>
 
       <p>
         Bearing will provide the Client with access to Compass during the term
@@ -113,7 +113,7 @@ export default function Contract() {
         accounts and AI subscription.
       </p>
 
-      <h2>5. Ownership</h2>
+      <h2>Ownership</h2>
 
       <p>
         Compass, including its software, underlying technology, design and
@@ -126,7 +126,7 @@ export default function Contract() {
         property.
       </p>
 
-      <h2>6. Ending the Agreement</h2>
+      <h2>Ending the Agreement</h2>
 
       <p>
         Either party may end this agreement if the other party materially
@@ -139,25 +139,27 @@ export default function Contract() {
         access will be removed.
       </p>
 
-      <h2>7. Agreement</h2>
+      <h2>Agreement</h2>
 
       <p>
         By signing below, both parties agree to the terms of this agreement.
       </p>
 
-      {signatories.map(({ party, name, role }) => (
-        <div className="signatory" key={party}>
-          <h3>{party}</h3>
+      <div className="signatures">
+        {signatories.map(({ party, name, role }) => (
+          <section className="signatory" key={party}>
+            <div className="font-semibold text-xs mb-3">{party}</div>
 
-          <p>
-            <strong>Signed by:</strong> {name}, {role}
-          </p>
+            <p className="signatory-signer">
+              {name}
+              <span className="signatory-role">{role}</span>
+            </p>
 
-          <p>Signature: __________________________________</p>
-
-          <p>Date: ______________________________________</p>
-        </div>
-      ))}
+            <div className="sig-line">Signature</div>
+            <div className="sig-line is-date">Date</div>
+          </section>
+        ))}
+      </div>
     </>
   )
 }
