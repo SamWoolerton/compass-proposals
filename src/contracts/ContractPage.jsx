@@ -9,7 +9,7 @@ function exportPdf() {
 
 export default function ContractPage({ client, children }) {
   const [guide, setGuide] = useState(false)
-  const title = `Compass License - ${client}`
+  const title = `Compass Licence Agreement - ${client}`
   useEffect(() => {
     document.title = title
   }, [title])

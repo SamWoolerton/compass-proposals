@@ -13,7 +13,7 @@ import '@fontsource/jetbrains-mono/600.css'
 import '../index.css'
 
 import ContractPage from './ContractPage.jsx'
-import Contract, { client } from './Compass licensing agreement.jsx'
+import Contract, { client } from './Compass licence agreement.jsx'
 
 createRoot(document.getElementById('root')).render(
   <ContractPage client={client}>
