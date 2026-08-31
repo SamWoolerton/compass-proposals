@@ -11,6 +11,22 @@
   counter-reset: clause;
 }
 
+/* Alignment guide, screen only: a rule on the text column's left edge. */
+@media screen {
+  .doc-body.show-guide {
+    position: relative;
+  }
+  .doc-body.show-guide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--doc-pad-x);
+    width: 1px;
+    background: #e0245e;
+    opacity: 0.6;
+  }
+}
 .doc-body.is-contract h2 {
   position: relative;
   counter-increment: clause;

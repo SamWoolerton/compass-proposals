@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import '../docs/docs.css'
 import './contracts.css'
@@ -8,6 +8,7 @@ function exportPdf() {
 }
 
 export default function ContractPage({ client, children }) {
+  const [guide, setGuide] = useState(false)
   const title = `Compass License - ${client}`
   useEffect(() => {
     document.title = title
@@ -16,6 +17,9 @@ export default function ContractPage({ client, children }) {
   return (
     <>
       <div className="toolbar no-print">
+        <button onClick={() => setGuide(g => !g)}>
+          {guide ? 'Hide guide' : 'Show guide'}
+        </button>
         <button onClick={exportPdf}>Export to PDF</button>
       </div>
 
@@ -44,7 +48,11 @@ export default function ContractPage({ client, children }) {
           <tbody>
             <tr>
               <td>
-                <article className="doc-body is-contract">{children}</article>
+                <article
+                  className={`doc-body is-contract${guide ? ' show-guide' : ''}`}
+                >
+                  {children}
+                </article>
               </td>
             </tr>
           </tbody>
