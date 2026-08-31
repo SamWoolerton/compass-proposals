@@ -102,7 +102,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6mm 12mm;
-  margin-top: 7mm;
+  margin: 7mm 0 12mm;
   break-inside: avoid;
 }
 
