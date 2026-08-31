@@ -36,11 +36,13 @@ const signatories = [
 export default function Contract() {
   return (
     <>
-      <h1>Compass — Software License Agreement</h1>
-
-      <p>
-        <strong>Effective date:</strong> {effectiveDate}
-      </p>
+      <h1>
+        Compass
+        <span className="title-meta">
+          <span>Software Licence Agreement</span>
+          <span className="title-date">Effective {effectiveDate}</span>
+        </span>
+      </h1>
 
       <div className="parties">
         {parties.map(({ role, name, term, address }) => (
