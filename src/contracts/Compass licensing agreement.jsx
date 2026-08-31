@@ -61,6 +61,12 @@ export default function Contract() {
         the Effective Date.
       </p>
 
+      <p>
+        At the completion of the initial term, the Client may opt to move to a
+        monthly subscription (rate to be discussed at that time), or renew for a
+        further 12-month term if they wish.
+      </p>
+
       <h2>3. Fees &amp; Payment</h2>
 
       <p>
