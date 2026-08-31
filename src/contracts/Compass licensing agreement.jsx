@@ -5,6 +5,21 @@ export const client = 'Tompkins Wake'
 // Default to the current date to save time; can always hard-code it per client where required.
 const effectiveDate = format(new Date(), 'do MMMM yyyy')
 
+const parties = [
+  {
+    role: 'Provider',
+    name: 'Bearing Holdings Limited',
+    term: 'Bearing',
+    address: ['45 Brookview Court', 'Queenwood', 'Hamilton 3210'],
+  },
+  {
+    role: 'Client',
+    name: client,
+    term: 'Client',
+    address: ['Westpac House, Level 8', '430 Victoria Street', 'Hamilton 3204'],
+  },
+]
+
 const signatories = [
   {
     party: 'Bearing Holdings Limited',
@@ -27,23 +42,21 @@ export default function Contract() {
         <strong>Effective date:</strong> {effectiveDate}
       </p>
 
-      <p>This agreement is between:</p>
-
-      <p className="party">
-        <strong>Bearing Holdings Limited</strong> (“Bearing”)
-        <br />
-        45 Brookview Court
-        <br />
-        Queenwood
-        <br />
-        Hamilton, 3210
-      </p>
-
-      <p>and</p>
-
-      <p className="party">
-        <strong>{client}</strong> (“Client”)
-      </p>
+      <div className="parties">
+        {parties.map(({ role, name, term, address }) => (
+          <section className="party" key={role}>
+            <div className="party-role">{role}</div>
+            <div className="party-name">
+              {name} <span className="party-term">(“{term}”)</span>
+            </div>
+            <div className="party-address">
+              {address.map(line => (
+                <span key={line}>{line}</span>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
 
       <h2>Licence</h2>
 

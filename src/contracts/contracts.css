@@ -3,8 +3,42 @@
    party blocks, addresses, signature panels.
    ============================================================ */
 
-.doc-body.is-contract .party {
-  line-height: 1.45;
+.doc-body.is-contract .parties {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12mm;
+  margin: 7mm 0 0;
+  break-inside: avoid;
+}
+.doc-body.is-contract .party-role {
+  padding-bottom: 1.5mm;
+  border-bottom: 1px solid var(--hair);
+  font-family: var(--font-mono);
+  font-size: 7pt;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.doc-body.is-contract .party-name {
+  margin-top: 2.5mm;
+  font-family: var(--font-display);
+  font-size: 12pt;
+  line-height: 1.25;
+  color: var(--heading);
+}
+.doc-body.is-contract .party-term {
+  font-family: var(--font-sans);
+  font-size: 9.5pt;
+  color: var(--muted);
+}
+.doc-body.is-contract .party-address {
+  margin-top: 2.5mm;
+  font-size: 9.5pt;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.doc-body.is-contract .party-address span {
+  display: block;
 }
 
 .doc-body.is-contract {
