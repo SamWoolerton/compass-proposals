@@ -1,4 +1,9 @@
+import { format } from 'date-fns'
+
 export const client = 'Tompkins Wake'
+
+// Default to the current date to save time; can always hard-code it per client where required.
+const effectiveDate = format(new Date(), 'do MMMM yyyy')
 
 const signatories = [
   {
@@ -19,7 +24,7 @@ export default function Contract() {
       <h1>Compass — Software License Agreement</h1>
 
       <p>
-        <strong>Effective date:</strong> ____________________
+        <strong>Effective date:</strong> {effectiveDate}
       </p>
 
       <p>This agreement is between:</p>
