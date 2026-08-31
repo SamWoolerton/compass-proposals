@@ -1,0 +1,15 @@
+/* ============================================================
+   contracts.css is layered on top of docs.css, and covers only the parts a contract has and a doc doesn't:
+   party blocks, addresses, signature panels.
+   ============================================================ */
+
+/* Multi-line party blocks (name + address). Tighter leading than body copy so
+   an address reads as one unit rather than as prose. */
+.doc-body.is-contract .party {
+  line-height: 1.45;
+}
+
+/* A signatory keeps its name, role and signing lines together on one page. */
+.doc-body.is-contract .signatory {
+  break-inside: avoid;
+}
