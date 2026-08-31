@@ -78,7 +78,7 @@ export default function Contract() {
 
       <p>
         The agreement runs for an initial <strong>12-month term</strong> from
-        the Effective Date.
+        the Effective Date, and is invoiced monthly.
       </p>
 
       <p>
