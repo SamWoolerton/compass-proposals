@@ -1,7 +1,8 @@
-import Page from './Page.jsx'
+import Page, { Pages } from './Page.jsx'
 import './paged.css'
 
 const clientName = 'Coastal Medical'
+const clientLogo = 'coastal-medical.png'
 
 document.title = `Compass + ${clientName}`
 
@@ -198,8 +199,6 @@ const Icon = {
   ),
 }
 
-const TOTAL = 7
-
 export default function App() {
   return (
     <>
@@ -214,563 +213,570 @@ export default function App() {
         <button onClick={exportPdf}>Export to PDF</button>
       </div>
 
-      {/* ============================================================
-          COVER 
-          Compass + "Your data, on tap", TW logo prominent,
-          white on Bearing green.
-          ============================================================ */}
-      <Page n={1} total={TOTAL}>
-        <div className="cover">
-          <div className="mark">COMPASS BY BEARING</div>
-          <div className="center">
-            <div className="eyebrow">Proposal · Compass</div>
-            <h1>
-              Compass
-              <br />
-              for <span className="thin">{clientName}</span>.
-            </h1>
-            <p className="sub">Effortless answers you can trust.</p>
-            <div className="intro">
+      <Pages>
+        {/* ============================================================
+            COVER 
+            Compass + "Your data, on tap", TW logo prominent,
+            white on Bearing green.
+            ============================================================ */}
+        <Page>
+          <div className="cover">
+            <div className="mark">COMPASS BY BEARING</div>
+            <div className="center">
+              <div className="eyebrow">Proposal · Compass</div>
+              <h1>
+                Compass
+                <br />
+                for <span className="thin">{clientName}</span>.
+              </h1>
+              <p className="sub">Effortless answers you can trust.</p>
+              <div className="intro">
+                <p>
+                  Today, &ldquo;how are we tracking?&rdquo; means someone stops
+                  what they're doing to pull an export, wrangle the data, and
+                  build a report.
+                </p>
+                <p>
+                  Compass changes that: ask in plain English and get answers in
+                  seconds. Save the most useful charts to your personal
+                  dashboard. AI with guardrails, providing answers you can
+                  trust.
+                </p>
+              </div>
+            </div>
+            <dl className="meta">
+              <div className="prepared-for">
+                <dt>Prepared for</dt>
+                <dd>
+                  <img
+                    className="client-logo"
+                    src={`/logos/${clientLogo}`}
+                    alt={clientName}
+                  />
+                </dd>
+              </div>
+              <div className="prepared-by">
+                <dt>Prepared by</dt>
+                <dd>Bearing</dd>
+              </div>
+            </dl>
+          </div>
+        </Page>
+
+        {/* ============================================================
+            DASHBOARDS  
+            ============================================================ */}
+        <Page label="Dashboards">
+          <div className="eyebrow">Curate your favourites</div>
+          <h2 className="section">A dashboard that's tailor-made for you</h2>
+          <p className="lead">
+            Save the most useful charts to your personal dashboard. No need to
+            wait for a report developer.
+          </p>
+          <div className="divider" />
+          <ul className="benefits grid">
+            <li>
+              <h3>Always up to date.</h3>
               <p>
-                Today, &ldquo;how are we tracking?&rdquo; means someone stops
-                what they're doing to pull an export, wrangle the data, and
-                build a report.
+                No more stale reports; see the latest data whenever you refresh
+                the page.
               </p>
+            </li>
+            <li>
+              <h3>Frees up your time to deep dive.</h3>
               <p>
-                Compass changes that: ask in plain English and get answers in
-                seconds. Save the most useful charts to your personal dashboard.
-                AI with guardrails, providing answers you can trust.
+                Less time pulling routine numbers, and more time on analysis
+                that moves the needle.
               </p>
-            </div>
-          </div>
-          <dl className="meta">
-            <div className="prepared-for">
-              <dt>Prepared for</dt>
-              <dd>
-                <img
-                  className="client-logo"
-                  src={`/logos/${clientLogo}`}
-                  alt={clientName}
-                />
-              </dd>
-            </div>
-            <div className="prepared-by">
-              <dt>Prepared by</dt>
-              <dd>Bearing</dd>
-            </div>
-          </dl>
-        </div>
-      </Page>
-
-      {/* ============================================================
-          DASHBOARDS  
-          ============================================================ */}
-      <Page n={2} total={TOTAL} label="Dashboards">
-        <div className="eyebrow">Curate your favourites</div>
-        <h2 className="section">A dashboard that's tailor-made for you</h2>
-        <p className="lead">
-          Save the most useful charts to your personal dashboard. No need to
-          wait for a report developer.
-        </p>
-        <div className="divider" />
-        <ul className="benefits grid">
-          <li>
-            <h3>Always up to date.</h3>
-            <p>
-              No more stale reports; see the latest data whenever you refresh
-              the page.
-            </p>
-          </li>
-          <li>
-            <h3>Frees up your time to deep dive.</h3>
-            <p>
-              Less time pulling routine numbers, and more time on analysis that
-              moves the needle.
-            </p>
-          </li>
-          <li>
-            <h3>Share with your team.</h3>
-            <p>
-              Share a report with your team, and they can refer to it directly
-              or use it as the base to build their own dashboard.
-            </p>
-          </li>
-          <li>
-            <h3>Track comments directly in the report.</h3>
-            <p>Keep everyone on the same page with in-report comments.</p>
-          </li>
-        </ul>
-        <Figure src="/Dashboard chart.png" alt="A saved dashboard" />
-        <Footer />
-      </Page>
-
-      {/* ============================================================
-          CHAT FEATURE 
-          ============================================================ */}
-      <Page n={3} total={TOTAL} label="Chat">
-        <div className="eyebrow">Effortless answers</div>
-        <h2 className="section">Chat with your data</h2>
-        <p className="lead">
-          The fastest path to insights. Send a question and Compass answers with
-          a table or chart.
-        </p>
-        <div className="divider" />
-        <ul className="benefits grid">
-          <li>
-            <h3>Ask anything, get answers immediately.</h3>
-            <p>
-              {sampleQuestions.map((q, i) => (
-                <span>
-                  {i !== 0 ? ', ' : ''}&ldquo;{q}&rdquo;
-                </span>
-              ))}
-              . Type it like you&apos;d say it, and get a chart or table back in
-              seconds.
-            </p>
-          </li>
-          <li>
-            <h3>Numbers you can trust, every time.</h3>
-            <p>
-              The AI reads your question but our custom query engine runs the
-              query - the worst case is that it misunderstands you, and you
-              clarify in a follow up. No hallucinated answers.
-            </p>
-          </li>
-          <li>
-            <h3>Locked down with granular permissions.</h3>
-            <p>
-              Everyone sees exactly what they&apos;re cleared to see, and
-              nothing else. Users can't circumvent controls to trick the AI into
-              revealing info it shouldn't.
-            </p>
-          </li>
-          <li>
-            <h3>Your data never leaves your systems.</h3>
-            <p>
-              The AI never sees your sensitive data, only your queries. Your
-              data never leaves your control.
-            </p>
-          </li>
-        </ul>
-        <Figure
-          src="/Chat GP chart.png"
-          alt="A chat question resolving into a chart"
-        />
-        <Footer />
-      </Page>
-
-      {/* ============================================================
-          BUILT ON EXISTING WORK 
-          Resolution8, no new data project, local, support
-          ============================================================ */}
-      {/* <Page n={4} total={TOTAL} label="Head start">
-        <div className="eyebrow">A running start</div>
-        <h2 className="section">Built on the work you&apos;ve already done</h2>
-        <p className="lead">
-          Resolution8 have already done the hard part: getting clean, reliable
-          data out of your systems and modelling it. Compass sits straight on
-          top.
-        </p>
-        <div className="divider" />
-
-        <div className="two-col">
-          <div className="card">
-            <h3>Go live in weeks, not months</h3>
-            <p>
-              Compass sits on top of your existing data foundation, so your team
-              can start getting answers straight away.
-            </p>
-          </div>
-          <div className="card">
-            <h3>Streamlined setup</h3>
-            <p>
-              Compass reuses the metric definitions has Resolution8 built for
-              your existing reporting, keeping the extra work to a minimum.
-            </p>
-          </div>
-          <div className="card">
-            <h3>Built to grow with you</h3>
-            <p>
-              Start with operational and finance data, and teach Compass about
-              more topics whenever you&apos;re ready.
-            </p>
-          </div>
-          <div className="card">
-            <h3>Lives in your infrastructure</h3>
-            <p>
-              Everything runs on your own systems, so sensitive client data is
-              protected by the controls you already trust.
-            </p>
-          </div>
-        </div>
-
-        <div className="divider" />
-        <h3 className="minihead">Your systems are already connected</h3>
-        <p className="note">
-          Compass draws on what's already in your database — Actionstep for
-          operations, Xero for financials.
-        </p>
-        <div className="mt-3 flex gap-4">
-          <div className="flex flex-1 items-center justify-center rounded-md bg-green-900 px-4 h-[72mm] [-webkit-print-color-adjust:exact] [print-color-adjust:exact]">
-            <img
-              className="h-[8.5mm] w-auto max-w-[70%] object-contain text-white rotate-90 scale-[1.4]"
-              src="/logos/actionstep.svg"
-              alt="Actionstep"
-            />
-          </div>
-          <div className="flex flex-1 items-center justify-center rounded-md bg-green-900 px-4 h-[72mm] [-webkit-print-color-adjust:exact] [print-color-adjust:exact]">
-            <img
-              className="h-[6.5mm] w-auto max-w-[70%] object-contain text-white rotate-90"
-              src="/logos/xero.svg"
-              alt="Xero"
-            />
-          </div>
-          <div className="flex flex-[3] flex-col items-center justify-center gap-3 rounded-md border border-hair bg-green-700-12 px-6 h-[72mm] text-center [-webkit-print-color-adjust:exact] [print-color-adjust:exact]">
-            <span className="font-mono text-[8pt] uppercase tracking-[0.16em] text-accent">
-              + more
-            </span>
-            <span className="max-w-[52mm] font-display text-[14pt] leading-snug text-heading">
-              Unify all of your data in Compass
-            </span>
-          </div>
-        </div>
-
-        <Footer />
-      </Page> */}
-
-      {/* ============================================================
-          PRICING 
-          ============================================================ */}
-      <Page n={4} total={TOTAL} label="Pricing">
-        <div className="eyebrow">Investment</div>
-        <h2 className="section">Pricing package</h2>
-        <p className="lead">
-          Clear pricing with no surprises: one flat fee for the whole company.
-        </p>
-        <div className="divider" />
-
-        <p class="text-xs mb-5">
-          Start on a monthly plan for complete flexibility, and then move to a
-          12-month contract when you're ready.
-        </p>
-
-        <div className="price-options">
-          <div className="price-opt price-opt--light">
-            <span className="badge">Flexible</span>
-            <div className="price-figure">
-              <span className="amount">$1,150</span>
-              <span className="per">/ month</span>
-            </div>
-            <p className="panel-sub">
-              + BYO AI for chat; 3c/message in our testing.
-            </p>
-            {/* <p className="panel-sub">
-              + est 3-4w for implementation at $185/h.
-            </p> */}
-          </div>
-          <div className="price-opt">
-            <span className="badge">12-month contract</span>
-            <div className="price-figure">
-              <span className="amount">$1,000</span>
-              <span className="per">/ month</span>
-            </div>
-            <p className="panel-sub">
-              + BYO AI for chat; 3c/message in our testing.
-            </p>
-            {/* <p className="panel-sub">
-              + est 3-4w for implementation at $185/h.
-            </p> */}
-            {/* <p className="panel-sub-small">
-              Sign up within your first 3 months and we'll waive 40 hours.
-            </p> */}
-          </div>
-        </div>
-
-        <div className="price-details">
-          <h3>What&apos;s included</h3>
-          <ul className="included included--light">
-            <li>
-              <span className="check">
-                <Icon.Check />
-              </span>
-              Unlimited partners &amp; users with bespoke security controls.
             </li>
             <li>
-              <span className="check">
-                <Icon.Check />
-              </span>
-              Chat &amp; personalised dashboards
+              <h3>Share with your team.</h3>
+              <p>
+                Share a report with your team, and they can refer to it directly
+                or use it as the base to build their own dashboard.
+              </p>
             </li>
             <li>
-              <span className="check">
-                <Icon.Check />
-              </span>
-              Ongoing support &amp; updates
-            </li>
-            <li>
-              <span className="check">
-                <Icon.Check />
-              </span>
-              Hosted in your environment for maximum security
+              <h3>Track comments directly in the report.</h3>
+              <p>Keep everyone on the same page with in-report comments.</p>
             </li>
           </ul>
-        </div>
+          <Figure src="/Dashboard chart.png" alt="A saved dashboard" />
+          <Footer />
+        </Page>
 
-        <div className="divider" />
-
-        <div className="price-features">
-          <div className="feat">
-            <span className="feat-icon">
-              <Icon.Shield />
-            </span>
-            <h3>Support included</h3>
-            <p>Ongoing support is in the licence, not billed on top.</p>
-          </div>
-          <div className="feat">
-            <span className="feat-icon">
-              <Icon.Tag />
-            </span>
-            <h3>Predictable pricing</h3>
-            <p>
-              The flat fee is indexed to inflation, so you know the price won't
-              be hiked on you.
-            </p>
-          </div>
-          <div className="feat">
-            <span className="feat-icon">
-              <Icon.Trial />
-            </span>
-            <h3>Try before you commit</h3>
-            <p>
-              Start on monthly billing so you can see Compass up close before
-              anything&apos;s locked in.
-            </p>
-          </div>
-        </div>
-
-        <div className="divider" />
-        {/* <p className="note">
-          Our standard pricing for a firm your size — we&apos;ll shape the final
-          package with you to match how you want to roll it out.
-        </p> */}
-        <p className="note">Prices shown are exclusive of GST.</p>
-        <Footer />
-      </Page>
-
-      {/* ============================================================
-          THE TEAM 
-          ============================================================ */}
-      <Page n={5} total={TOTAL} label="Team">
-        <div className="eyebrow">Who&apos;s behind it</div>
-        <h2 className="section">The team behind Compass</h2>
-        <p className="lead">
-          A boutique development studio in Hamilton — the people you talk to are
-          the people who build it.
-        </p>
-        <div className="divider" />
-        <div class="space-y-6">
-          <div className="team flex justify-center space-x-8">
-            <div className="member">
-              <img className="avatar" src="/team/sam.png" alt="Sam Woolerton" />
-              <h3>Sam Woolerton</h3>
-              <p className="role">Founder &amp; Director</p>
-            </div>
-            <div className="member">
-              <img
-                className="avatar"
-                src="/team/cathan.jpg"
-                alt="Cathan Bowler"
-              />
-              <h3>Cathan Bowler</h3>
-              <p className="role">Sales Lead</p>
-            </div>
-          </div>
-          <div className="team flex justify-center space-x-6">
-            <div className="member">
-              <img
-                className="avatar"
-                src="/team/jesse.png"
-                alt="Jesse O'Connor"
-              />
-              <h3>Jesse O&apos;Connor</h3>
-              <p className="role">Full-Stack Developer</p>
-            </div>
-            <div className="member">
-              <img
-                className="avatar"
-                src="/team/ethan.png"
-                alt="Ethan MacLeod"
-              />
-              <h3>Ethan MacLeod</h3>
-              <p className="role">Full-Stack Developer</p>
-            </div>
-            <div className="member">
-              <img
-                className="avatar"
-                src="/team/isaiah.png"
-                alt="Isaiah Foulidis"
-              />
-              <h3>Isaiah Foulidis</h3>
-              <p className="role">Data Pipeline Specialist</p>
-            </div>
-          </div>
-        </div>
-        <div className="divider" />
-        <div className="two-col">
-          <div className="card">
-            <h3>Only A players</h3>
-            <p>
-              We’ve shipped projects like yours many times over, and we don’t
-              have juniors learning on your dime.
-            </p>
-          </div>
-          <div className="card">
-            <h3>Clear scope, no surprises</h3>
-            <p>
-              Exactly what we&apos;ll build and what it costs is agreed up
-              front, before a single line of code is written.
-            </p>
-          </div>
-          <div className="card">
-            <h3>A track record you can check</h3>
-            <p>
-              150+ projects delivered since 2022 — and we&apos;ll happily
-              connect you with our satisfied clients.
-            </p>
-          </div>
-          <div className="card">
-            <h3>Right down the road</h3>
-            <p>
-              Hamilton-based, same team end to end, references you can call.
-            </p>
-          </div>
-        </div>
-        <p className="note mt-8">
-          Meet the team at{' '}
-          <a className="link" href="https://usebearing.com/about-us">
-            usebearing.com/about-us
-          </a>
-          .
-        </p>
-        <Footer />
-      </Page>
-
-      {/* ============================================================
-          INTEGRATIONS & AUTOMATION 
-          ============================================================ */}
-      <Page n={6} total={TOTAL} label="Automation">
-        <div className="eyebrow">Your data hub</div>
-        <h2 className="section">More than dashboards</h2>
-        <p className="lead">
-          The same query engine that answers your questions can move your data
-          for you. Compass connects your tools so data flows where it needs to,
-          without the manual overhead.
-        </p>
-        <div className="divider" />
-        <ul className="detail-rows">
-          <li>
-            <span className="detail-icon">
-              <Icon.Sync />
-            </span>
-            <div>
-              <h3>Stop entering the same data twice</h3>
-              <p>
-                We sync data between your systems so the team stops copy-pasting
-                by hand.
-              </p>
-            </div>
-          </li>
-          <li>
-            <span className="detail-icon">
-              <Icon.Report />
-            </span>
-            <div>
-              <h3>Reports that write themselves</h3>
-              <p>
-                Auto-generate the documents you build by hand today. Your team
-                are in the loop to provide value-add commentary, not just to
-                pull data together.
-              </p>
-            </div>
-          </li>
-          <li>
-            <span className="detail-icon">
-              <Icon.Inbox />
-            </span>
-            <div>
-              <h3>Dashboards delivered to your inbox</h3>
-              <p>
-                For Outlook power users, schedule a Compass dashboard to come to
-                your inbox on your terms.
-              </p>
-            </div>
-          </li>
-          {/* <li>
-            <span className="detail-icon">
-              <Icon.Shield />
-            </span>
-            <div>
-              <h3>Secure client portals</h3>
-              <p>
-                Raise the bar for client interactions by giving your key clients
-                more insights into their data. Strict security controls so they
-                only see information that you allow them to.
-              </p>
-            </div>
-          </li> */}
-          <li>
-            <span className="detail-icon">
-              <Icon.Source />
-            </span>
-            <div>
-              <h3>One source of truth</h3>
-              <p>
-                We define the logic once, and then dashboards, reports and
-                automations stay in sync as your business evolves.
-              </p>
-            </div>
-          </li>
-        </ul>
-        <Footer />
-      </Page>
-
-      {/* ============================================================
-          CTA  — closing, full-bleed green to bookend cover
-          ============================================================ */}
-      <Page n={7} total={TOTAL}>
-        <div className="cta">
-          <div className="mark">COMPASS BY BEARING</div>
-          <div className="center">
-            <div className="eyebrow">What happens next</div>
-            <h1>Seeing it beats reading about it.</h1>
-            <ol className="next-steps">
-              <li>
-                <span className="step-n">1</span>
-                <div>
-                  <h3>Book a demo on your data</h3>
-                  <p>
-                    We&apos;ll take a data extract and show you live how Compass
-                    understands your data.
-                  </p>
-                </div>
-              </li>
-              <li>
-                <span className="step-n">2</span>
-                <div>
-                  <h3>Run a trial</h3>
-                  <p>
-                    Put Compass through its paces, so you can see how it would
-                    fit into your workflows before signing.
-                  </p>
-                </div>
-              </li>
-            </ol>
-          </div>
-          <p className="closer">
-            {/* Say the word and we&apos;ll get a time in the diary this week. */}
+        {/* ============================================================
+            CHAT FEATURE 
+            ============================================================ */}
+        <Page label="Chat">
+          <div className="eyebrow">Effortless answers</div>
+          <h2 className="section">Chat with your data</h2>
+          <p className="lead">
+            The fastest path to insights. Send a question and Compass answers
+            with a table or chart.
           </p>
-        </div>
-      </Page>
+          <div className="divider" />
+          <ul className="benefits grid">
+            <li>
+              <h3>Ask anything, get answers immediately.</h3>
+              <p>
+                {sampleQuestions.map((q, i) => (
+                  <span>
+                    {i !== 0 ? ', ' : ''}&ldquo;{q}&rdquo;
+                  </span>
+                ))}
+                . Type it like you&apos;d say it, and get a chart or table back
+                in seconds.
+              </p>
+            </li>
+            <li>
+              <h3>Numbers you can trust, every time.</h3>
+              <p>
+                The AI reads your question but our custom query engine runs the
+                query - the worst case is that it misunderstands you, and you
+                clarify in a follow up. No hallucinated answers.
+              </p>
+            </li>
+            <li>
+              <h3>Locked down with granular permissions.</h3>
+              <p>
+                Everyone sees exactly what they&apos;re cleared to see, and
+                nothing else. Users can't circumvent controls to trick the AI
+                into revealing info it shouldn't.
+              </p>
+            </li>
+            <li>
+              <h3>Your data never leaves your systems.</h3>
+              <p>
+                The AI never sees your sensitive data, only your queries. Your
+                data never leaves your control.
+              </p>
+            </li>
+          </ul>
+          <Figure
+            src="/Chat GP chart.png"
+            alt="A chat question resolving into a chart"
+          />
+          <Footer />
+        </Page>
+
+        {/* ============================================================
+            BUILT ON EXISTING WORK 
+            Resolution8, no new data project, local, support
+            ============================================================ */}
+        {/* <Page label="Head start">
+          <div className="eyebrow">A running start</div>
+          <h2 className="section">Built on the work you&apos;ve already done</h2>
+          <p className="lead">
+            Resolution8 have already done the hard part: getting clean, reliable
+            data out of your systems and modelling it. Compass sits straight on
+            top.
+          </p>
+          <div className="divider" />
+
+          <div className="two-col">
+            <div className="card">
+              <h3>Go live in weeks, not months</h3>
+              <p>
+                Compass sits on top of your existing data foundation, so your team
+                can start getting answers straight away.
+              </p>
+            </div>
+            <div className="card">
+              <h3>Streamlined setup</h3>
+              <p>
+                Compass reuses the metric definitions has Resolution8 built for
+                your existing reporting, keeping the extra work to a minimum.
+              </p>
+            </div>
+            <div className="card">
+              <h3>Built to grow with you</h3>
+              <p>
+                Start with operational and finance data, and teach Compass about
+                more topics whenever you&apos;re ready.
+              </p>
+            </div>
+            <div className="card">
+              <h3>Lives in your infrastructure</h3>
+              <p>
+                Everything runs on your own systems, so sensitive client data is
+                protected by the controls you already trust.
+              </p>
+            </div>
+          </div>
+
+          <div className="divider" />
+          <h3 className="minihead">Your systems are already connected</h3>
+          <p className="note">
+            Compass draws on what's already in your database — Actionstep for
+            operations, Xero for financials.
+          </p>
+          <div className="mt-3 flex gap-4">
+            <div className="flex flex-1 items-center justify-center rounded-md bg-green-900 px-4 h-[72mm] [-webkit-print-color-adjust:exact] [print-color-adjust:exact]">
+              <img
+                className="h-[8.5mm] w-auto max-w-[70%] object-contain text-white rotate-90 scale-[1.4]"
+                src="/logos/actionstep.svg"
+                alt="Actionstep"
+              />
+            </div>
+            <div className="flex flex-1 items-center justify-center rounded-md bg-green-900 px-4 h-[72mm] [-webkit-print-color-adjust:exact] [print-color-adjust:exact]">
+              <img
+                className="h-[6.5mm] w-auto max-w-[70%] object-contain text-white rotate-90"
+                src="/logos/xero.svg"
+                alt="Xero"
+              />
+            </div>
+            <div className="flex flex-[3] flex-col items-center justify-center gap-3 rounded-md border border-hair bg-green-700-12 px-6 h-[72mm] text-center [-webkit-print-color-adjust:exact] [print-color-adjust:exact]">
+              <span className="font-mono text-[8pt] uppercase tracking-[0.16em] text-accent">
+                + more
+              </span>
+              <span className="max-w-[52mm] font-display text-[14pt] leading-snug text-heading">
+                Unify all of your data in Compass
+              </span>
+            </div>
+          </div>
+
+          <Footer />
+        </Page> */}
+
+        {/* ============================================================
+            PRICING 
+            ============================================================ */}
+        <Page label="Pricing">
+          <div className="eyebrow">Investment</div>
+          <h2 className="section">Pricing package</h2>
+          <p className="lead">
+            Clear pricing with no surprises: one flat fee for the whole company.
+          </p>
+          <div className="divider" />
+
+          <p class="text-xs mb-5">
+            Start on a monthly plan for complete flexibility, and then move to a
+            12-month contract when you're ready.
+          </p>
+
+          <div className="price-options">
+            <div className="price-opt price-opt--light">
+              <span className="badge">Flexible</span>
+              <div className="price-figure">
+                <span className="amount">$1,150</span>
+                <span className="per">/ month</span>
+              </div>
+              <p className="panel-sub">
+                + BYO AI for chat; 3c/message in our testing.
+              </p>
+              {/* <p className="panel-sub">
+                + est 3-4w for implementation at $185/h.
+              </p> */}
+            </div>
+            <div className="price-opt">
+              <span className="badge">12-month contract</span>
+              <div className="price-figure">
+                <span className="amount">$1,000</span>
+                <span className="per">/ month</span>
+              </div>
+              <p className="panel-sub">
+                + BYO AI for chat; 3c/message in our testing.
+              </p>
+              {/* <p className="panel-sub">
+                + est 3-4w for implementation at $185/h.
+              </p> */}
+              {/* <p className="panel-sub-small">
+                Sign up within your first 3 months and we'll waive 40 hours.
+              </p> */}
+            </div>
+          </div>
+
+          <div className="price-details">
+            <h3>What&apos;s included</h3>
+            <ul className="included included--light">
+              <li>
+                <span className="check">
+                  <Icon.Check />
+                </span>
+                Unlimited partners &amp; users with bespoke security controls.
+              </li>
+              <li>
+                <span className="check">
+                  <Icon.Check />
+                </span>
+                Chat &amp; personalised dashboards
+              </li>
+              <li>
+                <span className="check">
+                  <Icon.Check />
+                </span>
+                Ongoing support &amp; updates
+              </li>
+              <li>
+                <span className="check">
+                  <Icon.Check />
+                </span>
+                Hosted in your environment for maximum security
+              </li>
+            </ul>
+          </div>
+
+          <div className="divider" />
+
+          <div className="price-features">
+            <div className="feat">
+              <span className="feat-icon">
+                <Icon.Shield />
+              </span>
+              <h3>Support included</h3>
+              <p>Ongoing support is in the licence, not billed on top.</p>
+            </div>
+            <div className="feat">
+              <span className="feat-icon">
+                <Icon.Tag />
+              </span>
+              <h3>Predictable pricing</h3>
+              <p>
+                The flat fee is indexed to inflation, so you know the price
+                won't be hiked on you.
+              </p>
+            </div>
+            <div className="feat">
+              <span className="feat-icon">
+                <Icon.Trial />
+              </span>
+              <h3>Try before you commit</h3>
+              <p>
+                Start on monthly billing so you can see Compass up close before
+                anything&apos;s locked in.
+              </p>
+            </div>
+          </div>
+
+          <div className="divider" />
+          {/* <p className="note">
+            Our standard pricing for a firm your size — we&apos;ll shape the final
+            package with you to match how you want to roll it out.
+          </p> */}
+          <p className="note">Prices shown are exclusive of GST.</p>
+          <Footer />
+        </Page>
+
+        {/* ============================================================
+            THE TEAM 
+            ============================================================ */}
+        <Page label="Team">
+          <div className="eyebrow">Who&apos;s behind it</div>
+          <h2 className="section">The team behind Compass</h2>
+          <p className="lead">
+            A boutique development studio in Hamilton — the people you talk to
+            are the people who build it.
+          </p>
+          <div className="divider" />
+          <div class="space-y-6">
+            <div className="team flex justify-center space-x-8">
+              <div className="member">
+                <img
+                  className="avatar"
+                  src="/team/sam.png"
+                  alt="Sam Woolerton"
+                />
+                <h3>Sam Woolerton</h3>
+                <p className="role">Founder &amp; Director</p>
+              </div>
+              <div className="member">
+                <img
+                  className="avatar"
+                  src="/team/cathan.jpg"
+                  alt="Cathan Bowler"
+                />
+                <h3>Cathan Bowler</h3>
+                <p className="role">Sales Lead</p>
+              </div>
+            </div>
+            <div className="team flex justify-center space-x-6">
+              <div className="member">
+                <img
+                  className="avatar"
+                  src="/team/jesse.png"
+                  alt="Jesse O'Connor"
+                />
+                <h3>Jesse O&apos;Connor</h3>
+                <p className="role">Full-Stack Developer</p>
+              </div>
+              <div className="member">
+                <img
+                  className="avatar"
+                  src="/team/ethan.png"
+                  alt="Ethan MacLeod"
+                />
+                <h3>Ethan MacLeod</h3>
+                <p className="role">Full-Stack Developer</p>
+              </div>
+              <div className="member">
+                <img
+                  className="avatar"
+                  src="/team/isaiah.png"
+                  alt="Isaiah Foulidis"
+                />
+                <h3>Isaiah Foulidis</h3>
+                <p className="role">Data Pipeline Specialist</p>
+              </div>
+            </div>
+          </div>
+          <div className="divider" />
+          <div className="two-col">
+            <div className="card">
+              <h3>Only A players</h3>
+              <p>
+                We’ve shipped projects like yours many times over, and we don’t
+                have juniors learning on your dime.
+              </p>
+            </div>
+            <div className="card">
+              <h3>Clear scope, no surprises</h3>
+              <p>
+                Exactly what we&apos;ll build and what it costs is agreed up
+                front, before a single line of code is written.
+              </p>
+            </div>
+            <div className="card">
+              <h3>A track record you can check</h3>
+              <p>
+                150+ projects delivered since 2022 — and we&apos;ll happily
+                connect you with our satisfied clients.
+              </p>
+            </div>
+            <div className="card">
+              <h3>Right down the road</h3>
+              <p>
+                Hamilton-based, same team end to end, references you can call.
+              </p>
+            </div>
+          </div>
+          <p className="note mt-8">
+            Meet the team at{' '}
+            <a className="link" href="https://usebearing.com/about-us">
+              usebearing.com/about-us
+            </a>
+            .
+          </p>
+          <Footer />
+        </Page>
+
+        {/* ============================================================
+            INTEGRATIONS & AUTOMATION 
+            ============================================================ */}
+        <Page label="Automation">
+          <div className="eyebrow">Your data hub</div>
+          <h2 className="section">More than dashboards</h2>
+          <p className="lead">
+            The same query engine that answers your questions can move your data
+            for you. Compass connects your tools so data flows where it needs
+            to, without the manual overhead.
+          </p>
+          <div className="divider" />
+          <ul className="detail-rows">
+            <li>
+              <span className="detail-icon">
+                <Icon.Sync />
+              </span>
+              <div>
+                <h3>Stop entering the same data twice</h3>
+                <p>
+                  We sync data between your systems so the team stops
+                  copy-pasting by hand.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span className="detail-icon">
+                <Icon.Report />
+              </span>
+              <div>
+                <h3>Reports that write themselves</h3>
+                <p>
+                  Auto-generate the documents you build by hand today. Your team
+                  are in the loop to provide value-add commentary, not just to
+                  pull data together.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span className="detail-icon">
+                <Icon.Inbox />
+              </span>
+              <div>
+                <h3>Dashboards delivered to your inbox</h3>
+                <p>
+                  For Outlook power users, schedule a Compass dashboard to come
+                  to your inbox on your terms.
+                </p>
+              </div>
+            </li>
+            {/* <li>
+              <span className="detail-icon">
+                <Icon.Shield />
+              </span>
+              <div>
+                <h3>Secure client portals</h3>
+                <p>
+                  Raise the bar for client interactions by giving your key clients
+                  more insights into their data. Strict security controls so they
+                  only see information that you allow them to.
+                </p>
+              </div>
+            </li> */}
+            <li>
+              <span className="detail-icon">
+                <Icon.Source />
+              </span>
+              <div>
+                <h3>One source of truth</h3>
+                <p>
+                  We define the logic once, and then dashboards, reports and
+                  automations stay in sync as your business evolves.
+                </p>
+              </div>
+            </li>
+          </ul>
+          <Footer />
+        </Page>
+
+        {/* ============================================================
+            CTA  — closing, full-bleed green to bookend cover
+            ============================================================ */}
+        <Page>
+          <div className="cta">
+            <div className="mark">COMPASS BY BEARING</div>
+            <div className="center">
+              <div className="eyebrow">What happens next</div>
+              <h1>Seeing it beats reading about it.</h1>
+              <ol className="next-steps">
+                <li>
+                  <span className="step-n">1</span>
+                  <div>
+                    <h3>Book a demo on your data</h3>
+                    <p>
+                      We&apos;ll take a data extract and show you live how
+                      Compass understands your data.
+                    </p>
+                  </div>
+                </li>
+                <li>
+                  <span className="step-n">2</span>
+                  <div>
+                    <h3>Run a trial</h3>
+                    <p>
+                      Put Compass through its paces, so you can see how it would
+                      fit into your workflows before signing.
+                    </p>
+                  </div>
+                </li>
+              </ol>
+            </div>
+            <p className="closer">
+              {/* Say the word and we&apos;ll get a time in the diary this week. */}
+            </p>
+          </div>
+        </Page>
+      </Pages>
     </>
   )
 }

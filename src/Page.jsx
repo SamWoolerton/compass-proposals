@@ -1,3 +1,13 @@
+import { Children, cloneElement, isValidElement } from 'react'
+
+// Auto numbering for child Page elements
+export function Pages({ children }) {
+  const pages = Children.toArray(children).filter(isValidElement)
+  return pages.map((page, i) =>
+    cloneElement(page, { n: i + 1, total: pages.length }),
+  )
+}
+
 /**
  * A single fixed-size sheet. Whatever you put in `children` lives on exactly
  * one physical page — it will not reflow onto the next sheet. If content
