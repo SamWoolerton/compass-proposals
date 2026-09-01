@@ -249,7 +249,7 @@ export default function App() {
               <dd>
                 <img
                   className="client-logo"
-                  src="/logos/coastal-medical.png"
+                  src={`/logos/${clientLogo}`}
                   alt={clientName}
                 />
               </dd>
