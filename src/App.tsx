@@ -1,20 +1,27 @@
 import Page, { Pages } from './Page.jsx'
 import './paged.css'
 
-const clientName = 'Coastal Medical'
-const clientLogo = 'coastal-medical.png'
+const clientName = 'Stoney Creek'
+const clientLogo = 'stoney-creek.svg'
+
+type ClientPortalConfig = { enabled: false } | { enabled: true; label: string }
+const clientPortalsConfig: ClientPortalConfig = { enabled: false }
 
 document.title = `Compass + ${clientName}`
 
+const retailSampleQuestions = [
+  'Top 5 products by gross profit?',
+  'What products are our best sellers this year?',
+]
 const manufacturingSampleQuestions = [
   'Top 5 most profitable clients?',
   'What product lines are our best sellers this year?',
 ]
 const servicesSampleQuestions = [
-  'Top 5 most profitable appointment types?',
-  'Who of the team have the highest utilisation rate?',
+  'Top 5 most profitable projects?',
+  'Engineer utilisation rate trend this financial year?',
 ]
-const sampleQuestions = servicesSampleQuestions
+const sampleQuestions = retailSampleQuestions
 
 // The Export button. Native browser print → "Save as PDF" as the destination.
 // Because @page margin is 0 and each .page is exactly A4, the PDF is 1:1.
@@ -710,19 +717,23 @@ export default function App() {
                 </p>
               </div>
             </li>
-            {/* <li>
-              <span className="detail-icon">
-                <Icon.Shield />
-              </span>
-              <div>
-                <h3>Secure client portals</h3>
-                <p>
-                  Raise the bar for client interactions by giving your key clients
-                  more insights into their data. Strict security controls so they
-                  only see information that you allow them to.
-                </p>
-              </div>
-            </li> */}
+            {clientPortalsConfig.enabled && (
+              <li>
+                <span className="detail-icon">
+                  <Icon.Shield />
+                </span>
+                <div>
+                  <h3>Secure {clientPortalsConfig.label} portals</h3>
+                  <p>
+                    Raise the bar for {clientPortalsConfig.label} interactions
+                    by giving your key
+                    {clientPortalsConfig.label}s more insights into their data.
+                    Strict security controls so they only see information that
+                    you allow them to.
+                  </p>
+                </div>
+              </li>
+            )}
             <li>
               <span className="detail-icon">
                 <Icon.Source />
