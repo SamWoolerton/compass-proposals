@@ -4,8 +4,12 @@ import './paged.css'
 const clientName = 'Stoney Creek'
 const clientLogo = 'stoney-creek.svg'
 
-type ClientPortalConfig = { enabled: false } | { enabled: true; label: string }
-const clientPortalsConfig: ClientPortalConfig = { enabled: false }
+type ClientPortalConfig = { visible: false } | { visible: true; label: string }
+const clientPortalsConfig: ClientPortalConfig = { visible: false }
+
+type PricingConfig =
+  { visible: false } | { visible: true; monthly: string; annual: string }
+const pricingConfig: PricingConfig = { visible: false }
 
 document.title = `Compass + ${clientName}`
 
@@ -449,121 +453,124 @@ export default function App() {
         {/* ============================================================
             PRICING 
             ============================================================ */}
-        <Page label="Pricing">
-          <div className="eyebrow">Investment</div>
-          <h2 className="section">Pricing package</h2>
-          <p className="lead">
-            Clear pricing with no surprises: one flat fee for the whole company.
-          </p>
-          <div className="divider" />
+        {pricingConfig.visible && (
+          <Page label="Pricing">
+            <div className="eyebrow">Investment</div>
+            <h2 className="section">Pricing package</h2>
+            <p className="lead">
+              Clear pricing with no surprises: one flat fee for the whole
+              company.
+            </p>
+            <div className="divider" />
 
-          <p class="text-xs mb-5">
-            Start on a monthly plan for complete flexibility, and then move to a
-            12-month contract when you're ready.
-          </p>
+            <p className="text-xs mb-5">
+              Start on a monthly plan for complete flexibility, and then move to
+              a 12-month contract when you're ready.
+            </p>
 
-          <div className="price-options">
-            <div className="price-opt price-opt--light">
-              <span className="badge">Flexible</span>
-              <div className="price-figure">
-                <span className="amount">$1,150</span>
-                <span className="per">/ month</span>
-              </div>
-              <p className="panel-sub">
-                + BYO AI for chat; 3c/message in our testing.
-              </p>
-              {/* <p className="panel-sub">
+            <div className="price-options">
+              <div className="price-opt price-opt--light">
+                <span className="badge">Flexible</span>
+                <div className="price-figure">
+                  <span className="amount">${pricingConfig.monthly}</span>
+                  <span className="per">/ month</span>
+                </div>
+                <p className="panel-sub">
+                  + BYO AI for chat; 3c/message in our testing.
+                </p>
+                {/* <p className="panel-sub">
                 + est 3-4w for implementation at $185/h.
               </p> */}
-            </div>
-            <div className="price-opt">
-              <span className="badge">12-month contract</span>
-              <div className="price-figure">
-                <span className="amount">$1,000</span>
-                <span className="per">/ month</span>
               </div>
-              <p className="panel-sub">
-                + BYO AI for chat; 3c/message in our testing.
-              </p>
-              {/* <p className="panel-sub">
+              <div className="price-opt">
+                <span className="badge">12-month contract</span>
+                <div className="price-figure">
+                  <span className="amount">${pricingConfig.annual}</span>
+                  <span className="per">/ month</span>
+                </div>
+                <p className="panel-sub">
+                  + BYO AI for chat; 3c/message in our testing.
+                </p>
+                {/* <p className="panel-sub">
                 + est 3-4w for implementation at $185/h.
               </p> */}
-              {/* <p className="panel-sub-small">
+                {/* <p className="panel-sub-small">
                 Sign up within your first 3 months and we'll waive 40 hours.
               </p> */}
+              </div>
             </div>
-          </div>
 
-          <div className="price-details">
-            <h3>What&apos;s included</h3>
-            <ul className="included included--light">
-              <li>
-                <span className="check">
-                  <Icon.Check />
-                </span>
-                Unlimited partners &amp; users with bespoke security controls.
-              </li>
-              <li>
-                <span className="check">
-                  <Icon.Check />
-                </span>
-                Chat &amp; personalised dashboards
-              </li>
-              <li>
-                <span className="check">
-                  <Icon.Check />
-                </span>
-                Ongoing support &amp; updates
-              </li>
-              <li>
-                <span className="check">
-                  <Icon.Check />
-                </span>
-                Hosted in your environment for maximum security
-              </li>
-            </ul>
-          </div>
-
-          <div className="divider" />
-
-          <div className="price-features">
-            <div className="feat">
-              <span className="feat-icon">
-                <Icon.Shield />
-              </span>
-              <h3>Support included</h3>
-              <p>Ongoing support is in the licence, not billed on top.</p>
+            <div className="price-details">
+              <h3>What&apos;s included</h3>
+              <ul className="included included--light">
+                <li>
+                  <span className="check">
+                    <Icon.Check />
+                  </span>
+                  Unlimited partners &amp; users with bespoke security controls.
+                </li>
+                <li>
+                  <span className="check">
+                    <Icon.Check />
+                  </span>
+                  Chat &amp; personalised dashboards
+                </li>
+                <li>
+                  <span className="check">
+                    <Icon.Check />
+                  </span>
+                  Ongoing support &amp; updates
+                </li>
+                <li>
+                  <span className="check">
+                    <Icon.Check />
+                  </span>
+                  Hosted in your environment for maximum security
+                </li>
+              </ul>
             </div>
-            <div className="feat">
-              <span className="feat-icon">
-                <Icon.Tag />
-              </span>
-              <h3>Predictable pricing</h3>
-              <p>
-                The flat fee is indexed to inflation, so you know the price
-                won't be hiked on you.
-              </p>
-            </div>
-            <div className="feat">
-              <span className="feat-icon">
-                <Icon.Trial />
-              </span>
-              <h3>Try before you commit</h3>
-              <p>
-                Start on monthly billing so you can see Compass up close before
-                anything&apos;s locked in.
-              </p>
-            </div>
-          </div>
 
-          <div className="divider" />
-          {/* <p className="note">
+            <div className="divider" />
+
+            <div className="price-features">
+              <div className="feat">
+                <span className="feat-icon">
+                  <Icon.Shield />
+                </span>
+                <h3>Support included</h3>
+                <p>Ongoing support is in the licence, not billed on top.</p>
+              </div>
+              <div className="feat">
+                <span className="feat-icon">
+                  <Icon.Tag />
+                </span>
+                <h3>Predictable pricing</h3>
+                <p>
+                  The flat fee is indexed to inflation, so you know the price
+                  won't be hiked on you.
+                </p>
+              </div>
+              <div className="feat">
+                <span className="feat-icon">
+                  <Icon.Trial />
+                </span>
+                <h3>Try before you commit</h3>
+                <p>
+                  Start on monthly billing so you can see Compass up close
+                  before anything&apos;s locked in.
+                </p>
+              </div>
+            </div>
+
+            <div className="divider" />
+            {/* <p className="note">
             Our standard pricing for a firm your size — we&apos;ll shape the final
             package with you to match how you want to roll it out.
           </p> */}
-          <p className="note">Prices shown are exclusive of GST.</p>
-          <Footer />
-        </Page>
+            <p className="note">Prices shown are exclusive of GST.</p>
+            <Footer />
+          </Page>
+        )}
 
         {/* ============================================================
             THE TEAM 
@@ -576,7 +583,7 @@ export default function App() {
             are the people who build it.
           </p>
           <div className="divider" />
-          <div class="space-y-6">
+          <div className="space-y-6">
             <div className="team flex justify-center space-x-8">
               <div className="member">
                 <img
@@ -717,7 +724,7 @@ export default function App() {
                 </p>
               </div>
             </li>
-            {clientPortalsConfig.enabled && (
+            {clientPortalsConfig.visible && (
               <li>
                 <span className="detail-icon">
                   <Icon.Shield />

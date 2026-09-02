@@ -14,6 +14,6 @@ import '@fontsource/jetbrains-mono/500.css'
 // Tailwind (theme + utilities; Preflight intentionally omitted — see index.css).
 import './index.css'
 
-import App from './App.jsx'
+import App from './App'
 
 createRoot(document.getElementById('root')).render(<App />)

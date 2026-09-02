@@ -55,7 +55,7 @@ All the machinery is in `src/paged.css`. Four ideas do the work:
 - `src/paged.css` — the page + print machinery (the important bit) plus the
   sample proposal's styling.
 - `src/Page.jsx` — a reusable fixed-size sheet component.
-- `src/App.jsx` — a 4-page sample proposal + the Export button. Replace with
+- `src/App.tsx` — a 4-page sample proposal + the Export button. Replace with
   your content.
 
 ## Want automatic reflow instead?
