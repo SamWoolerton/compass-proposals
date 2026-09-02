@@ -588,7 +588,7 @@ export default function App() {
               <div className="member">
                 <img
                   className="avatar"
-                  src="/team/sam.png"
+                  src="/team/sam.jpg"
                   alt="Sam Woolerton"
                 />
                 <h3>Sam Woolerton</h3>
@@ -608,7 +608,7 @@ export default function App() {
               <div className="member">
                 <img
                   className="avatar"
-                  src="/team/jesse.png"
+                  src="/team/jesse.jpg"
                   alt="Jesse O'Connor"
                 />
                 <h3>Jesse O&apos;Connor</h3>
@@ -617,7 +617,7 @@ export default function App() {
               <div className="member">
                 <img
                   className="avatar"
-                  src="/team/ethan.png"
+                  src="/team/ethan.jpg"
                   alt="Ethan MacLeod"
                 />
                 <h3>Ethan MacLeod</h3>
@@ -626,7 +626,7 @@ export default function App() {
               <div className="member">
                 <img
                   className="avatar"
-                  src="/team/isaiah.png"
+                  src="/team/isaiah.jpg"
                   alt="Isaiah Foulidis"
                 />
                 <h3>Isaiah Foulidis</h3>
