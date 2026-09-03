@@ -3,7 +3,6 @@ import ConfigPane from './ConfigPane.jsx'
 import Page, { Pages } from './Page.jsx'
 import './paged.css'
 
-const clientLogo = 'stoney-creek.svg'
 const defaultClientLogoHeight = 7
 
 type ClientPortalConfig = { visible: false } | { visible: true; label: string }
@@ -13,17 +12,9 @@ type PricingConfig =
   { visible: false } | { visible: true; monthly: string; annual: string }
 const pricingConfig: PricingConfig = { visible: false }
 
-const retailSampleQuestions = [
+const defaultSampleQuestions = [
   'Top 5 products by gross profit?',
   'What products are our best sellers this year?',
-]
-const manufacturingSampleQuestions = [
-  'Top 5 most profitable clients?',
-  'What product lines are our best sellers this year?',
-]
-const servicesSampleQuestions = [
-  'Top 5 most profitable projects?',
-  'Engineer utilisation rate trend this financial year?',
 ]
 
 // The Export button. Native browser print → "Save as PDF" as the destination.
@@ -219,10 +210,18 @@ const Icon = {
 
 export default function App() {
   const [clientName, setClientName] = useState('Sample Client')
-  const [sampleQuestions, setSampleQuestions] = useState(retailSampleQuestions)
+  const [sampleQuestions, setSampleQuestions] = useState(defaultSampleQuestions)
   const [clientLogoHeight, setClientLogoHeight] = useState(
     defaultClientLogoHeight,
   )
+  // An uploaded logo is read as a data URL rather than an object URL so it's still resolvable when the page is printed to PDF.
+  const [uploadedLogo, setUploadedLogo] = useState<{
+    name: string
+    src: string
+  } | null>(null)
+
+  const [logoFailed, setLogoFailed] = useState(false)
+  const logoSrc = uploadedLogo?.src
 
   useEffect(
     function setDocName() {
@@ -231,8 +230,22 @@ export default function App() {
     [clientName],
   )
 
+  useEffect(
+    function clearLogoFailure() {
+      setLogoFailed(false)
+    },
+    [logoSrc],
+  )
+
   const setSampleQuestion = (i: number, value: string) =>
     setSampleQuestions(qs => qs.map((q, j) => (j === i ? value : q)))
+
+  const readClientLogo = (file: File) => {
+    const reader = new FileReader()
+    reader.onload = () =>
+      setUploadedLogo({ name: file.name, src: String(reader.result) })
+    reader.readAsDataURL(file)
+  }
 
   return (
     <>
@@ -254,6 +267,9 @@ export default function App() {
         onSampleQuestionChange={setSampleQuestion}
         clientLogoHeight={clientLogoHeight}
         onClientLogoHeightChange={setClientLogoHeight}
+        clientLogoName={uploadedLogo?.name ?? null}
+        onClientLogoFile={readClientLogo}
+        onClientLogoReset={() => setUploadedLogo(null)}
       />
 
       <Pages>
@@ -291,12 +307,17 @@ export default function App() {
               <div className="prepared-for">
                 <dt>Prepared for</dt>
                 <dd>
-                  <img
-                    className="client-logo"
-                    src={`/logos/${clientLogo}`}
-                    alt={clientName}
-                    style={{ height: `${clientLogoHeight}mm` }}
-                  />
+                  {logoSrc && !logoFailed ? (
+                    <img
+                      className="client-logo"
+                      src={logoSrc}
+                      alt={clientName}
+                      style={{ height: `${clientLogoHeight}mm` }}
+                      onError={() => setLogoFailed(true)}
+                    />
+                  ) : (
+                    <span className="client-name">{clientName}</span>
+                  )}
                 </dd>
               </div>
               <div className="prepared-by">

@@ -226,6 +226,14 @@ h3 {
   /* filter: brightness(0) invert(1) drop-shadow(0 0 0 #fff)
     drop-shadow(0 0 0 #fff); */
 }
+/* Stand-in for a missing client logo: the name set as a wordmark. */
+.cover .client-name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 18pt;
+  line-height: 6mm;
+  font-weight: 500;
+}
 /* Match the "Bearing" wordmark's height to the client logo beside it. */
 .cover .meta .prepared-by dd {
   margin-top: 6px;
@@ -867,6 +875,37 @@ table.price tr.total td {
   border: 1px solid var(--hair);
   border-radius: 6px;
   padding: 8px 10px;
+}
+.config-pane .dropzone {
+  display: block;
+  padding: 14px 10px;
+  text-align: center;
+  border: 1px dashed rgba(244, 241, 234, 0.35);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.config-pane .dropzone.dragging {
+  border-color: var(--mint-400);
+  background: rgba(244, 241, 234, 0.06);
+}
+.config-pane .dropzone input {
+  display: none;
+}
+.config-pane .dropzone span {
+  margin: 0;
+  font-size: 8.5pt;
+  color: var(--beige-50-66);
+  overflow-wrap: anywhere;
+}
+.config-pane .reset {
+  margin-top: 8px;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: 8.5pt;
+  color: var(--mint-400);
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 .config-pane input[type='range'] {
   padding: 0;
