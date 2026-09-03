@@ -15,8 +15,10 @@ export function Pages({ children }) {
  * the tradeoff that guarantees "what you see is what prints".
  *
  * Manage pagination yourself by splitting content across <Page> elements.
+ *
+ * `n` and `total` are injected by <Pages>, not passed by hand.
  */
-export default function Page({ n, total, label, children }) {
+export default function Page({ n = 0, total = 0, label = '', children }) {
   return (
     <section className="page">
       {label && (

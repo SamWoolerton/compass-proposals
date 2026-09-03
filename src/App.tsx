@@ -43,7 +43,15 @@ function Footer() {
 }
 
 // Placeholder for a screenshot/image that content will drop in later.
-function Figure({ src, alt, caption }) {
+function Figure({
+  src,
+  alt,
+  caption,
+}: {
+  src: string
+  alt: string
+  caption?: string
+}) {
   return (
     <figure className="figure">
       <img src={src} alt={alt} />
