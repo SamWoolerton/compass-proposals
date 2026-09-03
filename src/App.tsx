@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react'
+import ConfigPane from './ConfigPane.jsx'
 import Page, { Pages } from './Page.jsx'
 import './paged.css'
 
-const clientName = 'Stoney Creek'
 const clientLogo = 'stoney-creek.svg'
 
 type ClientPortalConfig = { visible: false } | { visible: true; label: string }
@@ -10,8 +11,6 @@ const clientPortalsConfig: ClientPortalConfig = { visible: false }
 type PricingConfig =
   { visible: false } | { visible: true; monthly: string; annual: string }
 const pricingConfig: PricingConfig = { visible: false }
-
-document.title = `Compass + ${clientName}`
 
 const retailSampleQuestions = [
   'Top 5 products by gross profit?',
@@ -25,7 +24,6 @@ const servicesSampleQuestions = [
   'Top 5 most profitable projects?',
   'Engineer utilisation rate trend this financial year?',
 ]
-const sampleQuestions = retailSampleQuestions
 
 // The Export button. Native browser print → "Save as PDF" as the destination.
 // Because @page margin is 0 and each .page is exactly A4, the PDF is 1:1.
@@ -219,6 +217,19 @@ const Icon = {
 }
 
 export default function App() {
+  const [clientName, setClientName] = useState('Sample Client')
+  const [sampleQuestions, setSampleQuestions] = useState(retailSampleQuestions)
+
+  useEffect(
+    function setDocName() {
+      document.title = `Compass + ${clientName}`
+    },
+    [clientName],
+  )
+
+  const setSampleQuestion = (i: number, value: string) =>
+    setSampleQuestions(qs => qs.map((q, j) => (j === i ? value : q)))
+
   return (
     <>
       {/* Toolbar is .no-print, so it never appears in the PDF */}
@@ -231,6 +242,13 @@ export default function App() {
         </button>
         <button onClick={exportPdf}>Export to PDF</button>
       </div>
+
+      <ConfigPane
+        clientName={clientName}
+        onClientNameChange={setClientName}
+        sampleQuestions={sampleQuestions}
+        onSampleQuestionChange={setSampleQuestion}
+      />
 
       <Pages>
         {/* ============================================================
@@ -340,7 +358,7 @@ export default function App() {
               <h3>Ask anything, get answers immediately.</h3>
               <p>
                 {sampleQuestions.map((q, i) => (
-                  <span>
+                  <span key={i}>
                     {i !== 0 ? ', ' : ''}&ldquo;{q}&rdquo;
                   </span>
                 ))}
