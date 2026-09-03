@@ -4,6 +4,7 @@ import Page, { Pages } from './Page.jsx'
 import './paged.css'
 
 const clientLogo = 'stoney-creek.svg'
+const clientLogoHeight = '7mm'
 
 type ClientPortalConfig = { visible: false } | { visible: true; label: string }
 const clientPortalsConfig: ClientPortalConfig = { visible: false }
@@ -289,6 +290,7 @@ export default function App() {
                     className="client-logo"
                     src={`/logos/${clientLogo}`}
                     alt={clientName}
+                    style={{ height: clientLogoHeight }}
                   />
                 </dd>
               </div>

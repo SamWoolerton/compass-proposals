@@ -215,7 +215,6 @@ h3 {
 }
 .cover .client-logo {
   display: block;
-  height: 7mm;
   width: auto;
   max-width: 60mm;
   /* The artwork is already solid white; it only *looks* grey because scaling a
