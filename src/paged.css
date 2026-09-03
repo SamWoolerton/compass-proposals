@@ -868,6 +868,12 @@ table.price tr.total td {
   border-radius: 6px;
   padding: 8px 10px;
 }
+.config-pane input[type='range'] {
+  padding: 0;
+  background: none;
+  border: none;
+  accent-color: var(--mint-400);
+}
 .config-pane input:focus {
   outline: 2px solid var(--mint-400);
   outline-offset: 1px;

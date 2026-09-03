@@ -4,7 +4,7 @@ import Page, { Pages } from './Page.jsx'
 import './paged.css'
 
 const clientLogo = 'stoney-creek.svg'
-const clientLogoHeight = '7mm'
+const defaultClientLogoHeight = 7
 
 type ClientPortalConfig = { visible: false } | { visible: true; label: string }
 const clientPortalsConfig: ClientPortalConfig = { visible: false }
@@ -220,6 +220,9 @@ const Icon = {
 export default function App() {
   const [clientName, setClientName] = useState('Sample Client')
   const [sampleQuestions, setSampleQuestions] = useState(retailSampleQuestions)
+  const [clientLogoHeight, setClientLogoHeight] = useState(
+    defaultClientLogoHeight,
+  )
 
   useEffect(
     function setDocName() {
@@ -249,6 +252,8 @@ export default function App() {
         onClientNameChange={setClientName}
         sampleQuestions={sampleQuestions}
         onSampleQuestionChange={setSampleQuestion}
+        clientLogoHeight={clientLogoHeight}
+        onClientLogoHeightChange={setClientLogoHeight}
       />
 
       <Pages>
@@ -290,7 +295,7 @@ export default function App() {
                     className="client-logo"
                     src={`/logos/${clientLogo}`}
                     alt={clientName}
-                    style={{ height: clientLogoHeight }}
+                    style={{ height: `${clientLogoHeight}mm` }}
                   />
                 </dd>
               </div>

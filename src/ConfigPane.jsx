@@ -5,6 +5,8 @@ export default function ConfigPane({
   onClientNameChange,
   sampleQuestions,
   onSampleQuestionChange,
+  clientLogoHeight,
+  onClientLogoHeightChange,
 }) {
   return (
     <aside className="config-pane no-print">
@@ -16,6 +18,18 @@ export default function ConfigPane({
           type="text"
           value={clientName}
           onChange={e => onClientNameChange(e.target.value)}
+        />
+      </label>
+
+      <label className="field">
+        <span>Client logo height: {clientLogoHeight}mm</span>
+        <input
+          type="range"
+          min="4"
+          max="11"
+          step="0.1"
+          value={clientLogoHeight}
+          onChange={e => onClientLogoHeightChange(Number(e.target.value))}
         />
       </label>
 
