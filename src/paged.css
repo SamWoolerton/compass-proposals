@@ -862,9 +862,28 @@ table.price tr.total td {
   letter-spacing: 0.16em;
   color: var(--mint-400);
 }
+.config-pane section {
+  padding-top: 16px;
+  border-top: 1px solid rgba(244, 241, 234, 0.14);
+}
+.config-pane section + section {
+  margin-top: 8px;
+}
+.config-pane h3 {
+  margin: 0 0 12px;
+  font-family: var(--font-mono);
+  font-size: 7.5pt;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--beige-50-66);
+}
 .config-pane .field {
   display: block;
   margin-bottom: 16px;
+}
+.config-pane section .field:last-child {
+  margin-bottom: 0;
 }
 .config-pane .field span {
   display: block;
