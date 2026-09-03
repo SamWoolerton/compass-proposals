@@ -885,7 +885,9 @@ table.price tr.total td {
 .config-pane section .field:last-child {
   margin-bottom: 0;
 }
-.config-pane .field span {
+/* Direct child only — the Switch's thumb is a nested span, and this rule's
+   margin would knock it out of the track. */
+.config-pane .field > span {
   display: block;
   margin-bottom: 6px;
   font-family: var(--font-sans);
@@ -918,6 +920,7 @@ table.price tr.total td {
   display: none;
 }
 .config-pane .dropzone span {
+  display: block;
   margin: 0;
   font-size: 8.5pt;
   color: var(--beige-50-66);

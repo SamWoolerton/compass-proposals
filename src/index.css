@@ -45,3 +45,18 @@
   --font-sans: 'Geist Variable', 'Geist', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
+
+/* The subset of shadcn/ui's tokens our components actually use.
+`inline` makes the utilities emit var(--primary) rather than the resolved value, which is what lets .config-pane in paged.css re-point them at the Bearing palette. */
+:root {
+  --primary: var(--green-900);
+  --input: var(--hair);
+  --background: var(--beige-50);
+  --ring: var(--green-700);
+}
+@theme inline {
+  --color-primary: var(--primary);
+  --color-input: var(--input);
+  --color-background: var(--background);
+  --color-ring: var(--ring);
+}
