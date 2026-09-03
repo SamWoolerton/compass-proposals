@@ -7,6 +7,11 @@ import tailwindcss from '@tailwindcss/vite'
 // In prod (Netlify), we only build the proposal.
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src'),
+    },
+  },
   build: {
     rollupOptions: {
       input: {

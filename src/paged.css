@@ -845,6 +845,13 @@ table.price tr.total td {
   background: var(--green-900);
   border-left: 1px solid rgba(244, 241, 234, 0.14);
   color: var(--beige-50);
+
+  /* Brand the shadcn controls in here — they read these as plain CSS vars,
+     so scoping them to the pane is enough (shadcn maps them via @theme inline). */
+  --primary: var(--mint-400);
+  --input: rgba(244, 241, 234, 0.24);
+  --background: var(--beige-50);
+  --ring: var(--mint-400);
 }
 .config-pane h2 {
   margin: 0 0 20px;
@@ -916,6 +923,17 @@ table.price tr.total td {
 .config-pane input:focus {
   outline: 2px solid var(--mint-400);
   outline-offset: 1px;
+}
+.config-pane .field--row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.config-pane .field--row label {
+  font-family: var(--font-sans);
+  font-size: 9pt;
+  cursor: pointer;
 }
 
 /* Utilities */

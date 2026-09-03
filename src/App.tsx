@@ -211,6 +211,7 @@ const Icon = {
 export default function App() {
   const [clientName, setClientName] = useState('Sample Client')
   const [sampleQuestions, setSampleQuestions] = useState(defaultSampleQuestions)
+  const [chatFirst, setChatFirst] = useState(false)
   const [clientLogoHeight, setClientLogoHeight] = useState(
     defaultClientLogoHeight,
   )
@@ -247,6 +248,107 @@ export default function App() {
     reader.readAsDataURL(file)
   }
 
+  // ============================================================
+  // DASHBOARDS
+  // ============================================================
+  const dashboardsPage = (
+    <Page label="Dashboards">
+      <div className="eyebrow">Curate your favourites</div>
+      <h2 className="section">A dashboard that's tailor-made for you</h2>
+      <p className="lead">
+        Save the most useful charts to your personal dashboard. No need to wait
+        for a report developer.
+      </p>
+      <div className="divider" />
+      <ul className="benefits grid">
+        <li>
+          <h3>Always up to date.</h3>
+          <p>
+            No more stale reports; see the latest data whenever you refresh the
+            page.
+          </p>
+        </li>
+        <li>
+          <h3>Frees up your time to deep dive.</h3>
+          <p>
+            Less time pulling routine numbers, and more time on analysis that
+            moves the needle.
+          </p>
+        </li>
+        <li>
+          <h3>Share with your team.</h3>
+          <p>
+            Share a report with your team, and they can refer to it directly or
+            use it as the base to build their own dashboard.
+          </p>
+        </li>
+        <li>
+          <h3>Track comments directly in the report.</h3>
+          <p>Keep everyone on the same page with in-report comments.</p>
+        </li>
+      </ul>
+      <Figure src="/Dashboard chart.png" alt="A saved dashboard" />
+      <Footer />
+    </Page>
+  )
+
+  // ============================================================
+  // CHAT FEATURE
+  // ============================================================
+  const chatPage = (
+    <Page label="Chat">
+      <div className="eyebrow">Effortless answers</div>
+      <h2 className="section">Chat with your data</h2>
+      <p className="lead">
+        The fastest path to insights. Send a question and Compass answers with a
+        table or chart.
+      </p>
+      <div className="divider" />
+      <ul className="benefits grid">
+        <li>
+          <h3>Ask anything, get answers immediately.</h3>
+          <p>
+            {sampleQuestions.map((q, i) => (
+              <span key={i}>
+                {i !== 0 ? ', ' : ''}&ldquo;{q}&rdquo;
+              </span>
+            ))}
+            . Type it like you&apos;d say it, and get a chart or table back in
+            seconds.
+          </p>
+        </li>
+        <li>
+          <h3>Numbers you can trust, every time.</h3>
+          <p>
+            The AI reads your question but our custom query engine runs the
+            query - the worst case is that it misunderstands you, and you
+            clarify in a follow up. No hallucinated answers.
+          </p>
+        </li>
+        <li>
+          <h3>Locked down with granular permissions.</h3>
+          <p>
+            Everyone sees exactly what they&apos;re cleared to see, and nothing
+            else. Users can't circumvent controls to trick the AI into revealing
+            info it shouldn't.
+          </p>
+        </li>
+        <li>
+          <h3>Your data never leaves your systems.</h3>
+          <p>
+            The AI never sees your sensitive data, only your queries. Your data
+            never leaves your control.
+          </p>
+        </li>
+      </ul>
+      <Figure
+        src="/Chat GP chart.png"
+        alt="A chat question resolving into a chart"
+      />
+      <Footer />
+    </Page>
+  )
+
   return (
     <>
       {/* Toolbar is .no-print, so it never appears in the PDF */}
@@ -270,6 +372,8 @@ export default function App() {
         clientLogoName={uploadedLogo?.name ?? null}
         onClientLogoFile={readClientLogo}
         onClientLogoReset={() => setUploadedLogo(null)}
+        chatFirst={chatFirst}
+        onChatFirstChange={setChatFirst}
       />
 
       <Pages>
@@ -328,102 +432,8 @@ export default function App() {
           </div>
         </Page>
 
-        {/* ============================================================
-            DASHBOARDS  
-            ============================================================ */}
-        <Page label="Dashboards">
-          <div className="eyebrow">Curate your favourites</div>
-          <h2 className="section">A dashboard that's tailor-made for you</h2>
-          <p className="lead">
-            Save the most useful charts to your personal dashboard. No need to
-            wait for a report developer.
-          </p>
-          <div className="divider" />
-          <ul className="benefits grid">
-            <li>
-              <h3>Always up to date.</h3>
-              <p>
-                No more stale reports; see the latest data whenever you refresh
-                the page.
-              </p>
-            </li>
-            <li>
-              <h3>Frees up your time to deep dive.</h3>
-              <p>
-                Less time pulling routine numbers, and more time on analysis
-                that moves the needle.
-              </p>
-            </li>
-            <li>
-              <h3>Share with your team.</h3>
-              <p>
-                Share a report with your team, and they can refer to it directly
-                or use it as the base to build their own dashboard.
-              </p>
-            </li>
-            <li>
-              <h3>Track comments directly in the report.</h3>
-              <p>Keep everyone on the same page with in-report comments.</p>
-            </li>
-          </ul>
-          <Figure src="/Dashboard chart.png" alt="A saved dashboard" />
-          <Footer />
-        </Page>
-
-        {/* ============================================================
-            CHAT FEATURE 
-            ============================================================ */}
-        <Page label="Chat">
-          <div className="eyebrow">Effortless answers</div>
-          <h2 className="section">Chat with your data</h2>
-          <p className="lead">
-            The fastest path to insights. Send a question and Compass answers
-            with a table or chart.
-          </p>
-          <div className="divider" />
-          <ul className="benefits grid">
-            <li>
-              <h3>Ask anything, get answers immediately.</h3>
-              <p>
-                {sampleQuestions.map((q, i) => (
-                  <span key={i}>
-                    {i !== 0 ? ', ' : ''}&ldquo;{q}&rdquo;
-                  </span>
-                ))}
-                . Type it like you&apos;d say it, and get a chart or table back
-                in seconds.
-              </p>
-            </li>
-            <li>
-              <h3>Numbers you can trust, every time.</h3>
-              <p>
-                The AI reads your question but our custom query engine runs the
-                query - the worst case is that it misunderstands you, and you
-                clarify in a follow up. No hallucinated answers.
-              </p>
-            </li>
-            <li>
-              <h3>Locked down with granular permissions.</h3>
-              <p>
-                Everyone sees exactly what they&apos;re cleared to see, and
-                nothing else. Users can't circumvent controls to trick the AI
-                into revealing info it shouldn't.
-              </p>
-            </li>
-            <li>
-              <h3>Your data never leaves your systems.</h3>
-              <p>
-                The AI never sees your sensitive data, only your queries. Your
-                data never leaves your control.
-              </p>
-            </li>
-          </ul>
-          <Figure
-            src="/Chat GP chart.png"
-            alt="A chat question resolving into a chart"
-          />
-          <Footer />
-        </Page>
+        {/* DASHBOARDS + CHAT — order is set from the config pane */}
+        {chatFirst ? [chatPage, dashboardsPage] : [dashboardsPage, chatPage]}
 
         {/* ============================================================
             BUILT ON EXISTING WORK 

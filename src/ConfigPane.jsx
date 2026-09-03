@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Switch } from '@/components/ui/switch'
 
 // Screen-only editor for the parts of the proposal that change per client.
 // .no-print keeps it out of the PDF.
@@ -12,6 +13,8 @@ export default function ConfigPane({
   clientLogoName,
   onClientLogoFile,
   onClientLogoReset,
+  chatFirst,
+  onChatFirstChange,
 }) {
   const [dragging, setDragging] = useState(false)
 
@@ -90,6 +93,15 @@ export default function ConfigPane({
           onChange={e => onSampleQuestionChange(1, e.target.value)}
         />
       </label>
+
+      <div className="field field--row">
+        <label htmlFor="chat-first">Chat page first</label>
+        <Switch
+          id="chat-first"
+          checked={chatFirst}
+          onCheckedChange={onChatFirstChange}
+        />
+      </div>
     </aside>
   )
 }
