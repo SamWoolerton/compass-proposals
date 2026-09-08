@@ -60,3 +60,7 @@
   --color-background: var(--background);
   --color-ring: var(--ring);
 }
+
+#nl-badge-frame {
+  display: none;
+}
