@@ -9,9 +9,9 @@
      - We control auth and permissions in the app itself, so having this published publicly isn’t a security risk - a user who signs in but isn’t set up in the app will just get an empty screen telling them to contact an admin to get access.
 3. Open **APIs & Services → Credentials → Create Credentials → OAuth client ID**.
    - Application type: **Web application**.
-   - **Authorized redirect URIs**: add `<BASE_URL>/auth/callback/google`
-     - We need this to be set to this for now: [`http://localhost:5173/auth/callback/google`](http://localhost:5173/auth/callback/google)
-     - Once the app goes live, we’ll also need to include the live app’s URL here too, like [`https://compassdemo.usebearing.com/auth/callback/google`](https://compassdemo.usebearing.com/auth/callback/google)
+   - **Authorized redirect URIs**: add `<BASE_URL>/auth/google/callback`
+     - We need this to be set to this for now: [`http://localhost:5173/auth/google/callback`](http://localhost:5173/auth/google/callback)
+     - Once the app goes live, we’ll also need to include the live app’s URL here too, like [`https://compassdemo.usebearing.com/auth/google/callback`](https://compassdemo.usebearing.com/auth/google/callback)
        - If you know the final URL already then you can set this now; if you’re still deciding then you can come back and set it later
 4. Click **Create**. Copy the **Client ID** and **Client secret**.
 5. Securely share the credentials (client ID + client secret) with us [via Pwpush](https://eu.pwpush.com/p/new)
