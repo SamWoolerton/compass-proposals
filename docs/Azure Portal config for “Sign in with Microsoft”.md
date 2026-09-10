@@ -7,7 +7,7 @@
      - _Single tenant only_ → restrict to your org (e.g. for an internal-only app).
      - _Any Entra ID Tenant + Personal Microsoft accounts_ → accessible by approved users (controlled in the app), e.g. a client portal.
    - **Redirect URI**: platform **Web**, value `<BASE_URL>/auth/microsoft/callback`.
-     - We need this to be set to this for now: [`http://localhost:5173/auth/microsoft/callback`](http://localhost:5173/auth/microsoft/callback)
+     - We need this to be set to this for now: [`http://localhost:3000/auth/microsoft/callback`](http://localhost:3000/auth/microsoft/callback)
      - Once the app goes live, we’ll also need to include the live app’s URL here too, like [`https://compassdemo.usebearing.com/auth/microsoft/callback`](https://compassdemo.usebearing.com/auth/microsoft/callback)
        - If you know the final URL already then you can set this now; if you’re still deciding then you can come back and set it later.
        - If you can only provide one URL at this stage then just set that `localhost` one for now; once you finish this process, you can access `Redirect URIs` from the `Overview` tab to set additional URLs here.

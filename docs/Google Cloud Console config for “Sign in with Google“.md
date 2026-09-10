@@ -10,7 +10,7 @@
 3. Open **APIs & Services → Credentials → Create Credentials → OAuth client ID**.
    - Application type: **Web application**.
    - **Authorized redirect URIs**: add `<BASE_URL>/auth/google/callback`
-     - We need this to be set to this for now: [`http://localhost:5173/auth/google/callback`](http://localhost:5173/auth/google/callback)
+     - We need this to be set to this for now: [`http://localhost:3000/auth/google/callback`](http://localhost:3000/auth/google/callback)
      - Once the app goes live, we’ll also need to include the live app’s URL here too, like [`https://compassdemo.usebearing.com/auth/google/callback`](https://compassdemo.usebearing.com/auth/google/callback)
        - If you know the final URL already then you can set this now; if you’re still deciding then you can come back and set it later
 4. Click **Create**. Copy the **Client ID** and **Client secret**.
