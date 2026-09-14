@@ -161,7 +161,7 @@ export default function Contract() {
       </p>
 
       <div className="signatures">
-        {signatories.map(({ party, name, role }) => (
+        {signatories.map(({ party, name, role, signedDate }) => (
           <section className="signatory" key={party}>
             <div className="font-semibold text-xs mb-3">{party}</div>
 
@@ -171,7 +171,10 @@ export default function Contract() {
             </p>
 
             <div className="sig-line">Signature</div>
-            <div className="sig-line is-date">Date</div>
+            <div className="sig-line is-date">
+              {signedDate && <span className="sig-fill">{signedDate}</span>}
+              Date
+            </div>
           </section>
         ))}
       </div>

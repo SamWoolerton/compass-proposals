@@ -125,6 +125,19 @@
   color: var(--muted);
 }
 .doc-body.is-contract .sig-line.is-date {
+  position: relative;
   margin-top: 9mm;
   width: 60%;
+}
+.doc-body.is-contract .sig-fill {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  padding-bottom: 1.5mm;
+  font-family: var(--font-sans);
+  font-size: 10pt;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  color: var(--text);
 }
