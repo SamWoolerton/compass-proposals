@@ -9,8 +9,15 @@ type ClientPortalConfig = { visible: false } | { visible: true; label: string }
 const clientPortalsConfig: ClientPortalConfig = { visible: false }
 
 type PricingConfig =
-  { visible: false } | { visible: true; monthly: string; annual: string }
-const pricingConfig: PricingConfig = { visible: false }
+  | { type: 'hidden' }
+  | { type: 'monthly-annual'; monthly: string; annual: string }
+  | { type: 'license-retainer'; license: string; retainer: string }
+// const pricingConfig: PricingConfig = { type: 'hidden' }
+const pricingConfig: PricingConfig = {
+  type: 'monthly-annual',
+  monthly: '1',
+  annual: '1',
+}
 
 const defaultSampleQuestions = [
   'Top 5 products by gross profit?',
@@ -517,7 +524,7 @@ export default function App() {
         {/* ============================================================
             PRICING 
             ============================================================ */}
-        {pricingConfig.visible && (
+        {pricingConfig.type !== 'hidden' && (
           <Page label="Pricing">
             <div className="eyebrow">Investment</div>
             <h2 className="section">Pricing package</h2>
@@ -527,16 +534,34 @@ export default function App() {
             </p>
             <div className="divider" />
 
-            <p className="text-xs mb-5">
-              Start on a monthly plan for complete flexibility, and then move to
-              a 12-month contract when you're ready.
-            </p>
+            {pricingConfig.type === 'monthly-annual' && (
+              <p className="text-xs mb-5">
+                Start on a monthly plan for complete flexibility, and then move
+                to a 12-month contract when you're ready.
+              </p>
+            )}
 
             <div className="price-options">
-              <div className="price-opt price-opt--light">
-                <span className="badge">Flexible</span>
+              <div
+                className={
+                  'price-opt ' +
+                  (pricingConfig.type === 'monthly-annual'
+                    ? 'price-opt--light'
+                    : '')
+                }
+              >
+                <span className="badge">
+                  {pricingConfig.type === 'monthly-annual'
+                    ? 'Flexible'
+                    : 'License'}
+                </span>
                 <div className="price-figure">
-                  <span className="amount">${pricingConfig.monthly}</span>
+                  <span className="amount">
+                    $
+                    {pricingConfig.type === 'monthly-annual'
+                      ? pricingConfig.monthly
+                      : pricingConfig.license}
+                  </span>
                   <span className="per">/ month</span>
                 </div>
                 <p className="panel-sub">
@@ -546,14 +571,31 @@ export default function App() {
                 + est 3-4w for implementation at $185/h.
               </p> */}
               </div>
-              <div className="price-opt">
-                <span className="badge">12-month contract</span>
+              <div
+                className={
+                  'price-opt ' +
+                  (pricingConfig.type === 'license-retainer'
+                    ? 'price-opt--light'
+                    : '')
+                }
+              >
+                <span className="badge">
+                  {pricingConfig.type === 'monthly-annual'
+                    ? '12-month contract'
+                    : 'Retainer'}
+                </span>
                 <div className="price-figure">
-                  <span className="amount">${pricingConfig.annual}</span>
+                  <span className="amount">
+                    {pricingConfig.type === 'monthly-annual'
+                      ? `$${pricingConfig.annual}`
+                      : pricingConfig.retainer}
+                  </span>
                   <span className="per">/ month</span>
                 </div>
                 <p className="panel-sub">
-                  + BYO AI for chat; 3c/message in our testing.
+                  {pricingConfig.type === 'monthly-annual'
+                    ? '+ BYO AI for chat; 3c/message in our testing.'
+                    : 'Tweak and tailor dashboards without needing budget approval each time.'}
                 </p>
                 {/* <p className="panel-sub">
                 + est 3-4w for implementation at $185/h.
@@ -602,7 +644,11 @@ export default function App() {
                   <Icon.Shield />
                 </span>
                 <h3>Support included</h3>
-                <p>Ongoing support is in the licence, not billed on top.</p>
+                <p>
+                  {pricingConfig.type === 'monthly-annual'
+                    ? 'Ongoing support is in the licence, not billed on top.'
+                    : `We're always adding new features, and you get access to those as part of the license fee.`}
+                </p>
               </div>
               <div className="feat">
                 <span className="feat-icon">
@@ -620,8 +666,11 @@ export default function App() {
                 </span>
                 <h3>Try before you commit</h3>
                 <p>
-                  Start on monthly billing so you can see Compass up close
-                  before anything&apos;s locked in.
+                  {pricingConfig.type === 'monthly-annual'
+                    ? 'Start on monthly billing '
+                    : `We can set up a demo with your data `}
+                  so you can see Compass up close before anything&apos;s locked
+                  in.
                 </p>
               </div>
             </div>
