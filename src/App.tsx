@@ -12,12 +12,7 @@ type PricingConfig =
   | { type: 'hidden' }
   | { type: 'monthly-annual'; monthly: string; annual: string }
   | { type: 'license-retainer'; license: string; retainer: string }
-// const pricingConfig: PricingConfig = { type: 'hidden' }
-const pricingConfig: PricingConfig = {
-  type: 'monthly-annual',
-  monthly: '1',
-  annual: '1',
-}
+const pricingConfig: PricingConfig = { type: 'hidden' }
 
 const defaultSampleQuestions = [
   'Top 5 products by gross profit?',
